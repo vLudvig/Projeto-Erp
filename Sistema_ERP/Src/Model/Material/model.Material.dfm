@@ -4,7 +4,7 @@ object modelMaterial: TmodelMaterial
   object QcadastroMaterial: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      '')
+      'select * from material')
     Left = 192
     Top = 256
     object QcadastroMaterialID: TIntegerField

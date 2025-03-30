@@ -32,6 +32,8 @@ type
     btnDesistir: TButton;
     Panel1: TPanel;
     Label6: TLabel;
+    Label7: TLabel;
+    Panel2: TPanel;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -49,6 +51,7 @@ type
 
 var
   cadastroMaterial: TcadastroMaterial;
+  inclusao: boolean;
 
 implementation
 
@@ -65,6 +68,8 @@ end;
 
 procedure TcadastroMaterial.modoInclusao();
 begin
+  inclusao := true;
+  checkAtivo.Checked := true;
   pnlCadastro.Enabled := true;
   btnConsultar.Visible := false;
   btnIncluir.Visible := false;
@@ -72,10 +77,19 @@ begin
   btnExcluir.Visible := false;
   btnConfirmar.Visible := True;
   btnDesistir.Visible := True;
+
+//limpa todos os campos do panel de informações do material  
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if pnlCadastro.Controls[i] is TEdit then
+      TEdit(pnlCadastro.Controls[i]).Text := '';
+  end;
+  
 end;
 
 procedure TcadastroMaterial.modoAlteracao();
 begin
+  inclusao := false;
   pnlCadastro.Enabled := true;
   btnConsultar.Visible := false;
   btnIncluir.Visible := false;
@@ -102,9 +116,35 @@ begin
 end;
 
 procedure TcadastroMaterial.btnConfirmarClick(Sender: TObject);
+var
+  materialAtivo: String;
+  sqlValues: String;
 begin
+  if inclusao then
+  begin
+    var sqlInsert: String;
+    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE,ATIVO) ';
+    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :ativo);';
+  if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
+  
+    try
+      modelMaterial.QcadastroMaterial.SQL.Text := sqlInsert + sqlValues;
+      modelMaterial.QcadastroMaterial.ParamByName('codigo').AsInteger := StrToInt(tCodigoMat.Text); 
+      modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text; 
+      modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0; 
+      modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := 'MT'; 
+      modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo; 
+      modelMaterial.QcadastroMaterial.ExecSQL; 
+    except
+      on E: Exception do
+        ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
+    end;
+  end
+  else
+  begin
+
+  end;
   modoConsulta();
-  inherited;
 end;
 
 procedure TcadastroMaterial.btnDesistirClick(Sender: TObject);

@@ -3,7 +3,7 @@ object modelConexao: TmodelConexao
   Width = 693
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=C:\ProjetoSisplan\Sisplan\Base\SISPLANPROJETO.FB3'
+      'Database=C:\Projeto-Erp\Sistema_ERP\Base\SISPLANPROJETO.FB3'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')

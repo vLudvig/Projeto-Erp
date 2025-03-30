@@ -26,7 +26,7 @@ object ViewPrincipal: TViewPrincipal
     object Image1: TImage
       Left = 0
       Top = 560
-      Width = 473
+      Width = 329
       Height = 233
       Align = alCustom
       Center = True
@@ -115,7 +115,7 @@ object ViewPrincipal: TViewPrincipal
         82}
     end
     object Panel2: TPanel
-      Left = 368
+      Left = 296
       Top = 560
       Width = 425
       Height = 233

@@ -1,28 +1,29 @@
 ﻿object cadastroMaterial: TcadastroMaterial
-  Left = 0
+  Left = 20
   Top = 0
   Caption = 'Cadastro De Material'
-  ClientHeight = 623
-  ClientWidth = 1168
+  ClientHeight = 750
+  ClientWidth = 1197
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesigned
   OnCreate = abrirTelaMaterial
   OnDestroy = FecharTelaMaterial
   TextHeight = 15
   object pnlCadastro: TPanel
     Left = 0
     Top = 0
-    Width = 1168
-    Height = 533
+    Width = 1197
+    Height = 660
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = -6
-    ExplicitHeight = 656
+    ExplicitWidth = 1168
+    ExplicitHeight = 533
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -72,6 +73,13 @@
       Height = 15
       Caption = 'Imagem do Material:'
     end
+    object Label7: TLabel
+      Left = 696
+      Top = 367
+      Width = 119
+      Height = 15
+      Caption = 'Imagem 2 do Material:'
+    end
     object tCodigoMat: TEdit
       Left = 104
       Top = 53
@@ -118,8 +126,8 @@
     object DBGrid1: TDBGrid
       Left = 56
       Top = 328
-      Width = 503
-      Height = 137
+      Width = 297
+      Height = 297
       TabOrder = 6
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -128,19 +136,27 @@
       TitleFont.Style = []
     end
     object Panel1: TPanel
-      Left = 696
+      Left = 688
       Top = 56
-      Width = 305
-      Height = 266
+      Width = 297
+      Height = 289
       Cursor = crHandPoint
       Caption = 'Anexar'
       TabOrder = 7
     end
+    object Panel2: TPanel
+      Left = 688
+      Top = 388
+      Width = 225
+      Height = 205
+      Caption = 'Anexar'
+      TabOrder = 8
+    end
   end
   object pnlBotoes: TPanel
     Left = 0
-    Top = 533
-    Width = 1168
+    Top = 660
+    Width = 1197
     Height = 90
     Align = alBottom
     BevelOuter = bvNone
@@ -148,7 +164,8 @@
     ParentBackground = False
     ParentCtl3D = False
     TabOrder = 1
-    ExplicitTop = 662
+    ExplicitTop = 533
+    ExplicitWidth = 1168
     object btnIncluir: TButton
       Left = 44
       Top = 32
