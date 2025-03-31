@@ -22,8 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1168
-    ExplicitHeight = 533
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -164,8 +162,6 @@
     ParentBackground = False
     ParentCtl3D = False
     TabOrder = 1
-    ExplicitTop = 533
-    ExplicitWidth = 1168
     object btnIncluir: TButton
       Left = 44
       Top = 32
@@ -201,6 +197,7 @@
       Height = 33
       Caption = 'Consultar'
       TabOrder = 3
+      OnClick = btnConsultarClick
     end
     object btnConfirmar: TButton
       Left = 44

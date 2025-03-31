@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, model.Material, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids;
+  Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material;
 
 type
   TcadastroMaterial = class(TForm)
@@ -43,6 +43,7 @@ type
     procedure btnDesistirClick(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure btnConsultarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -145,6 +146,16 @@ begin
 
   end;
   modoConsulta();
+end;
+
+procedure TcadastroMaterial.btnConsultarClick(Sender: TObject);
+begin
+  formConsultaMaterial := TformConsultaMaterial.Create(nil);
+  try
+     formConsultaMaterial.ShowModal;
+  finally
+     FreeAndNil(formConsultaMaterial);
+  end;
 end;
 
 procedure TcadastroMaterial.btnDesistirClick(Sender: TObject);

@@ -19,7 +19,6 @@ object ViewPrincipal: TViewPrincipal
     Top = 0
     Width = 1123
     Height = 793
-    Cursor = crHandPoint
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -156,8 +155,8 @@ object ViewPrincipal: TViewPrincipal
     end
   end
   object MainMenu1: TMainMenu
-    Left = 192
-    Top = 56
+    Left = 784
+    Top = 16
     object abaCadastros: TMenuItem
       Caption = 'Cadastros'
       object Material1: TMenuItem
