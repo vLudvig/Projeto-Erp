@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, model.Material, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material;
+  Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material, Model.Conexao;
 
 type
   TcadastroMaterial = class(TForm)
@@ -34,6 +34,9 @@ type
     Label6: TLabel;
     Label7: TLabel;
     Panel2: TPanel;
+    tIdMat: TEdit;
+    lblId: TLabel;
+    Button1: TButton;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -44,6 +47,7 @@ type
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,6 +57,7 @@ type
 var
   cadastroMaterial: TcadastroMaterial;
   inclusao: boolean;
+  modelConexao: TmodelConexao;
 
 implementation
 
@@ -63,7 +68,8 @@ begin
   inherited;
   if(modelMaterial = nil)then
     modelMaterial := TmodelMaterial.Create(nil);
-
+  if(modelConexao = nil)then
+    modelConexao := TmodelConexao.Create(nil);
     modoConsulta();
 end;
 
@@ -116,6 +122,8 @@ begin
   modoAlteracao;
 end;
 
+//Grava as Informaçoes da tela na tabela Material e volta para o modo Consulta
+//Desabilitando os campos de edição.
 procedure TcadastroMaterial.btnConfirmarClick(Sender: TObject);
 var
   materialAtivo: String;
@@ -135,7 +143,8 @@ begin
       modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0; 
       modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := 'MT'; 
       modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo; 
-      modelMaterial.QcadastroMaterial.ExecSQL; 
+      modelMaterial.QcadastroMaterial.ExecSQL;
+
     except
       on E: Exception do
         ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
@@ -148,11 +157,15 @@ begin
   modoConsulta();
 end;
 
+//Abre a tela de consulta de Material
 procedure TcadastroMaterial.btnConsultarClick(Sender: TObject);
 begin
   formConsultaMaterial := TformConsultaMaterial.Create(nil);
   try
-     formConsultaMaterial.ShowModal;
+     if formConsultaMaterial.ShowModal = mrOk then
+     begin
+       tCodigoMat.Text :=  IntToStr(formConsultaMaterial.registroSelecionado)
+     end;
   finally
      FreeAndNil(formConsultaMaterial);
   end;
@@ -166,6 +179,11 @@ end;
 procedure TcadastroMaterial.btnIncluirClick(Sender: TObject);
 begin
   modoInclusao();
+end;
+
+procedure TcadastroMaterial.Button1Click(Sender: TObject);
+begin
+  Self.Close;
 end;
 
 procedure TcadastroMaterial.FecharTelaMaterial(Sender: TObject);

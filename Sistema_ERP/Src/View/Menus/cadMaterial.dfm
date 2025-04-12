@@ -22,6 +22,7 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = -8
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -78,6 +79,13 @@
       Height = 15
       Caption = 'Imagem 2 do Material:'
     end
+    object lblId: TLabel
+      Left = 25
+      Top = 19
+      Width = 13
+      Height = 15
+      Caption = 'Id:'
+    end
     object tCodigoMat: TEdit
       Left = 104
       Top = 53
@@ -120,6 +128,13 @@
       Width = 97
       Height = 23
       TabOrder = 5
+      Items.Strings = (
+        'MT'
+        'KG'
+        'UN'
+        'TN'
+        'MM'
+        'GR')
     end
     object DBGrid1: TDBGrid
       Left = 56
@@ -149,6 +164,14 @@
       Height = 205
       Caption = 'Anexar'
       TabOrder = 8
+    end
+    object tIdMat: TEdit
+      Left = 44
+      Top = 16
+      Width = 41
+      Height = 23
+      Enabled = False
+      TabOrder = 9
     end
   end
   object pnlBotoes: TPanel
@@ -216,6 +239,15 @@
       Caption = 'Desisitr'
       TabOrder = 5
       OnClick = btnDesistirClick
+    end
+    object Button1: TButton
+      Left = 576
+      Top = 33
+      Width = 105
+      Height = 33
+      Caption = 'Fechar'
+      TabOrder = 6
+      OnClick = Button1Click
     end
   end
 end

@@ -5,8 +5,8 @@ object modelMaterial: TmodelMaterial
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
       'select * from material')
-    Left = 192
-    Top = 256
+    Left = 160
+    Top = 120
     object QcadastroMaterialID: TIntegerField
       FieldName = 'ID'
       Origin = 'ID'
@@ -61,15 +61,9 @@ object modelMaterial: TmodelMaterial
   object QconsultaMaterial: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from material')
-    Left = 352
-    Top = 144
-    object QconsultaMaterialID: TIntegerField
-      FieldName = 'ID'
-      Origin = 'ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
+      'select * from material order by codigo')
+    Left = 296
+    Top = 120
     object QconsultaMaterialCODIGO: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'CODIGO'
@@ -84,7 +78,7 @@ object modelMaterial: TmodelMaterial
       Size = 30
     end
     object QconsultaMaterialQUANTIDADE_ESTOQUE: TFMTBCDField
-      DisplayLabel = 'Quantidade em estoque'
+      DisplayLabel = 'Quantidade estoque'
       FieldName = 'QUANTIDADE_ESTOQUE'
       Origin = 'QUANTIDADE_ESTOQUE'
       Precision = 18
@@ -97,12 +91,12 @@ object modelMaterial: TmodelMaterial
       Size = 4
     end
     object QconsultaMaterialGRUPO_MATERIAL_ID: TIntegerField
-      DisplayLabel = 'Grupo Material'
+      DisplayLabel = 'Grupo'
       FieldName = 'GRUPO_MATERIAL_ID'
       Origin = 'GRUPO_MATERIAL_ID'
     end
     object QconsultaMaterialCATEGORIA_MATERIAL_ID: TIntegerField
-      DisplayLabel = 'Categoria Material'
+      DisplayLabel = 'Categoria'
       FieldName = 'CATEGORIA_MATERIAL_ID'
       Origin = 'CATEGORIA_MATERIAL_ID'
     end
@@ -114,13 +108,21 @@ object modelMaterial: TmodelMaterial
       FixedChar = True
       Size = 1
     end
+    object QconsultaMaterialID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
   end
   object DS_QcadastroMaterial: TDataSource
-    Left = 288
-    Top = 288
+    Left = 504
+    Top = 392
   end
   object DS_QconsultaMaterial: TDataSource
-    Left = 448
-    Top = 168
+    DataSet = QconsultaMaterial
+    Left = 560
+    Top = 248
   end
 end

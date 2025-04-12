@@ -10,6 +10,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
   TextHeight = 15
   object pnlEdit: TPanel
     Left = 0
@@ -18,7 +19,6 @@ object formConsultaPrincipal: TformConsultaPrincipal
     Height = 83
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 792
     object Label1: TLabel
       Left = 16
       Top = 10
@@ -40,7 +40,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Height = 23
       TabOrder = 0
     end
-    object ComboBox1: TComboBox
+    object cmbBusca: TComboBox
       Left = 568
       Top = 31
       Width = 145
@@ -55,9 +55,6 @@ object formConsultaPrincipal: TformConsultaPrincipal
     Height = 365
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 81
-    ExplicitWidth = 769
-    ExplicitHeight = 288
     object DBGrid1: TDBGrid
       Left = 1
       Top = 1
@@ -94,10 +91,11 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Height = 25
       Caption = 'Desistir'
       TabOrder = 1
+      OnClick = btnDesistirClick
     end
   end
-  object DS_busca: TDataSource
-    Left = 504
-    Top = 201
+  object dataSourceGrid: TDataSource
+    Left = 600
+    Top = 243
   end
 end
