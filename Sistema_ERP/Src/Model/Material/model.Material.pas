@@ -30,6 +30,7 @@ type
     QconsultaMaterialGRUPO_MATERIAL_ID: TIntegerField;
     QconsultaMaterialCATEGORIA_MATERIAL_ID: TIntegerField;
     QconsultaMaterialATIVO: TStringField;
+    QcoresMaterial: TFDQuery;
   private
     { Private declarations }
   public

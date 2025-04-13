@@ -67,6 +67,8 @@ object formConsultaPrincipal: TformConsultaPrincipal
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDblClick = DBGrid1DblClick
+      OnKeyDown = DBGrid1KeyDown
     end
   end
   object Panel1: TPanel

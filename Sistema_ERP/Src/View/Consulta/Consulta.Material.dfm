@@ -1,7 +1,6 @@
 inherited formConsultaMaterial: TformConsultaMaterial
   Caption = 'Consulta - Material'
   StyleElements = [seFont, seClient, seBorder]
-  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
   inherited pnlEdit: TPanel
@@ -14,6 +13,7 @@ inherited formConsultaMaterial: TformConsultaMaterial
     end
     inherited tBusca: TEdit
       StyleElements = [seFont, seClient, seBorder]
+      OnChange = tBuscaChange
       OnKeyDown = tBuscaKeyDown
     end
     inherited cmbBusca: TComboBox
@@ -36,9 +36,6 @@ inherited formConsultaMaterial: TformConsultaMaterial
     StyleElements = [seFont, seClient, seBorder]
     inherited btnSelecReg: TButton
       OnClick = btnSelecRegClick
-    end
-    inherited btnDesistir: TButton
-      OnClick = btnDesistirClick
     end
   end
   inherited dataSourceGrid: TDataSource

@@ -22,6 +22,9 @@ type
     dataSourceGrid: TDataSource;
     procedure btnDesistirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBGrid1DblClick(Sender: TObject);
 
   private
   protected
@@ -48,9 +51,21 @@ begin
 
 end;
 
+procedure TformConsultaPrincipal.DBGrid1DblClick(Sender: TObject);
+begin
+  btnSelecReg.Click;
+end;
+
+procedure TformConsultaPrincipal.DBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    btnSelecReg.Click;
+end;
+
 procedure TformConsultaPrincipal.FormCreate(Sender: TObject);
 begin
-    modelConexao := TmodelConexao.Create(nil);
+   modelConexao := TmodelConexao.Create(nil);
    if Assigned(modelConexao) then
     begin
       // Verifica se a conexão está criada
@@ -67,5 +82,7 @@ begin
       Exit;
     end;
 end;
+
+
 
 end.

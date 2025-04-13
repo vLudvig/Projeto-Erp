@@ -20,7 +20,7 @@ object modelMaterial: TmodelMaterial
       Required = True
     end
     object QcadastroMaterialDESCRICAO: TStringField
-      DisplayLabel = 'Descri'#231#227'o'
+      DisplayLabel = 'Descricao'
       FieldName = 'DESCRICAO'
       Origin = 'DESCRICAO'
       Required = True
@@ -61,7 +61,7 @@ object modelMaterial: TmodelMaterial
   object QconsultaMaterial: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from material order by codigo')
+      'select * from material')
     Left = 296
     Top = 120
     object QconsultaMaterialCODIGO: TIntegerField
@@ -124,5 +124,9 @@ object modelMaterial: TmodelMaterial
     DataSet = QconsultaMaterial
     Left = 560
     Top = 248
+  end
+  object QcoresMaterial: TFDQuery
+    Left = 160
+    Top = 280
   end
 end

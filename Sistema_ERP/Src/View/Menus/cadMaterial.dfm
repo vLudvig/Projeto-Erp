@@ -22,7 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -8
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -162,6 +161,7 @@
       Top = 388
       Width = 225
       Height = 205
+      Cursor = crHandPoint
       Caption = 'Anexar'
       TabOrder = 8
     end
@@ -212,6 +212,7 @@
       Height = 33
       Caption = 'Excluir'
       TabOrder = 2
+      OnClick = btnExcluirClick
     end
     object btnConsultar: TButton
       Left = 445

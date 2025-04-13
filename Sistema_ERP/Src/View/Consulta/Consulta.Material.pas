@@ -16,9 +16,12 @@ type
     procedure SelecionaRegistro();
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure BuscarDados;
+    procedure tBuscaChange(Sender: TObject);
   private
     { Private declarations }
   public
+    procedure buscarMateriais(condicao: String);
     var
     registroSelecionado: integer;
   end;
@@ -76,7 +79,6 @@ begin
   end;
 end;
 
-
 procedure TformConsultaMaterial.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -90,6 +92,12 @@ begin
   begin
     ShowMessage('Erro: modelMaterial ou QconsultaMaterial não foi instanciado!');
   end;
+end;
+
+procedure TformConsultaMaterial.tBuscaChange(Sender: TObject);
+begin
+  inherited;
+  BuscarDados;
 end;
 
 procedure TformConsultaMaterial.tBuscaKeyDown(Sender: TObject; var Key: Word;
@@ -110,6 +118,28 @@ begin
     if modelMaterial.QconsultaMaterial.Active then
        modelMaterial.QconsultaMaterial.Close;
   end;
+end;
+
+procedure TformConsultaMaterial.BuscarDados;
+var Lcondicao: string;
+begin
+  Lcondicao := '';
+  case cmbBusca.ItemIndex of
+   0: Lcondicao := 'where descricao like '+ QuotedStr('%' + tBusca.Text + '%');
+   1: Lcondicao := 'where codigo like '+ QuotedStr('%' + tBusca.Text + '%');
+  end;
+
+  buscarMateriais(Lcondicao);
+
+end;
+
+procedure TformConsultaMaterial.buscarMateriais(condicao: string);
+begin
+  modelMaterial.QconsultaMaterial.Close;
+  modelMaterial.QconsultaMaterial.SQL.Clear;
+  modelMaterial.QconsultaMaterial.SQL.Add('Select * from material');
+  modelMaterial.QconsultaMaterial.SQL.Add(condicao);
+  modelMaterial.QconsultaMaterial.Open;
 end;
 
 end.
