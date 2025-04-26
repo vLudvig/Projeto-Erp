@@ -7,7 +7,10 @@ uses
   model.Material in 'Src\Model\Material\model.Material.pas' {modelMaterial: TDataModule},
   cadMaterial in 'Src\View\Menus\cadMaterial.pas' {cadastroMaterial},
   Consulta.Principal in 'Src\View\Consulta\Consulta.Principal.pas' {formConsultaPrincipal},
-  Consulta.Material in 'Src\View\Consulta\Consulta.Material.pas' {formConsultaMaterial};
+  Consulta.Material in 'Src\View\Consulta\Consulta.Material.pas' {formConsultaMaterial},
+  cadGeral in 'Src\View\Menus\Menu.Heranca\cadGeral.pas' {cadastroGeral},
+  cadCor1 in 'Src\View\Menus\cadCor1.pas' {cadCor},
+  model.cor in 'Src\Model\Cor\model.cor.pas' {DataModule1: TDataModule};
 
 {$R *.res}
 
@@ -17,5 +20,8 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
+  Application.CreateForm(TcadastroGeral, cadastroGeral);
+  Application.CreateForm(TcadCor, cadCor);
+  Application.CreateForm(TDataModule1, DataModule1);
   Application.Run;
 end.

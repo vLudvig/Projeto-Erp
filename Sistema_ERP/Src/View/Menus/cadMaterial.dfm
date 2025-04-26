@@ -22,6 +22,7 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -207,7 +208,7 @@
     end
     object btnExcluir: TButton
       Left = 310
-      Top = 32
+      Top = 33
       Width = 105
       Height = 33
       Caption = 'Excluir'
@@ -216,7 +217,7 @@
     end
     object btnConsultar: TButton
       Left = 445
-      Top = 32
+      Top = 33
       Width = 105
       Height = 33
       Caption = 'Consultar'

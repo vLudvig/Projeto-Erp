@@ -67,11 +67,23 @@ implementation
 
 procedure TcadastroMaterial.abrirTelaMaterial(Sender: TObject);
 begin
+
     modoConsulta();
 end;
 
 procedure TcadastroMaterial.modoInclusao();
 begin
+    modelMaterial := TmodelMaterial.Create(nil);
+
+    if Assigned(modelMaterial) and Assigned(modelMaterial.QconsultaMaterial) then
+    begin
+      modelMaterial.QcadastroMaterial.Close;
+      modelMaterial.QcadastroMaterial.Open;
+    end
+    else
+    begin
+      ShowMessage('Erro: modelMaterial ou QconsultaMaterial não foi instanciado!');
+    end;
   inclusao := true;
   checkAtivo.Checked := true;
   pnlCadastro.Enabled := true;
@@ -130,6 +142,8 @@ var
   sqlValues: String;
   sqlInsert: String;
 begin
+  modelMaterial.QcadastroMaterial.Close();
+  modelMaterial.QcadastroMaterial.Open();
   if inclusao then
   begin
     sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE,ATIVO) ';
@@ -141,9 +155,10 @@ begin
       modelMaterial.QcadastroMaterial.ParamByName('codigo').AsInteger := StrToInt(tCodigoMat.Text); 
       modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text; 
       modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0; 
-      modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := 'MT'; 
+      modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := 'MT';
       modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo; 
       modelMaterial.QcadastroMaterial.ExecSQL;
+      modelMaterial.QcadastroMaterial.Close();
     except
       on E: Exception do
         ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
@@ -164,7 +179,7 @@ begin
      if formConsultaMaterial.ShowModal = mrOk then
      begin
        tIdMat.Text :=  IntToStr(formConsultaMaterial.registroSelecionado);//Escreve o ID conforme selecionado na consulta
-       idMaterial;//com o ID escrito, pega todos os outros campos;
+       idMaterial();//com o ID escrito, pega todos os outros campos;
      end;
   finally
      FreeAndNil(formConsultaMaterial);

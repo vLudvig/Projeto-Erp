@@ -117,8 +117,8 @@ object modelMaterial: TmodelMaterial
     end
   end
   object DS_QcadastroMaterial: TDataSource
-    Left = 504
-    Top = 392
+    Left = 496
+    Top = 352
   end
   object DS_QconsultaMaterial: TDataSource
     DataSet = QconsultaMaterial
@@ -126,7 +126,7 @@ object modelMaterial: TmodelMaterial
     Top = 248
   end
   object QcoresMaterial: TFDQuery
-    Left = 160
-    Top = 280
+    Left = 120
+    Top = 288
   end
 end
