@@ -22,7 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -136,7 +135,7 @@
         'MM'
         'GR')
     end
-    object DBGrid1: TDBGrid
+    object gridCores: TDBGrid
       Left = 56
       Top = 328
       Width = 297
@@ -249,7 +248,7 @@
       Height = 33
       Caption = 'Fechar'
       TabOrder = 6
-      OnClick = Button1Click
+      OnClick = btnFecharClick
     end
   end
 end

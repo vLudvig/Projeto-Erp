@@ -1,4 +1,4 @@
-object DataModule1: TDataModule1
+object modelCor: TmodelCor
   Height = 480
   Width = 640
   object QconsultaCor: TFDQuery

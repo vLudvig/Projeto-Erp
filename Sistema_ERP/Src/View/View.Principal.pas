@@ -47,6 +47,7 @@ type
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
     procedure Material1Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,7 +62,7 @@ implementation
 {$R *.dfm}
 
 uses
-  cadMaterial;
+  cadMaterial, cadCor1;
 
 procedure TViewPrincipal.lblMouseClick(Sender: TObject);
 begin
@@ -85,6 +86,16 @@ begin
      cadastroMaterial.ShowModal;
   finally
      FreeAndNil(cadastroMaterial);
+  end;
+end;
+
+procedure TViewPrincipal.N1Click(Sender: TObject);
+begin
+  cadCor := TcadCor.Create(nil);
+  try
+     cadCor.ShowModal;
+  finally
+     FreeAndNil(cadCor);
   end;
 end;
 

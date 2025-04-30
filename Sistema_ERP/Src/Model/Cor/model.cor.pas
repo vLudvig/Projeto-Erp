@@ -9,7 +9,7 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Model.Conexao;
 
 type
-  TDataModule1 = class(TDataModule)
+  TmodelCor = class(TDataModule)
     QconsultaCor: TFDQuery;
     QcadastroCor: TFDQuery;
     Ds_QconsultaCor: TDataSource;
@@ -21,7 +21,7 @@ type
   end;
 
 var
-  DataModule1: TDataModule1;
+  modelCor: TmodelCor;
 
 implementation
 

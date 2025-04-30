@@ -31,6 +31,8 @@ type
     procedure btnDesistirClick(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,9 +109,22 @@ begin
   modoConsulta();
 end;
 
+procedure TcadastroGeral.btnFecharClick(Sender: TObject);
+begin
+  if btnIncluir.Visible then
+    Self.Close
+  else
+    ShowMessage('Registro em Alteração, impossível continuar!')
+end;
+
 procedure TcadastroGeral.btnIncluirClick(Sender: TObject);
 begin
   modoInclusao();
+end;
+
+procedure TcadastroGeral.FormCreate(Sender: TObject);
+begin
+  modoConsulta();
 end;
 
 end.

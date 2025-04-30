@@ -11,6 +11,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlEdit: TPanel
     Left = 0
@@ -45,7 +46,13 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Top = 31
       Width = 145
       Height = 23
+      Style = csDropDownList
+      ItemIndex = 0
       TabOrder = 1
+      Text = 'Descri'#231#227'o'
+      Items.Strings = (
+        'Descri'#231#227'o'
+        'Codigo')
     end
   end
   object pnlGrid: TPanel
@@ -61,12 +68,14 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Width = 831
       Height = 363
       Align = alClient
+      DataSource = dataSourceGrid
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnCellClick = DBGrid1CellClick
       OnDblClick = DBGrid1DblClick
       OnKeyDown = DBGrid1KeyDown
     end
@@ -97,7 +106,12 @@ object formConsultaPrincipal: TformConsultaPrincipal
     end
   end
   object dataSourceGrid: TDataSource
-    Left = 600
-    Top = 243
+    DataSet = Qconsulta
+    Left = 608
+    Top = 179
+  end
+  object Qconsulta: TFDQuery
+    Left = 608
+    Top = 331
   end
 end

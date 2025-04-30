@@ -3,7 +3,7 @@ object ViewPrincipal: TViewPrincipal
   Top = 0
   Caption = 'FireBird 3.0 - Projeto Erp'
   ClientHeight = 793
-  ClientWidth = 1123
+  ClientWidth = 1151
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,12 @@ object ViewPrincipal: TViewPrincipal
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1123
+    Width = 1151
     Height = 793
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 1123
     object Image1: TImage
       Left = 0
       Top = 560
@@ -168,6 +169,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object N1: TMenuItem
         Caption = 'Cores'
+        OnClick = N1Click
       end
       object GrupodeMaterial1: TMenuItem
         Caption = '-'

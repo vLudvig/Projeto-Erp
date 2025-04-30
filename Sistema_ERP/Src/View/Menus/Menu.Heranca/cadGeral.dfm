@@ -10,6 +10,7 @@ object cadastroGeral: TcadastroGeral
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
   TextHeight = 15
   object pnlCadastro: TPanel
     Left = 0
@@ -18,10 +19,6 @@ object cadastroGeral: TcadastroGeral
     Height = 660
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 632
-    ExplicitTop = 304
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Label1: TLabel
       Left = 25
       Top = 19
@@ -81,7 +78,6 @@ object cadastroGeral: TcadastroGeral
     Height = 90
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 709
     object btnIncluir: TButton
       Left = 44
       Top = 33
@@ -123,6 +119,7 @@ object cadastroGeral: TcadastroGeral
       Height = 33
       Caption = 'Fechar'
       TabOrder = 4
+      OnClick = btnFecharClick
     end
     object btnConfirmar: TButton
       Left = 44

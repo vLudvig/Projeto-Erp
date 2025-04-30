@@ -5,7 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  Vcl.ExtCtrls, Vcl.StdCtrls, Model.Conexao;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Model.Conexao, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TformConsultaPrincipal = class(TForm)
@@ -20,17 +23,20 @@ type
     btnDesistir: TButton;
     DBGrid1: TDBGrid;
     dataSourceGrid: TDataSource;
+    Qconsulta: TFDQuery;
     procedure btnDesistirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
-
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure FormShow(Sender: TObject);
   private
   protected
     procedure ConfiguraConsulta; virtual;
   public
-    { Public declarations }
+    var
+    registroSelecionado: integer;
   end;
 
 var
@@ -49,6 +55,12 @@ end;
 procedure TformConsultaPrincipal.ConfiguraConsulta();
 begin
 
+end;
+
+//Garante que o registro selecionado no grid seja sempre atualizado.
+procedure TformConsultaPrincipal.DBGrid1CellClick(Column: TColumn);
+begin
+  Qconsulta.RecNo := DBGrid1.DataSource.DataSet.RecNo;
 end;
 
 procedure TformConsultaPrincipal.DBGrid1DblClick(Sender: TObject);
@@ -81,8 +93,27 @@ begin
       ShowMessage('Erro: modelConexao não foi instanciado!');
       Exit;
     end;
+
+    Qconsulta.Close;
+    Qconsulta.Open;
+    dataSourceGrid.DataSet := Qconsulta;
+    DBGrid1.DataSource := dataSourceGrid;
 end;
 
 
+procedure TformConsultaPrincipal.FormShow(Sender: TObject);
+begin
+  if not Assigned(Qconsulta.Connection) then
+    Qconsulta.Connection := modelConexao.FDConnection1;
+
+  if not modelConexao.FDConnection1.Connected then
+    modelConexao.FDConnection1.Connected := True;
+
+  if Assigned(Qconsulta) then
+  begin
+    Qconsulta.Close;
+    Qconsulta.Open;
+  end;
+end;
 
 end.

@@ -109,6 +109,7 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UnitSearchPath>C:\Projeto-Erp\Sistema_ERP\Src\View\Consulta;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <BRCC_IncludePath>C:\Projeto-Erp\Sistema_ERP\Src\Model\Cor;$(BRCC_IncludePath)</BRCC_IncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -164,9 +165,13 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\Cor\model.cor.pas">
-            <Form>DataModule1</Form>
+            <Form>modelCor</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\View\Consulta\Consulta.Cor.pas">
+            <Form>formConsultaCores</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

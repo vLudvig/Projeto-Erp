@@ -1,7 +1,6 @@
-inherited formConsultaMaterial: TformConsultaMaterial
-  Caption = 'Consulta - Material'
+inherited formConsultaCores: TformConsultaCores
+  Caption = 'Consulta Cores'
   StyleElements = [seFont, seClient, seBorder]
-  OnShow = FormShow
   TextHeight = 15
   inherited pnlEdit: TPanel
     StyleElements = [seFont, seClient, seBorder]
@@ -13,8 +12,6 @@ inherited formConsultaMaterial: TformConsultaMaterial
     end
     inherited tBusca: TEdit
       StyleElements = [seFont, seClient, seBorder]
-      OnChange = tBuscaChange
-      OnKeyDown = tBuscaKeyDown
     end
     inherited cmbBusca: TComboBox
       StyleElements = [seFont, seClient, seBorder]
@@ -33,13 +30,13 @@ inherited formConsultaMaterial: TformConsultaMaterial
     end
   end
   inherited dataSourceGrid: TDataSource
-    DataSet = modelMaterial.QconsultaMaterial
-    Left = 632
-    Top = 139
+    Left = 648
   end
   inherited Qconsulta: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from material')
+      'select * from cor')
+    Left = 600
+    Top = 259
   end
 end

@@ -26,7 +26,7 @@ type
     checkAtivo: TCheckBox;
     cbUnidade: TComboBox;
     Label4: TLabel;
-    DBGrid1: TDBGrid;
+    gridCores: TDBGrid;
     Label5: TLabel;
     btnConfirmar: TButton;
     btnDesistir: TButton;
@@ -47,7 +47,7 @@ type
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
     procedure idMaterial();
     procedure btnExcluirClick(Sender: TObject);
   private
@@ -75,9 +75,9 @@ procedure TcadastroMaterial.modoInclusao();
 begin
     modelMaterial := TmodelMaterial.Create(nil);
 
-    if Assigned(modelMaterial) and Assigned(modelMaterial.QconsultaMaterial) then
+    if Assigned(modelMaterial) and Assigned(modelMaterial.QcadastroMaterial) then
     begin
-      modelMaterial.QcadastroMaterial.Close;
+      modelMaterial.QcadastroMaterial.Close; //revisar esta bosta de linha
       modelMaterial.QcadastroMaterial.Open;
     end
     else
@@ -243,9 +243,12 @@ begin
   modoInclusao();
 end;
 
-procedure TcadastroMaterial.Button1Click(Sender: TObject);
+procedure TcadastroMaterial.btnFecharClick(Sender: TObject);
 begin
-  Self.Close;
+  if btnIncluir.Visible then
+    Self.Close
+  else
+    ShowMessage('Registro em Alteração, impossível continuar!')
 end;
 
 procedure TcadastroMaterial.FecharTelaMaterial(Sender: TObject);
