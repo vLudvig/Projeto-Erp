@@ -22,6 +22,7 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -140,6 +141,7 @@
       Top = 328
       Width = 297
       Height = 297
+      DataSource = DS_Cor_Mat
       TabOrder = 6
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -172,6 +174,24 @@
       Height = 23
       Enabled = False
       TabOrder = 9
+    end
+    object btnAddCor: TButton
+      Left = 56
+      Top = 629
+      Width = 98
+      Height = 25
+      Caption = 'Adicionar Cor'
+      TabOrder = 10
+      OnClick = btnAddCorClick
+    end
+    object btnRemovCor: TButton
+      Left = 160
+      Top = 629
+      Width = 98
+      Height = 25
+      Caption = 'Remover Cor'
+      TabOrder = 11
+      OnClick = btnRemovCorClick
     end
   end
   object pnlBotoes: TPanel
@@ -249,6 +269,50 @@
       Caption = 'Fechar'
       TabOrder = 6
       OnClick = btnFecharClick
+    end
+  end
+  object DS_Cor_Mat: TDataSource
+    DataSet = QcorMaterial
+    Left = 272
+    Top = 408
+  end
+  object QcorMaterial: TFDQuery
+    Connection = modelConexao.FDConnection1
+    SQL.Strings = (
+      'select c.codigo, c.descricao, c.ativa from cor c'
+      'inner join cor_material cm'
+      'on c.id = cm.cor_id'
+      'inner join material m'
+      'on m.id = cm.Material_id'
+      'where m.id = :idMat')
+    Left = 256
+    Top = 520
+    ParamData = <
+      item
+        Name = 'IDMAT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object QcorMaterialCODIGO: TStringField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      Size = 10
+    end
+    object QcorMaterialDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Required = True
+    end
+    object QcorMaterialATIVA: TStringField
+      DisplayLabel = 'Ativa'
+      FieldName = 'ATIVA'
+      Origin = 'ATIVA'
+      Required = True
+      FixedChar = True
+      Size = 1
     end
   end
 end

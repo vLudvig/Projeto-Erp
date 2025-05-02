@@ -13,11 +13,11 @@ object modelMaterial: TmodelMaterial
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object QcadastroMaterialCODIGO: TIntegerField
-      DisplayLabel = 'C'#243'digo'
+    object QcadastroMaterialCODIGO: TStringField
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       Required = True
+      Size = 10
     end
     object QcadastroMaterialDESCRICAO: TStringField
       DisplayLabel = 'Descricao'
@@ -64,11 +64,12 @@ object modelMaterial: TmodelMaterial
       'select * from material')
     Left = 296
     Top = 120
-    object QconsultaMaterialCODIGO: TIntegerField
+    object QconsultaMaterialCODIGO: TStringField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       Required = True
+      Size = 10
     end
     object QconsultaMaterialDESCRICAO: TStringField
       DisplayLabel = 'Descri'#231#227'o'

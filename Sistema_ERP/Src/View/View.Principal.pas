@@ -48,6 +48,7 @@ type
     procedure lblMouseLeave(Sender: TObject);
     procedure Material1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
+    procedure Material2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,6 +88,11 @@ begin
   finally
      FreeAndNil(cadastroMaterial);
   end;
+end;
+
+procedure TViewPrincipal.Material2Click(Sender: TObject);
+begin
+  ShowMessage('Tela ainda em Produção, impossivel continuar');
 end;
 
 procedure TViewPrincipal.N1Click(Sender: TObject);

@@ -1,10 +1,10 @@
 inherited cadCor: TcadCor
   Caption = 'Cadastro de Cor'
   StyleElements = [seFont, seClient, seBorder]
-  OnCreate = FormCreate
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    ExplicitHeight = 601
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -46,6 +46,9 @@ inherited cadCor: TcadCor
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited btnExcluir: TButton
+      OnClick = btnExcluirClick
+    end
     inherited btnConsultar: TButton
       OnClick = btnConsultarClick
     end
@@ -61,5 +64,32 @@ inherited cadCor: TcadCor
       'select * from cor')
     Left = 736
     Top = 504
+    object QcoresID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QcoresCODIGO: TStringField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      Size = 10
+    end
+    object QcoresDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Required = True
+    end
+    object QcoresATIVA: TStringField
+      DisplayLabel = 'Ativa'
+      FieldName = 'ATIVA'
+      Origin = 'ATIVA'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
   end
 end

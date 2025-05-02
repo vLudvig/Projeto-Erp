@@ -12,12 +12,16 @@ uses
 
 type
   TformConsultaCores = class(TformConsultaPrincipal)
-  procedure SelecionaRegistro();
-    procedure btnSelecRegClick(Sender: TObject);
+    QconsultaID: TIntegerField;
+    QconsultaDESCRICAO: TStringField;
+    QconsultaATIVA: TStringField;
+    QconsultaCODIGO: TStringField;
+    procedure tBuscaChange(Sender: TObject);
+    procedure BuscarDados;
   private
     { Private declarations }
   public
-    { Public declarations }
+    procedure buscarCores(condicao: String);
   end;
 
 var
@@ -27,22 +31,32 @@ implementation
 
 {$R *.dfm}
 
-
-procedure TformConsultaCores.btnSelecRegClick(Sender: TObject);
+procedure TformConsultaCores.tBuscaChange(Sender: TObject);
 begin
   inherited;
-  SelecionaRegistro();
+  BuscarDados;
 end;
 
-procedure TformConsultaCores.SelecionaRegistro();
+procedure TformConsultaCores.BuscarDados;
+var Lcondicao: string;
 begin
-  if dataSourceGrid.DataSet.IsEmpty then
-    raise Exception.Create('Selecione um Registro');
+  Lcondicao := '';
+  case cmbBusca.ItemIndex of
+   0: Lcondicao := 'where descricao like '+ QuotedStr('%' + tBusca.Text + '%');
+   1: Lcondicao := 'where codigo like '+ QuotedStr('%' + tBusca.Text + '%');
+  end;
 
-  Qconsulta.Open;
-  registroSelecionado := Qconsulta.FieldByName('ID').AsInteger;
+  buscarCores(Lcondicao);
+
+end;
+
+procedure TformConsultaCores.buscarCores(condicao: string);
+begin
   Qconsulta.Close;
-  ModalResult := mrOk;
+  Qconsulta.SQL.Clear;
+  Qconsulta.SQL.Add('Select * from cor');
+  Qconsulta.SQL.Add(condicao);
+  Qconsulta.Open;
 end;
 
 end.

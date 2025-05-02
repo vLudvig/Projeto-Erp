@@ -12,6 +12,14 @@ uses
 
 type
   TformConsultaMaterial = class(TformConsultaPrincipal)
+    QconsultaID: TIntegerField;
+    QconsultaDESCRICAO: TStringField;
+    QconsultaQUANTIDADE_ESTOQUE: TFMTBCDField;
+    QconsultaUNIDADE_ESTOQUE: TStringField;
+    QconsultaGRUPO_MATERIAL_ID: TIntegerField;
+    QconsultaCATEGORIA_MATERIAL_ID: TIntegerField;
+    QconsultaATIVO: TStringField;
+    QconsultaCODIGO: TStringField;
     procedure FormDestroy(Sender: TObject);
     procedure btnSelecRegClick(Sender: TObject);
     procedure tBuscaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -40,7 +48,6 @@ implementation
 
 procedure TformConsultaMaterial.btnSelecRegClick(Sender: TObject);
 begin
-  inherited;
   SelecionaRegistro();
 end;
 
@@ -78,6 +85,7 @@ end;
 procedure TformConsultaMaterial.FormCreate(Sender: TObject);
 begin
   inherited;
+
   if Assigned(Qconsulta) then
   begin
     Qconsulta.Close;
@@ -87,18 +95,13 @@ begin
   begin
     ShowMessage('Erro: Qconsulta não foi instanciado!');
   end;
-end;
 
-procedure TformConsultaMaterial.tBuscaChange(Sender: TObject);
-begin
-  inherited;
-  BuscarDados;
 end;
 
 procedure TformConsultaMaterial.tBuscaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  inherited;
+  //inherited;
   case(Key)of
     VK_UP: dataSourceGrid.DataSet.Prior;
     VK_DOWN: dataSourceGrid.DataSet.Next;
@@ -113,6 +116,18 @@ begin
     if Qconsulta.Active then
        Qconsulta.Close;
   end;
+  if Assigned(modelMaterial.QconsultaMaterial) then
+  begin
+    if modelMaterial.QconsultaMaterial.Active then
+       modelMaterial.QconsultaMaterial.Close;
+  end;
+end;
+
+
+procedure TformConsultaMaterial.tBuscaChange(Sender: TObject);
+begin
+  inherited;
+  BuscarDados;
 end;
 
 procedure TformConsultaMaterial.BuscarDados;
@@ -136,5 +151,4 @@ begin
   Qconsulta.SQL.Add(condicao);
   Qconsulta.Open;
 end;
-
 end.

@@ -22,7 +22,6 @@ object ViewPrincipal: TViewPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1123
     object Image1: TImage
       Left = 0
       Top = 560
@@ -166,6 +165,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object Material2: TMenuItem
         Caption = 'Produtos'
+        OnClick = Material2Click
       end
       object N1: TMenuItem
         Caption = 'Cores'

@@ -15,9 +15,15 @@ type
     gridCores: TDBGrid;
     DS_GridCores: TDataSource;
     Qcores: TFDQuery;
+    QcoresID: TIntegerField;
+    QcoresDESCRICAO: TStringField;
+    QcoresATIVA: TStringField;
+    QcoresCODIGO: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
+    procedure idCor();
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,8 +47,6 @@ var
 
 begin
   inherited;
-  modelCor.QcadastroCor.Close();
-  modelCor.QcadastroCor.Open();
   if inclusao then
   begin
     sqlInsert := 'Insert into cor(CODIGO, DESCRICAO,ATIVA) ';
@@ -51,11 +55,13 @@ begin
 
     try
       modelCor.QcadastroCor.SQL.Text := sqlInsert + sqlValues;
-      modelCor.QcadastroCor.ParamByName('codigo').AsInteger := StrToInt(tCodigo.Text);
+      modelCor.QcadastroCor.ParamByName('codigo').AsString := tCodigo.Text;
       modelCor.QcadastroCor.ParamByName('descricao').AsString := tDesc.Text;
       modelCor.QcadastroCor.ParamByName('ativa').AsString := corAtiva;
       modelCor.QcadastroCor.ExecSQL;
-      modelCor.QcadastroCor.Close();
+      //modelCor.QcadastroCor.Close();
+      Qcores.Close;
+      Qcores.Open;
     except
       on E: Exception do
         ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
@@ -77,7 +83,7 @@ begin
     if formConsultaCores.ShowModal = mrOk then
     begin
       tId.Text := IntToStr(formConsultaCores.registroSelecionado);
-      // idMaterial(); // com o ID escrito, pega todos os outros campos;
+      idCor(); // com o ID escrito, pega todos os outros campos;
     end;
   finally
     FreeAndNil(formConsultaCores);
@@ -89,9 +95,33 @@ begin
 
 end;
 
+procedure TcadCor.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if tId.Text <> '' then
+  begin
+    modelCor.QcadastroCor.Close;
+    modelCor.QcadastroCor.SQL.Clear;
+    modelCor.QcadastroCor.SQL.Text := 'delete from material where id = :id';
+    modelCor.QcadastroCor.ParamByName('id').AsInteger := StrToInt(tId.Text);
+    try
+      modelMaterial.QcadastroMaterial.ExecSQL;
+      ShowMessage('Cor Excluida com sucesso!');
+    except
+      on E: Exception do
+        ShowMessage('Erro ao excluir cor: ' + E.Message);
+    end;
+  end
+  else
+    ShowMessage('Nenhuma cor selecionada, impossivel continuar.');
+end;
+
 procedure TcadCor.FormCreate(Sender: TObject);
 begin
   inherited;
+  modelCor := TmodelCor.Create(nil);
+  gridCores.Enabled := true;
+
     if Assigned(Qcores) then
     begin
       Qcores.Close;
@@ -101,6 +131,30 @@ begin
     begin
       ShowMessage('Erro: Qcores não foi instanciado!');
     end;
+end;
+
+procedure TcadCor.idCor();
+var sqlConsulta: String;
+begin
+  sqlConsulta := 'Select * from cor where id = :ID';
+  modelCor.QconsultaCor.SQL.Text := sqlConsulta;
+  modelCor.QconsultaCor.ParamByName('ID').AsInteger := StrToInt(tId.Text);
+  modelCor.QconsultaCor.Close();
+  modelCor.QconsultaCor.Open();
+
+  if not modelCor.QconsultaCor.IsEmpty then
+  begin
+    tCodigo.Text := modelCor.QconsultaCor.FieldByName('codigo').AsString;
+    tDesc.Text := modelCor.QconsultaCor.FieldByName('descricao').AsString;
+    if modelCor.QconsultaCor.FieldByName('ativa').AsString = 'S' then
+      checkAtivo.Checked := true
+    else
+      checkAtivo.Checked := false;
+  end
+  else
+    ShowMessage('Material nao encontrado!');
+
+  modelCor.QconsultaCor.Close();
 end;
 
 end.

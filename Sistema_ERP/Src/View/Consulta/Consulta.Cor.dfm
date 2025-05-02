@@ -12,6 +12,7 @@ inherited formConsultaCores: TformConsultaCores
     end
     inherited tBusca: TEdit
       StyleElements = [seFont, seClient, seBorder]
+      OnChange = tBuscaChange
     end
     inherited cmbBusca: TComboBox
       StyleElements = [seFont, seClient, seBorder]
@@ -19,15 +20,9 @@ inherited formConsultaCores: TformConsultaCores
   end
   inherited pnlGrid: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    inherited DBGrid1: TDBGrid
-      OnCellClick = DBGrid1CellClick
-    end
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    inherited btnSelecReg: TButton
-      OnClick = btnSelecRegClick
-    end
   end
   inherited dataSourceGrid: TDataSource
     Left = 648
@@ -38,5 +33,32 @@ inherited formConsultaCores: TformConsultaCores
       'select * from cor')
     Left = 600
     Top = 259
+    object QconsultaID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QconsultaCODIGO: TStringField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      Size = 10
+    end
+    object QconsultaDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Required = True
+    end
+    object QconsultaATIVA: TStringField
+      DisplayLabel = 'Ativa'
+      FieldName = 'ATIVA'
+      Origin = 'ATIVA'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
   end
 end

@@ -94,6 +94,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Height = 25
       Caption = 'Selecionar'
       TabOrder = 0
+      OnClick = btnSelecRegClick
     end
     object btnDesistir: TButton
       Left = 112

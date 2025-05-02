@@ -15,7 +15,6 @@ type
     DS_QcadastroMaterial: TDataSource;
     DS_QconsultaMaterial: TDataSource;
     QcadastroMaterialID: TIntegerField;
-    QcadastroMaterialCODIGO: TIntegerField;
     QcadastroMaterialDESCRICAO: TStringField;
     QcadastroMaterialQUANTIDADE_ESTOQUE: TFMTBCDField;
     QcadastroMaterialUNIDADE_ESTOQUE: TStringField;
@@ -23,7 +22,6 @@ type
     QcadastroMaterialCATEGORIA_MATERIAL_ID: TIntegerField;
     QcadastroMaterialATIVO: TStringField;
     QconsultaMaterialID: TIntegerField;
-    QconsultaMaterialCODIGO: TIntegerField;
     QconsultaMaterialDESCRICAO: TStringField;
     QconsultaMaterialQUANTIDADE_ESTOQUE: TFMTBCDField;
     QconsultaMaterialUNIDADE_ESTOQUE: TStringField;
@@ -31,6 +29,8 @@ type
     QconsultaMaterialCATEGORIA_MATERIAL_ID: TIntegerField;
     QconsultaMaterialATIVO: TStringField;
     QcoresMaterial: TFDQuery;
+    QcadastroMaterialCODIGO: TStringField;
+    QconsultaMaterialCODIGO: TStringField;
   private
     { Private declarations }
   public

@@ -8,8 +8,8 @@ object modelConexao: TmodelConexao
       'Password=masterkey'
       'DriverID=FB')
     Connected = True
-    Left = 192
-    Top = 168
+    Left = 232
+    Top = 128
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'

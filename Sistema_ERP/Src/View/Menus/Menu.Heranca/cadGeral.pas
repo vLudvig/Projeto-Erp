@@ -70,7 +70,14 @@ end;
 
 procedure TcadastroGeral.modoConsulta();
 begin
-  pnlCadastro.Enabled := false;
+  //pnlCadastro.Enabled := false;
+  //limpa todos os campos do panel de informações do material
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if (pnlCadastro.Controls[i] is TEdit) or
+    (pnlCadastro.Controls[i] is TCheckBox) then
+      TEdit(pnlCadastro.Controls[i]).Enabled := false;
+  end;
   btnConsultar.Visible := true;
   btnIncluir.Visible := true;
   btnAlterar.Visible := true;

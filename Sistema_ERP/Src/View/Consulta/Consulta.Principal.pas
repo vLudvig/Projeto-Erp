@@ -31,6 +31,8 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1CellClick(Column: TColumn);
     procedure FormShow(Sender: TObject);
+    procedure btnSelecRegClick(Sender: TObject);
+    procedure SelecionaRegistro();
   private
   protected
     procedure ConfiguraConsulta; virtual;
@@ -52,6 +54,22 @@ begin
   ModalResult := mrCancel;
 end;
 
+procedure TformConsultaPrincipal.btnSelecRegClick(Sender: TObject);
+begin
+  SelecionaRegistro();
+end;
+
+procedure TformConsultaPrincipal.SelecionaRegistro();
+begin
+  
+  if dataSourceGrid.DataSet.IsEmpty then
+    raise Exception.Create('Selecione um Registro');
+
+  registroSelecionado := Qconsulta.FieldByName('ID').AsInteger;
+  Qconsulta.Close;
+  ModalResult := mrOk;
+end;
+
 procedure TformConsultaPrincipal.ConfiguraConsulta();
 begin
 
@@ -60,7 +78,7 @@ end;
 //Garante que o registro selecionado no grid seja sempre atualizado.
 procedure TformConsultaPrincipal.DBGrid1CellClick(Column: TColumn);
 begin
-  Qconsulta.RecNo := DBGrid1.DataSource.DataSet.RecNo;
+  //Qconsulta.RecNo := DBGrid1.DataSource.DataSet.RecNo;    inutil
 end;
 
 procedure TformConsultaPrincipal.DBGrid1DblClick(Sender: TObject);
