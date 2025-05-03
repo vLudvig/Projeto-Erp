@@ -10,6 +10,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15

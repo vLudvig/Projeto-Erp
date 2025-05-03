@@ -10,7 +10,7 @@
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesigned
+  Position = poScreenCenter
   OnCreate = abrirTelaMaterial
   OnDestroy = FecharTelaMaterial
   TextHeight = 15

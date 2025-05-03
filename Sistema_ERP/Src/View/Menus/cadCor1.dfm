@@ -40,12 +40,15 @@ inherited cadCor: TcadCor
       Top = 344
       Width = 1197
       Height = 310
+      Align = alCustom
+      Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 4
       object gridCores: TDBGrid
-        Left = 0
-        Top = 0
-        Width = 1197
-        Height = 310
+        Left = 1
+        Top = 1
+        Width = 1195
+        Height = 308
+        Align = alClient
         DataSource = DS_GridCores
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET

@@ -24,9 +24,6 @@ inherited formConsultaMaterial: TformConsultaMaterial
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    inherited btnSelecReg: TButton
-      OnClick = btnSelecRegClick
-    end
   end
   inherited dataSourceGrid: TDataSource
     Left = 632

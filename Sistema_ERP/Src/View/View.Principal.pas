@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage, Vcl.StdCtrls,
-  ShellAPI;
+  ShellAPI, Vcl.Imaging.jpeg;
 
 type
   TViewPrincipal = class(TForm)

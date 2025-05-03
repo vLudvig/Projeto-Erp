@@ -10,6 +10,7 @@ object cadastroGeral: TcadastroGeral
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object pnlCadastro: TPanel
@@ -19,7 +20,6 @@ object cadastroGeral: TcadastroGeral
     Height = 660
     Align = alClient
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 25
       Top = 19
