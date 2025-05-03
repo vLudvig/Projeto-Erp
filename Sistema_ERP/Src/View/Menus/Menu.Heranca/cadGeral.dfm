@@ -19,6 +19,7 @@ object cadastroGeral: TcadastroGeral
     Height = 660
     Align = alClient
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 25
       Top = 19
@@ -39,6 +40,20 @@ object cadastroGeral: TcadastroGeral
       Width = 54
       Height = 15
       Caption = 'Descri'#231#227'o:'
+    end
+    object Label4: TLabel
+      Left = 50
+      Top = 52
+      Width = 5
+      Height = 15
+      Caption = '*'
+    end
+    object Label6: TLabel
+      Left = 38
+      Top = 101
+      Width = 5
+      Height = 15
+      Caption = '*'
     end
     object tId: TEdit
       Left = 44

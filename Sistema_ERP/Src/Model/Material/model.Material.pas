@@ -31,6 +31,7 @@ type
     QcoresMaterial: TFDQuery;
     QcadastroMaterialCODIGO: TStringField;
     QconsultaMaterialCODIGO: TStringField;
+    QremoveCorMat: TFDQuery;
   private
     { Private declarations }
   public

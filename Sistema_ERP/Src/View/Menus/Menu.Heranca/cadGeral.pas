@@ -24,6 +24,8 @@ type
     checkAtivo: TCheckBox;
     btnConfirmar: TButton;
     btnDesistir: TButton;
+    Label4: TLabel;
+    Label6: TLabel;
     procedure modoInclusao();
     procedure modoConsulta();
     procedure modoAlteracao();

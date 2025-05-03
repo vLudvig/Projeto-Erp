@@ -11,7 +11,9 @@ uses
   cadGeral in 'Src\View\Menus\Menu.Heranca\cadGeral.pas' {cadastroGeral},
   cadCor1 in 'Src\View\Menus\cadCor1.pas' {cadCor},
   model.cor in 'Src\Model\Cor\model.cor.pas' {modelCor: TDataModule},
-  Consulta.Cor in 'Src\View\Consulta\Consulta.Cor.pas' {formConsultaCores};
+  Consulta.Cor in 'Src\View\Consulta\Consulta.Cor.pas' {formConsultaCores},
+  Model.GrupoMaterial in 'Src\Model\GrupoMaterial\Model.GrupoMaterial.pas' {DataModule1: TDataModule},
+  cadGrupoMaterial in 'Src\View\Menus\cadGrupoMaterial.pas' {formCadGrupoMat};
 
 {$R *.res}
 
@@ -21,5 +23,7 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TformCadGrupoMat, formCadGrupoMat);
   Application.Run;
 end.

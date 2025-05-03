@@ -173,6 +173,15 @@
             <Form>formConsultaCores</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\Model\GrupoMaterial\Model.GrupoMaterial.pas">
+            <Form>DataModule1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\View\Menus\cadGrupoMaterial.pas">
+            <Form>formCadGrupoMat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

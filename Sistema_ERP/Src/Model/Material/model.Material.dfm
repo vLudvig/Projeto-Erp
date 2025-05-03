@@ -130,4 +130,11 @@ object modelMaterial: TmodelMaterial
     Left = 120
     Top = 288
   end
+  object QremoveCorMat: TFDQuery
+    Connection = modelConexao.FDConnection1
+    SQL.Strings = (
+      'select * from cor_material')
+    Left = 320
+    Top = 408
+  end
 end

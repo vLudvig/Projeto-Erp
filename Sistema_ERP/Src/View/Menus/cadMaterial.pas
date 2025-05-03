@@ -47,6 +47,11 @@ type
     QcorMaterialATIVA: TStringField;
     btnAddCor: TButton;
     btnRemovCor: TButton;
+    tDescGrupo: TEdit;
+    tDescCategoria: TEdit;
+    label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -64,6 +69,7 @@ type
     procedure adicionarCor();
     procedure removerCor();
     procedure btnRemovCorClick(Sender: TObject);
+    function validaCamposConfirmar(): boolean;
   private
     colunaSelecionada: String;
   public
@@ -73,6 +79,7 @@ type
 var
   cadastroMaterial: TcadastroMaterial;
   inclusao: boolean;
+  alteracao: boolean;
   modelConexao: TmodelConexao;
 
 implementation
@@ -82,11 +89,17 @@ implementation
 procedure TcadastroMaterial.abrirTelaMaterial(Sender: TObject);
 begin
     modoConsulta();
+    try
+      modelMaterial := TmodelMaterial.Create(nil);
+    finally
+      //FreeAndNil(modelMaterial);
+    end;
+
 end;
 
 procedure TcadastroMaterial.modoInclusao();
 begin
-    modelMaterial := TmodelMaterial.Create(nil);
+
 
     if Assigned(modelMaterial) and Assigned(modelMaterial.QcadastroMaterial) then
     begin
@@ -127,6 +140,7 @@ begin
   btnExcluir.Visible := false;
   btnConfirmar.Visible := True;
   btnDesistir.Visible := True;
+  alteracao := true;
 end;
 
 procedure TcadastroMaterial.modoConsulta();
@@ -138,6 +152,8 @@ begin
   btnExcluir.Visible := true;
   btnConfirmar.Visible := false;
   btnDesistir.Visible := false;
+  inclusao := false;
+  alteracao := false;
 end;
 
 procedure TcadastroMaterial.btnAddCorClick(Sender: TObject);
@@ -181,6 +197,7 @@ begin
      modoAlteracao
   else
    ShowMessage('Nenhum material selecionado, impossivel continuar.');
+
 end;
 
 //Grava as Informaçoes da tela na tabela Material e volta para o modo Consulta
@@ -193,36 +210,51 @@ var
 begin
   //modelMaterial.QcadastroMaterial.Close();
   //modelMaterial.QcadastroMaterial.Open();
-  if inclusao then
+  if inclusao and validaCamposConfirmar then
   begin
     sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE,ATIVO) ';
     sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :ativo);';
     if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
-      modelMaterial.QcadastroMaterial.SQL.Text := sqlInsert + sqlValues;
-      modelMaterial.QcadastroMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
-      modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text; 
-      modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0; 
-      modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := 'MT';
-      modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
-      modelMaterial.QcadastroMaterial.ExecSQL;
-      modelMaterial.QcadastroMaterial.Close();
-      modelMaterial.QconsultaMaterial.Close;
-      modelMaterial.QconsultaMaterial.SQL.Text := 'select * from material where codigo = :codigo';
-      modelMaterial.QconsultaMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
-      modelMaterial.QconsultaMaterial.Open();
-      tIdMat.Text := modelMaterial.QconsultaMaterial.FieldByName('id').AsString;
-      modelMaterial.QconsultaMaterial.Close();
-    except
-      on E: Exception do
-        ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
+      try
+        modelMaterial.QcadastroMaterial.SQL.Text := sqlInsert + sqlValues;
+        modelMaterial.QcadastroMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
+        modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text;
+        modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0;
+        modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
+        modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
+        modelMaterial.QcadastroMaterial.ExecSQL;
+        modelMaterial.QcadastroMaterial.Close;
+
+        modelMaterial.QconsultaMaterial.Close;
+        modelMaterial.QconsultaMaterial.SQL.Text := 'select * from material where codigo = :codigo';
+        modelMaterial.QconsultaMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
+        modelMaterial.QconsultaMaterial.Open;
+        tIdMat.Text := modelMaterial.QconsultaMaterial.FieldByName('id').AsString;
+        modelMaterial.QconsultaMaterial.Close;
+      except
+        on E: Exception do
+          ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
+      end;
+    finally
+      inclusao := false;
+    end;
+
+  end
+  else if alteracao and validaCamposConfirmar then
+  begin
+    try
+
+    finally
+      alteracao := false;
     end;
   end
   else
   begin
-
+    ShowMessage('Campo obrigatório não informado ou vazio, cadastro não efetuado!')
   end;
+
   modoConsulta();
 end;
 
@@ -294,6 +326,11 @@ begin
     try
       modelMaterial.QcadastroMaterial.ExecSQL;
       ShowMessage('Material Excluido com sucesso!');
+      for var i := 0 to pnlCadastro.ControlCount - 1 do
+        begin
+          if pnlCadastro.Controls[i] is TEdit then
+            TEdit(pnlCadastro.Controls[i]).Text := '';
+        end;
     except
       on E: Exception do
         ShowMessage('Erro ao excluir material: ' + E.Message);
@@ -323,17 +360,36 @@ end;
 procedure TcadastroMaterial.removerCor;
 var
   codCorRemove: String;
+  idCorRemove: integer;
 begin
   try
-    codCorRemove := QcorMaterial.FieldByName('cod').AsString;
-    QcorMaterial.Close();
-    QcorMaterial.SQL.Text := 'Delete from cor_material where cor_id = :idCor and material_id = :idMaterial';
-    //QcorMaterial.FieldByName('idCor').AsInteger := 
-    
-  finally
+     // Captura o código da cor da linha selecionada no grid
+    codCorRemove := QcorMaterial.FieldByName('codigo').AsString;
+
+    // Primeiro busca o ID da cor pelo código
+    //QcorMaterial.Close; testessss
+    modelMaterial.QremoveCorMat.SQL.Text := 'select * from cor where codigo = :codigoCor';
+    modelMaterial.QremoveCorMat.ParamByName('codigoCor').AsString := codCorRemove;
+    modelMaterial.QremoveCorMat.Open;
+
+    if modelMaterial.QremoveCorMat.IsEmpty then
+      raise Exception.Create('Cor não encontrada!');
+
+    idCorRemove := modelMaterial.QremoveCorMat.FieldByName('id').AsInteger;
+    modelMaterial.QremoveCorMat.Close;
+
+    // Agora realiza o delete no vínculo cor_material
+    modelMaterial.QremoveCorMat.SQL.Text := 'delete from cor_material where material_id = :idMaterial and cor_id = :idCor';
+    modelMaterial.QremoveCorMat.ParamByName('idMaterial').AsInteger := StrToInt(tIdMat.Text); // ou tCodigoMat.Text se for ID
+    modelMaterial.QremoveCorMat.ParamByName('idCor').AsInteger := idCorRemove;
+    modelMaterial.QremoveCorMat.ExecSQL;
+    idMaterial();
+
+    ShowMessage('Cor removida com sucesso.');
+  except on E: Exception do
+    ShowMessage('Erro ao excluir cor do material: ' + E.Message);
 
   end;
-  //ShowMessage('Codigo: ' + QcorMaterial.FieldByName('id').AsString);
 end;
 
 procedure TcadastroMaterial.btnFecharClick(Sender: TObject);
@@ -349,6 +405,14 @@ begin
   inherited;
   FreeAndNil(modelMaterial);
   FreeAndNil(modelConexao);
+end;
+
+function TcadastroMaterial.validaCamposConfirmar: boolean;
+begin
+  if (tCodigoMat.Text <> '') and (cbUnidade.ItemIndex.ToString <> '') and (tDescMat.Text <> '') then
+    validaCamposConfirmar := true
+  else
+    validaCamposConfirmar := false;
 end;
 
 end.

@@ -19,6 +19,7 @@ type
     QcoresDESCRICAO: TStringField;
     QcoresATIVA: TStringField;
     QcoresCODIGO: TStringField;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
@@ -47,7 +48,7 @@ var
 
 begin
   inherited;
-  if inclusao then
+  if inclusao and (tCodigo.Text <> '') then
   begin
     sqlInsert := 'Insert into cor(CODIGO, DESCRICAO,ATIVA) ';
     sqlValues := 'values (:codigo, :descricao, :ativa);';

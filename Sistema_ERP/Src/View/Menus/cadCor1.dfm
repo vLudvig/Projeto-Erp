@@ -4,7 +4,6 @@ inherited cadCor: TcadCor
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    ExplicitHeight = 601
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -12,6 +11,19 @@ inherited cadCor: TcadCor
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited Label3: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Label4: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    object Label5: TLabel [4]
+      Left = 38
+      Top = 101
+      Width = 5
+      Height = 15
+      Caption = '*'
+    end
+    inherited Label6: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited tId: TEdit

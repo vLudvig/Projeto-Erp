@@ -49,6 +49,7 @@ type
     procedure Material1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure Material2Click(Sender: TObject);
+    procedure CategoriaMaterial1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,7 +64,17 @@ implementation
 {$R *.dfm}
 
 uses
-  cadMaterial, cadCor1;
+  cadMaterial, cadCor1, cadGrupoMaterial;
+
+procedure TViewPrincipal.CategoriaMaterial1Click(Sender: TObject);
+begin
+  formCadGrupoMat := TformCadGrupoMat.Create(nil);
+  try
+     formCadGrupoMat.ShowModal;
+  finally
+     FreeAndNil(formCadGrupoMat);
+  end;
+end;
 
 procedure TViewPrincipal.lblMouseClick(Sender: TObject);
 begin

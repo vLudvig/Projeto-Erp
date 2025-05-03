@@ -176,6 +176,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object CategoriaMaterial1: TMenuItem
         Caption = 'Grupo de Materiais'
+        OnClick = CategoriaMaterial1Click
       end
       object CategoriaMaterial2: TMenuItem
         Caption = 'Categoria de Materiais'

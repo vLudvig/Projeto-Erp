@@ -22,7 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -86,6 +85,27 @@
       Height = 15
       Caption = 'Id:'
     end
+    object label8: TLabel
+      Left = 50
+      Top = 52
+      Width = 5
+      Height = 15
+      Caption = '*'
+    end
+    object Label9: TLabel
+      Left = 268
+      Top = 52
+      Width = 5
+      Height = 15
+      Caption = '*'
+    end
+    object Label10: TLabel
+      Left = 38
+      Top = 101
+      Width = 5
+      Height = 15
+      Caption = '*'
+    end
     object tCodigoMat: TEdit
       Left = 104
       Top = 53
@@ -103,14 +123,14 @@
     object tGrupoMat: TEdit
       Left = 104
       Top = 149
-      Width = 121
+      Width = 57
       Height = 23
       TabOrder = 2
     end
     object tCategoriaMat: TEdit
       Left = 104
       Top = 197
-      Width = 121
+      Width = 57
       Height = 23
       TabOrder = 3
     end
@@ -192,6 +212,22 @@
       Caption = 'Remover Cor'
       TabOrder = 11
       OnClick = btnRemovCorClick
+    end
+    object tDescGrupo: TEdit
+      Left = 167
+      Top = 149
+      Width = 257
+      Height = 23
+      Enabled = False
+      TabOrder = 12
+    end
+    object tDescCategoria: TEdit
+      Left = 167
+      Top = 197
+      Width = 257
+      Height = 23
+      Enabled = False
+      TabOrder = 13
     end
   end
   object pnlBotoes: TPanel
