@@ -1,4 +1,4 @@
-object DataModule1: TDataModule1
+object modelGrupoMaterial: TmodelGrupoMaterial
   Height = 480
   Width = 640
   object QcadastroGrupo: TFDQuery
@@ -8,6 +8,8 @@ object DataModule1: TDataModule1
   end
   object QconsultaGrupo: TFDQuery
     Connection = modelConexao.FDConnection1
+    SQL.Strings = (
+      'select * from grupo_material')
     Left = 464
     Top = 136
   end

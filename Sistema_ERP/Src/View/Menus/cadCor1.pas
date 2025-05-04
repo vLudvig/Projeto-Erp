@@ -65,7 +65,7 @@ begin
       Qcores.Open;
     except
       on E: Exception do
-        ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
+        ShowMessage('Erro ao cadastrar a Cor: ' + E.Message);
     end;
   end
   else
@@ -121,7 +121,7 @@ procedure TcadCor.FormCreate(Sender: TObject);
 begin
   inherited;
   modelCor := TmodelCor.Create(nil);
-  gridCores.Enabled := true;
+  //gridCores.Enabled := true;
 
     if Assigned(Qcores) then
     begin

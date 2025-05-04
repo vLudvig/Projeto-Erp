@@ -9,7 +9,7 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Model.Conexao;
 
 type
-  TDataModule1 = class(TDataModule)
+  TmodelGrupoMaterial = class(TDataModule)
     QcadastroGrupo: TFDQuery;
     QconsultaGrupo: TFDQuery;
   private
@@ -19,7 +19,7 @@ type
   end;
 
 var
-  DataModule1: TDataModule1;
+  modelGrupoMaterial: TmodelGrupoMaterial;
 
 implementation
 

@@ -53,7 +53,16 @@ procedure TcadastroGeral.modoInclusao();
 begin
   inclusao := true;
   checkAtivo.Checked := true;
-  pnlCadastro.Enabled := true;
+  //pnlCadastro.Enabled := true;
+  //Ativa todos os campos do panel de informações do material
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if (pnlCadastro.Controls[i] is TEdit) or
+    (pnlCadastro.Controls[i] is TCheckBox) or
+    (pnlCadastro.Controls[i] is TGroupBox) then
+      TEdit(pnlCadastro.Controls[i]).Enabled := true;
+  end;
+  tId.Enabled:= false;
   btnConsultar.Visible := false;
   btnIncluir.Visible := false;
   btnAlterar.Visible := false;
@@ -73,11 +82,12 @@ end;
 procedure TcadastroGeral.modoConsulta();
 begin
   //pnlCadastro.Enabled := false;
-  //limpa todos os campos do panel de informações do material
+  //desativa todos os campos do panel de informações do material (menos o grid)
   for var i := 0 to pnlCadastro.ControlCount - 1 do
   begin
     if (pnlCadastro.Controls[i] is TEdit) or
-    (pnlCadastro.Controls[i] is TCheckBox) then
+    (pnlCadastro.Controls[i] is TCheckBox) or
+    (pnlCadastro.Controls[i] is TGroupBox) then
       TEdit(pnlCadastro.Controls[i]).Enabled := false;
   end;
   btnConsultar.Visible := true;
@@ -110,7 +120,7 @@ end;
 
 procedure TcadastroGeral.btnConfirmarClick(Sender: TObject);
 begin
-  modoConsulta();
+  //modoConsulta();
 end;
 
 procedure TcadastroGeral.btnDesistirClick(Sender: TObject);
