@@ -11,6 +11,6 @@ object modelGrupoMaterial: TmodelGrupoMaterial
     SQL.Strings = (
       'select * from grupo_material')
     Left = 464
-    Top = 136
+    Top = 128
   end
 end

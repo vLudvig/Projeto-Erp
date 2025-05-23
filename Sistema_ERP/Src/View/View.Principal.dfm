@@ -729,10 +729,6 @@ object ViewPrincipal: TViewPrincipal
         Caption = 'Materiais'
         OnClick = Material1Click
       end
-      object Material2: TMenuItem
-        Caption = 'Produtos'
-        OnClick = Material2Click
-      end
       object N1: TMenuItem
         Caption = 'Cores'
         OnClick = N1Click
@@ -750,18 +746,6 @@ object ViewPrincipal: TViewPrincipal
       object N2: TMenuItem
         Caption = '-'
       end
-      object N3: TMenuItem
-        Caption = 'Cole'#231#227'o de Produtos'
-      end
-      object GrupodeProdutos1: TMenuItem
-        Caption = 'Grupo de Produtos'
-      end
-      object amanhos1: TMenuItem
-        Caption = 'Tamanhos'
-      end
-      object N4: TMenuItem
-        Caption = '-'
-      end
       object N5: TMenuItem
         Caption = 'Dep'#243'sito'
       end
@@ -771,23 +755,14 @@ object ViewPrincipal: TViewPrincipal
       object EntradadeMaterial1: TMenuItem
         Caption = 'Entrada de Materiais'
       end
-      object EntradadeProdutos1: TMenuItem
-        Caption = 'Entrada de Produtos'
-      end
       object N6: TMenuItem
         Caption = '-'
       end
       object SadadeMateriais1: TMenuItem
         Caption = 'Sa'#237'da de Materiais'
       end
-      object SadadeProdutos1: TMenuItem
-        Caption = 'Sa'#237'da de Produtos'
-      end
       object SadadeProdutos2: TMenuItem
         Caption = '-'
-      end
-      object ransfernciaDepositoProd1: TMenuItem
-        Caption = 'Transf'#234'rencia Dep. Prod.'
       end
       object ransfrenciaDepProd1: TMenuItem
         Caption = 'Transf'#234'rencia Dep. Mat.'
@@ -800,9 +775,6 @@ object ViewPrincipal: TViewPrincipal
       end
       object MovimentaesMat2: TMenuItem
         Caption = 'Movimenta'#231#245'es Mat.'
-      end
-      object Estoque1: TMenuItem
-        Caption = 'Movimenta'#231#245'es Prod.'
       end
     end
   end

@@ -8,7 +8,7 @@ uses
   Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material, Model.Conexao,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor;
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat;
 
 type
   TcadastroMaterial = class(TForm)
@@ -52,6 +52,8 @@ type
     label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
+    btnConsultaGrupo: TButton;
+    btnConsultaCategoria: TButton;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -70,6 +72,8 @@ type
     procedure removerCor();
     procedure btnRemovCorClick(Sender: TObject);
     function validaCamposConfirmar(): boolean;
+    procedure btnConsultaGrupoClick(Sender: TObject);
+    procedure limpaCamposTela();
   private
     colunaSelecionada: String;
   public
@@ -99,8 +103,6 @@ end;
 
 procedure TcadastroMaterial.modoInclusao();
 begin
-
-
     if Assigned(modelMaterial) and Assigned(modelMaterial.QcadastroMaterial) then
     begin
       modelMaterial.QcadastroMaterial.Close;
@@ -120,12 +122,7 @@ begin
   btnConfirmar.Visible := True;
   btnDesistir.Visible := True;
 
-//limpa todos os campos do panel de informações do material  
-  for var i := 0 to pnlCadastro.ControlCount - 1 do
-  begin
-    if pnlCadastro.Controls[i] is TEdit then
-      TEdit(pnlCadastro.Controls[i]).Text := '';
-  end;
+  limpaCamposTela;
   
 end;
 
@@ -156,6 +153,16 @@ begin
   alteracao := false;
 end;
 
+procedure TcadastroMaterial.limpaCamposTela;
+begin
+  //limpa todos os campos do panel de informações do material
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if pnlCadastro.Controls[i] is TEdit then
+      TEdit(pnlCadastro.Controls[i]).Text := '';
+  end;
+end;
+
 procedure TcadastroMaterial.btnAddCorClick(Sender: TObject);
 begin
   if inclusao then
@@ -179,8 +186,6 @@ begin
           QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
           QcorMaterial.ExecSQL;
           idMaterial();
-          //tId.Text := IntToStr(formConsultaCores.registroSelecionado);
-          //idCor(); // com o ID escrito, pega todos os outros campos;
         end;
     finally
       FreeAndNil(formConsultaCores);
@@ -208,12 +213,10 @@ var
   sqlValues: String;
   sqlInsert: String;
 begin
-  //modelMaterial.QcadastroMaterial.Close();
-  //modelMaterial.QcadastroMaterial.Open();
   if inclusao and validaCamposConfirmar then
   begin
-    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE,ATIVO) ';
-    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :ativo);';
+    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, CATEGORIA_MATERIAL_ID, ATIVO) ';
+    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :categoria_material_id, :ativo);';
     if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
@@ -224,6 +227,9 @@ begin
         modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0;
         modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
         modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
+        ShowMessage(tGrupoMat.Text); //test debug
+        modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
+        modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
         modelMaterial.QcadastroMaterial.ExecSQL;
         modelMaterial.QcadastroMaterial.Close;
 
@@ -235,9 +241,10 @@ begin
         modelMaterial.QconsultaMaterial.Close;
       except
         on E: Exception do
-          ShowMessage('Erro ao cadastrar o Material: ' + E.Message);
+          ShowMessage('CADASTRO NÃO EFETUADO!'+ sLineBreak + 'Erro ao cadastrar o Material: ' + E.Message);
       end;
     finally
+      limpaCamposTela;
       inclusao := false;
     end;
 
@@ -259,6 +266,28 @@ begin
 end;
 
 //Abre a tela de consulta de Material
+procedure TcadastroMaterial.btnConsultaGrupoClick(Sender: TObject);
+begin
+  formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
+  try
+     if formConsultaGrupoMat.ShowModal = mrOk then
+     begin
+      try
+        tGrupoMat.Text :=  IntToStr(formConsultaGrupoMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+        formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaGrupoMat.Qconsulta.Open;
+        tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar este grupo!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaGrupoMat);
+  end;
+end;
+
 procedure TcadastroMaterial.btnConsultarClick(Sender: TObject);
 begin
   formConsultaMaterial := TformConsultaMaterial.Create(nil);
@@ -326,11 +355,7 @@ begin
     try
       modelMaterial.QcadastroMaterial.ExecSQL;
       ShowMessage('Material Excluido com sucesso!');
-      for var i := 0 to pnlCadastro.ControlCount - 1 do
-        begin
-          if pnlCadastro.Controls[i] is TEdit then
-            TEdit(pnlCadastro.Controls[i]).Text := '';
-        end;
+      limpaCamposTela;
     except
       on E: Exception do
         ShowMessage('Erro ao excluir material: ' + E.Message);

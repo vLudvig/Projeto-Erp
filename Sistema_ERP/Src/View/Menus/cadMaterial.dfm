@@ -22,6 +22,7 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -123,14 +124,14 @@
     object tGrupoMat: TEdit
       Left = 104
       Top = 149
-      Width = 57
+      Width = 45
       Height = 23
       TabOrder = 2
     end
     object tCategoriaMat: TEdit
       Left = 104
       Top = 197
-      Width = 57
+      Width = 45
       Height = 23
       TabOrder = 3
     end
@@ -214,20 +215,37 @@
       OnClick = btnRemovCorClick
     end
     object tDescGrupo: TEdit
-      Left = 167
+      Left = 155
       Top = 149
-      Width = 257
+      Width = 269
       Height = 23
       Enabled = False
       TabOrder = 12
     end
     object tDescCategoria: TEdit
-      Left = 167
+      Left = 155
       Top = 197
-      Width = 257
+      Width = 269
       Height = 23
       Enabled = False
       TabOrder = 13
+    end
+    object btnConsultaGrupo: TButton
+      Left = 430
+      Top = 149
+      Width = 75
+      Height = 23
+      Caption = 'Consulta'
+      TabOrder = 14
+      OnClick = btnConsultaGrupoClick
+    end
+    object btnConsultaCategoria: TButton
+      Left = 430
+      Top = 197
+      Width = 75
+      Height = 23
+      Caption = 'Consulta'
+      TabOrder = 15
     end
   end
   object pnlBotoes: TPanel

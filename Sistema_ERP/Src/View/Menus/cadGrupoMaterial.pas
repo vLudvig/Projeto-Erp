@@ -124,7 +124,7 @@ end;
 procedure TformCadGrupoMat.idGrupo();
 var sqlConsulta: String;
 begin
-  sqlConsulta := 'Select * from cor where id = :ID';
+  sqlConsulta := 'Select * from grupo_material where id = :ID';
   modelGrupoMaterial.QconsultaGrupo.SQL.Text := sqlConsulta;
   modelGrupoMaterial.QconsultaGrupo.ParamByName('ID').AsInteger := StrToInt(tId.Text);
   modelGrupoMaterial.QconsultaGrupo.Close();
@@ -136,22 +136,22 @@ begin
     tDesc.Text := modelGrupoMaterial.QconsultaGrupo.FieldByName('descricao').AsString;
 
     //Check Ativo
-    if modelGrupoMaterial.QconsultaGrupo.FieldByName('ativa').AsString = 'S' then
+    if modelGrupoMaterial.QconsultaGrupo.FieldByName('ativo').AsString = 'S' then
       checkAtivo.Checked := true
     else
       checkAtivo.Checked := false;
 
     //Check Movimenta Estoque
     if modelGrupoMaterial.QconsultaGrupo.FieldByName('movimenta_estoque').AsString = 'S' then
-      checkAtivo.Checked := true
+      checkMovEst.Checked := true
     else
-      checkAtivo.Checked := false;
+      checkMovEst.Checked := false;
 
     //Check Gera Inventario
     if modelGrupoMaterial.QconsultaGrupo.FieldByName('gera_inventario').AsString = 'S' then
-      checkAtivo.Checked := true
+      checkGeraInv.Checked := true
     else
-      checkAtivo.Checked := false;
+      checkGeraInv.Checked := false;
   end
   else
     ShowMessage('Grupo nao encontrado!');

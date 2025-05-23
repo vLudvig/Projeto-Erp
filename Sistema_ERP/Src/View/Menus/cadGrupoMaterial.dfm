@@ -66,7 +66,7 @@ inherited formCadGrupoMat: TformCadGrupoMat
       TabOrder = 5
       object checkMovEst: TCheckBox
         Left = 19
-        Top = 24
+        Top = 25
         Width = 142
         Height = 17
         Caption = 'Movimenta Estoque'
