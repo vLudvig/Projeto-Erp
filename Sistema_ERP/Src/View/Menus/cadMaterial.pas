@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, model.Material, Vcl.StdCtrls,
   Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material, Model.Conexao,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Consulta.CategoriaMat,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat;
 
 type
@@ -77,6 +77,13 @@ type
     procedure tGrupoMatEnter(Sender: TObject);
     procedure tGrupoMatKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnConsultaCategoriaClick(Sender: TObject);
+    procedure tCategoriaMatKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure descGrupoId();
+    procedure descCategId();
+    procedure tGrupoMatExit(Sender: TObject);
+    procedure tCategoriaMatExit(Sender: TObject);
   private
     colunaSelecionada: String;
   public
@@ -218,8 +225,8 @@ var
 begin
   if inclusao and validaCamposConfirmar then
   begin
-    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, ATIVO) ';
-    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :ativo);';
+    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, CATEGORIA_MATERIAL_ID, ATIVO) ';
+    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :categoria_material_id, :ativo);';
     if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
@@ -231,7 +238,7 @@ begin
         modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
         modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
         modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
-        //modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+        modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
         modelMaterial.QcadastroMaterial.ExecSQL;
         modelMaterial.QcadastroMaterial.Close;
 
@@ -267,7 +274,67 @@ begin
   modoConsulta();
 end;
 
-//Abre a tela de consulta de Material
+//Abre a tela de consulta de categoria de Material
+procedure TcadastroMaterial.btnConsultaCategoriaClick(Sender: TObject);
+begin
+  formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
+  try
+     if formConsultaCategoriaMat.ShowModal = mrOk then
+     begin
+      try
+        tCategoriaMat.Text :=  IntToStr(formConsultaCategoriaMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
+        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaCategoriaMat.Qconsulta.Open;
+        tDescCategoria.text := formConsultaCategoriaMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar esta categoria!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaCategoriaMat);
+  end;
+end;
+
+procedure TcadastroMaterial.descGrupoId;
+begin
+    try
+      try
+        formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
+        formConsultaGrupoMat.Qconsulta.Close;
+        formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+        formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaGrupoMat.Qconsulta.Open;
+        tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+          ShowMessage(E.Message);
+      end;
+    finally
+        FreeAndNil(formConsultaGrupoMat)
+    end;
+end;
+
+procedure TcadastroMaterial.descCategId;
+begin
+    try
+      try
+        formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
+        formConsultaCategoriaMat.Qconsulta.Close;
+        formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
+        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tCategoriaMat.Text);
+        formConsultaCategoriaMat.Qconsulta.Open;
+        tDescCategoria.text := formConsultaCategoriaMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+          ShowMessage(E.Message);
+      end;
+    finally
+        FreeAndNil(formConsultaCategoriaMat)
+    end;
+end;
+
 procedure TcadastroMaterial.btnConsultaGrupoClick(Sender: TObject);
 begin
   formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
@@ -334,6 +401,9 @@ begin
       checkAtivo.Checked := true
     else
       checkAtivo.Checked := false;
+
+    if Trim(tGrupoMat.Text) <> '' then descGrupoId();
+    if Trim(tCategoriaMat.Text) <> '' then descCategId();
   end
   else
     ShowMessage('Material nao encontrado!');
@@ -419,6 +489,21 @@ begin
   end;
 end;
 
+procedure TcadastroMaterial.tCategoriaMatExit(Sender: TObject);
+begin
+  if Trim(tCategoriaMat.Text) <> '' then descCategId();
+
+end;
+
+procedure TcadastroMaterial.tCategoriaMatKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = VK_RETURN) and (Trim(tCategoriaMat.Text) <> '') then
+  begin
+    descCategId(); //Escreve a descricao da categoria com ID informado
+  end;
+end;
+
 procedure TcadastroMaterial.tGrupoMatEnter(Sender: TObject);
 begin
   try
@@ -436,21 +521,17 @@ begin
   end;
 end;
 
+procedure TcadastroMaterial.tGrupoMatExit(Sender: TObject);
+begin
+  if Trim(tGrupoMat.Text) <> '' then descGrupoId();//Escreve a desc do grupo
+end;
+
 procedure TcadastroMaterial.tGrupoMatKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if ((Key = VK_RETURN) or (Key = VK_TAB)) and (Trim(tGrupoMat.Text) <> '') then
+  if (Key = VK_RETURN) and (Trim(tGrupoMat.Text) <> '') then
   begin
-    try
-      formConsultaGrupoMat.Qconsulta.Close;
-      formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
-      formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
-      formConsultaGrupoMat.Qconsulta.Open;
-      tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
-    except
-      on E: Exception do
-        ShowMessage('Grupo não encontrado: ' +  sLineBreak + E.Message)
-    end;
+    descGrupoId(); //Escreve a descrição do grupo a partir do id informado!
   end;
 end;
 
@@ -471,7 +552,10 @@ end;
 
 function TcadastroMaterial.validaCamposConfirmar: boolean;
 begin
-  if (tCodigoMat.Text <> '') and (cbUnidade.ItemIndex.ToString <> '') and (tDescMat.Text <> '') then
+  if (tCodigoMat.Text <> '')
+    and (cbUnidade.ItemIndex.ToString <> '') and (tDescMat.Text <> '')
+    and ((Trim(tGrupoMat.Text) <> '') and (Trim(tDescGrupo.Text) <> ''))
+    and ((Trim(tCategoriaMat.Text) <> '') and (Trim(tDescCategoria.Text) <> '')) then
     validaCamposConfirmar := true
   else
     validaCamposConfirmar := false;

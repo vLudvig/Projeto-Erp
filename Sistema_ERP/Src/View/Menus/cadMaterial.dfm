@@ -126,6 +126,7 @@
       Width = 45
       Height = 23
       TabOrder = 2
+      OnExit = tGrupoMatExit
       OnKeyDown = tGrupoMatKeyDown
     end
     object tCategoriaMat: TEdit
@@ -134,6 +135,8 @@
       Width = 45
       Height = 23
       TabOrder = 3
+      OnExit = tCategoriaMatExit
+      OnKeyDown = tCategoriaMatKeyDown
     end
     object checkAtivo: TCheckBox
       Left = 463
@@ -246,6 +249,7 @@
       Height = 23
       Caption = 'Consulta'
       TabOrder = 15
+      OnClick = btnConsultaCategoriaClick
     end
   end
   object pnlBotoes: TPanel
