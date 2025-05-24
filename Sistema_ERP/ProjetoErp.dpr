@@ -14,7 +14,10 @@ uses
   Consulta.Cor in 'Src\View\Consulta\Consulta.Cor.pas' {formConsultaCores},
   Model.GrupoMaterial in 'Src\Model\GrupoMaterial\Model.GrupoMaterial.pas' {modelGrupoMaterial: TDataModule},
   cadGrupoMaterial in 'Src\View\Menus\cadGrupoMaterial.pas' {formCadGrupoMat},
-  Consulta.GrupoMat in 'Src\View\Consulta\Consulta.GrupoMat.pas' {formConsultaGrupoMat};
+  Consulta.GrupoMat in 'Src\View\Consulta\Consulta.GrupoMat.pas' {formConsultaGrupoMat},
+  cadCategoriaMat in 'Src\View\Menus\cadCategoriaMat.pas' {cadCategoriaMaterial},
+  Model.CategoriaMat in 'Src\Model\CategoriaMaterial\Model.CategoriaMat.pas' {modelCategoriaMat: TDataModule},
+  Consulta.CategoriaMat in 'Src\View\Consulta\Consulta.CategoriaMat.pas' {formConsultaCategoriaMat};
 
 {$R *.res}
 
@@ -24,8 +27,5 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
-  Application.CreateForm(TmodelGrupoMaterial, modelGrupoMaterial);
-  Application.CreateForm(TformCadGrupoMat, formCadGrupoMat);
-  Application.CreateForm(TformConsultaGrupoMat, formConsultaGrupoMat);
   Application.Run;
 end.

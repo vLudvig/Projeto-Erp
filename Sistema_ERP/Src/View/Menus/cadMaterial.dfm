@@ -22,7 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -127,6 +126,7 @@
       Width = 45
       Height = 23
       TabOrder = 2
+      OnKeyDown = tGrupoMatKeyDown
     end
     object tCategoriaMat: TEdit
       Left = 104

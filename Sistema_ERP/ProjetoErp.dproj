@@ -186,6 +186,19 @@
             <Form>formConsultaGrupoMat</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\View\Menus\cadCategoriaMat.pas">
+            <Form>cadCategoriaMaterial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\Model\CategoriaMaterial\Model.CategoriaMat.pas">
+            <Form>modelCategoriaMat</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\View\Consulta\Consulta.CategoriaMat.pas">
+            <Form>formConsultaCategoriaMat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

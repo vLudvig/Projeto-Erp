@@ -54,7 +54,7 @@ procedure TformConsultaCores.buscarCores(condicao: string);
 begin
   Qconsulta.Close;
   Qconsulta.SQL.Clear;
-  Qconsulta.SQL.Add('Select * from cor');
+  Qconsulta.SQL.Add('Select * from cor ');
   Qconsulta.SQL.Add(condicao);
   Qconsulta.Open;
 end;

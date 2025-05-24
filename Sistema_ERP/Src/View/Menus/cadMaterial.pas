@@ -74,6 +74,9 @@ type
     function validaCamposConfirmar(): boolean;
     procedure btnConsultaGrupoClick(Sender: TObject);
     procedure limpaCamposTela();
+    procedure tGrupoMatEnter(Sender: TObject);
+    procedure tGrupoMatKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     colunaSelecionada: String;
   public
@@ -215,8 +218,8 @@ var
 begin
   if inclusao and validaCamposConfirmar then
   begin
-    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, CATEGORIA_MATERIAL_ID, ATIVO) ';
-    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :categoria_material_id, :ativo);';
+    sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, ATIVO) ';
+    sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :ativo);';
     if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
@@ -227,9 +230,8 @@ begin
         modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0;
         modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
         modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
-        ShowMessage(tGrupoMat.Text); //test debug
         modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
-        modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+        //modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
         modelMaterial.QcadastroMaterial.ExecSQL;
         modelMaterial.QcadastroMaterial.Close;
 
@@ -414,6 +416,41 @@ begin
   except on E: Exception do
     ShowMessage('Erro ao excluir cor do material: ' + E.Message);
 
+  end;
+end;
+
+procedure TcadastroMaterial.tGrupoMatEnter(Sender: TObject);
+begin
+  try
+    try
+      formConsultaGrupoMat.Qconsulta.Close;
+      formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+      formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+      formConsultaGrupoMat.Qconsulta.Open;
+      tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+    except
+     on E: Exception do
+      ShowMessage('Grupo não encontrado: ' + E.Message)
+    end;
+  finally
+  end;
+end;
+
+procedure TcadastroMaterial.tGrupoMatKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if ((Key = VK_RETURN) or (Key = VK_TAB)) and (Trim(tGrupoMat.Text) <> '') then
+  begin
+    try
+      formConsultaGrupoMat.Qconsulta.Close;
+      formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+      formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+      formConsultaGrupoMat.Qconsulta.Open;
+      tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+    except
+      on E: Exception do
+        ShowMessage('Grupo não encontrado: ' +  sLineBreak + E.Message)
+    end;
   end;
 end;
 

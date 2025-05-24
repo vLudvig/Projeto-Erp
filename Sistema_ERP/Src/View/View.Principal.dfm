@@ -742,6 +742,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object CategoriaMaterial2: TMenuItem
         Caption = 'Categoria de Materiais'
+        OnClick = CategoriaMaterial2Click
       end
       object N2: TMenuItem
         Caption = '-'
