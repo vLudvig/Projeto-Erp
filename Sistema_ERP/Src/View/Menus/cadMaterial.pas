@@ -209,7 +209,10 @@ end;
 procedure TcadastroMaterial.btnAlterarClick(Sender: TObject);
 begin
   if tIdMat.Text <> '' then
-     modoAlteracao
+     begin
+        alteracao := true;
+        modoAlteracao;
+     end
   else
    ShowMessage('Nenhum material selecionado, impossivel continuar.');
 
@@ -222,11 +225,13 @@ var
   materialAtivo: String;
   sqlValues: String;
   sqlInsert: String;
+  sqlUpdate: String;
 begin
   if inclusao and validaCamposConfirmar then
   begin
     sqlInsert := 'Insert into material(CODIGO, DESCRICAO, QUANTIDADE_ESTOQUE, UNIDADE_ESTOQUE, GRUPO_MATERIAL_ID, CATEGORIA_MATERIAL_ID, ATIVO) ';
     sqlValues := 'values (:codigo, :descricao, :quantidade, :unidade, :grupo_material_id, :categoria_material_id, :ativo);';
+
     if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
@@ -260,11 +265,24 @@ begin
   end
   else if alteracao and validaCamposConfirmar then
   begin
-    try
+    sqlUpdate := 'Update material set DESCRICAO = :descricao , UNIDADE_ESTOQUE = :unidade , ' +
+        'GRUPO_MATERIAL_ID = :grupo_material_id , CATEGORIA_MATERIAL_ID = :categoria_material_id , ATIVO = :ativo ' +
+        'where ID = :id';
 
+    try
+      modelMaterial.QcadastroMaterial.SQL.Text := sqlUpdate;
+      modelMaterial.QcadastroMaterial.ParamByName('id').AsInteger := StrToInt(tIdMat.Text);
+      modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text;
+      modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
+      modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
+      modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
+      modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+      modelMaterial.QcadastroMaterial.ExecSQL;
+      modelMaterial.QcadastroMaterial.Close;
     finally
       alteracao := false;
     end;
+
   end
   else
   begin
@@ -284,7 +302,7 @@ begin
       try
         tCategoriaMat.Text :=  IntToStr(formConsultaCategoriaMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
         formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
-        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tCategoriaMat.Text);
         formConsultaCategoriaMat.Qconsulta.Open;
         tDescCategoria.text := formConsultaCategoriaMat.Qconsulta.FieldByName('descricao').AsString;
       except
