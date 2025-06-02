@@ -1,5 +1,5 @@
 inherited cadCor: TcadCor
-  Caption = 'Cadastro de Cor'
+  Caption = 'Cadastro - Cor'
   StyleElements = [seFont, seClient, seBorder]
   TextHeight = 15
   inherited pnlCadastro: TPanel

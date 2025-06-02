@@ -22,6 +22,8 @@ object ViewPrincipal: TViewPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = 32
+    ExplicitTop = -32
     DesignSize = (
       1151
       793)
@@ -749,6 +751,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object N5: TMenuItem
         Caption = 'Dep'#243'sito'
+        OnClick = N5Click
       end
     end
     object Movimentaes1: TMenuItem

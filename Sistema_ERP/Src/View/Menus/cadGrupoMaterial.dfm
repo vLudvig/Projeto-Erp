@@ -1,5 +1,5 @@
 inherited formCadGrupoMat: TformCadGrupoMat
-  Caption = 'Cadastro-Grupo Material'
+  Caption = 'Cadastro - Grupo Material'
   StyleElements = [seFont, seClient, seBorder]
   TextHeight = 15
   inherited pnlCadastro: TPanel

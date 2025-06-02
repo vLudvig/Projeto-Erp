@@ -17,7 +17,9 @@ uses
   Consulta.GrupoMat in 'Src\View\Consulta\Consulta.GrupoMat.pas' {formConsultaGrupoMat},
   cadCategoriaMat in 'Src\View\Menus\cadCategoriaMat.pas' {cadCategoriaMaterial},
   Model.CategoriaMat in 'Src\Model\CategoriaMaterial\Model.CategoriaMat.pas' {modelCategoriaMat: TDataModule},
-  Consulta.CategoriaMat in 'Src\View\Consulta\Consulta.CategoriaMat.pas' {formConsultaCategoriaMat};
+  Consulta.CategoriaMat in 'Src\View\Consulta\Consulta.CategoriaMat.pas' {formConsultaCategoriaMat},
+  cadDeposito in 'Src\View\Menus\cadDeposito.pas' {formCadDeposito},
+  Model.Deposito in 'Src\Model\Deposito\Model.Deposito.pas' {modelDeposito: TDataModule};
 
 {$R *.res}
 

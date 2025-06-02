@@ -1,7 +1,7 @@
 ﻿object cadastroMaterial: TcadastroMaterial
   Left = 20
   Top = 0
-  Caption = 'Cadastro De Material'
+  Caption = 'Cadastro - Material'
   ClientHeight = 750
   ClientWidth = 1197
   Color = clBtnFace
@@ -22,7 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -239,7 +238,7 @@
       Top = 149
       Width = 75
       Height = 23
-      Caption = 'Consulta'
+      Caption = 'Consultar'
       TabOrder = 14
       OnClick = btnConsultaGrupoClick
     end
@@ -248,7 +247,7 @@
       Top = 197
       Width = 75
       Height = 23
-      Caption = 'Consulta'
+      Caption = 'Consultar'
       TabOrder = 15
       OnClick = btnConsultaCategoriaClick
     end

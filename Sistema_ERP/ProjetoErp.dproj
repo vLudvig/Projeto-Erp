@@ -199,6 +199,15 @@
             <Form>formConsultaCategoriaMat</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\View\Menus\cadDeposito.pas">
+            <Form>formCadDeposito</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\Model\Deposito\Model.Deposito.pas">
+            <Form>modelDeposito</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

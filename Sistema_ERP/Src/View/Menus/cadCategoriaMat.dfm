@@ -1,5 +1,5 @@
 inherited cadCategoriaMaterial: TcadCategoriaMaterial
-  Caption = 'Cadastro-Categoria Material'
+  Caption = 'Cadastro - Categoria Material'
   StyleElements = [seFont, seClient, seBorder]
   TextHeight = 15
   inherited pnlCadastro: TPanel
