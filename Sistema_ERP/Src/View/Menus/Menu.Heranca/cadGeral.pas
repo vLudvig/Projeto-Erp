@@ -44,6 +44,7 @@ type
 var
   cadastroGeral: TcadastroGeral;
   inclusao: boolean;
+  alteracao: boolean;
 
 implementation
 
@@ -96,11 +97,14 @@ begin
   btnExcluir.Visible := true;
   btnConfirmar.Visible := false;
   btnDesistir.Visible := false;
+  inclusao := false;
+  alteracao := false;
 end;
 
 procedure TcadastroGeral.modoAlteracao();
 begin
   inclusao := false;
+  alteracao := true;
   pnlCadastro.Enabled := true;
   btnConsultar.Visible := false;
   btnIncluir.Visible := false;

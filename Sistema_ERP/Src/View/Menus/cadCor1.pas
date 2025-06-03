@@ -25,6 +25,7 @@ type
     procedure btnConsultarClick(Sender: TObject);
     procedure idCor();
     procedure btnExcluirClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -132,6 +133,12 @@ begin
     begin
       ShowMessage('Erro: Qcores não foi instanciado!');
     end;
+end;
+
+procedure TcadCor.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(modelCor);
 end;
 
 procedure TcadCor.idCor();

@@ -1,6 +1,7 @@
 inherited cadCor: TcadCor
   Caption = 'Cadastro - Cor'
   StyleElements = [seFont, seClient, seBorder]
+  OnDestroy = FormDestroy
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]

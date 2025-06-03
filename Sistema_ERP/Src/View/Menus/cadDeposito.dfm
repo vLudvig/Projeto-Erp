@@ -1,9 +1,11 @@
 inherited formCadDeposito: TformCadDeposito
   Caption = 'Cadastro - Dep'#243'sito'
   StyleElements = [seFont, seClient, seBorder]
+  OnDestroy = FormDestroy
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = -6
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -53,6 +55,7 @@ inherited formCadDeposito: TformCadDeposito
         Width = 1193
         Height = 361
         Align = alClient
+        DataSource = DS_QgridDepos
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -84,7 +87,7 @@ inherited formCadDeposito: TformCadDeposito
         Caption = 'Permite Saida Manual'
         TabOrder = 1
       end
-      object CheckBox1: TCheckBox
+      object checkEntMn: TCheckBox
         Left = 16
         Top = 92
         Width = 153
@@ -101,15 +104,17 @@ inherited formCadDeposito: TformCadDeposito
       Caption = 'Tipo'
       TabOrder = 6
     end
-    object RadioButton1: TRadioButton
+    object rdBtnProd: TRadioButton
       Left = 480
       Top = 72
       Width = 113
       Height = 17
       Caption = 'Produto'
+      Checked = True
       TabOrder = 7
+      TabStop = True
     end
-    object RadioButton2: TRadioButton
+    object rdBtnMat: TRadioButton
       Left = 480
       Top = 95
       Width = 113
@@ -122,6 +127,7 @@ inherited formCadDeposito: TformCadDeposito
     StyleElements = [seFont, seClient, seBorder]
   end
   object DS_QgridDepos: TDataSource
+    DataSet = QgridDepos
     Left = 721
     Top = 408
   end
