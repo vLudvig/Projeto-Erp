@@ -4,8 +4,6 @@ inherited formCadDeposito: TformCadDeposito
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    ExplicitLeft = -8
-    ExplicitTop = -6
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -16,9 +14,15 @@ inherited formCadDeposito: TformCadDeposito
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited Label4: TLabel
+      Hint = 'Indica Campo Obrigat'#243'rio'
+      ParentShowHint = False
+      ShowHint = True
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited Label6: TLabel
+      Hint = 'Indica Campo Obrigat'#243'rio'
+      ParentShowHint = False
+      ShowHint = True
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited tId: TEdit
@@ -43,6 +47,19 @@ inherited formCadDeposito: TformCadDeposito
       Height = 363
       Align = alBottom
       TabOrder = 4
+      object DBGrid1: TDBGrid
+        Left = 1
+        Top = 1
+        Width = 1193
+        Height = 361
+        Align = alClient
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -12
+        TitleFont.Name = 'Segoe UI'
+        TitleFont.Style = []
+      end
     end
     object grpDep: TGroupBox
       Left = 56
@@ -61,7 +78,7 @@ inherited formCadDeposito: TformCadDeposito
       end
       object checkSaidaMn: TCheckBox
         Left = 16
-        Top = 56
+        Top = 58
         Width = 153
         Height = 17
         Caption = 'Permite Saida Manual'
@@ -103,5 +120,16 @@ inherited formCadDeposito: TformCadDeposito
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
+  end
+  object DS_QgridDepos: TDataSource
+    Left = 721
+    Top = 408
+  end
+  object QgridDepos: TFDQuery
+    Connection = modelConexao.FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM DEPOSITO')
+    Left = 497
+    Top = 448
   end
 end

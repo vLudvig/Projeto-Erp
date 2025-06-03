@@ -50,7 +50,6 @@ type
     tDescGrupo: TEdit;
     tDescCategoria: TEdit;
     label8: TLabel;
-    Label9: TLabel;
     Label10: TLabel;
     btnConsultaGrupo: TButton;
     btnConsultaCategoria: TButton;

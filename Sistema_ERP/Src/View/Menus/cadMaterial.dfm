@@ -90,21 +90,20 @@
       Top = 52
       Width = 5
       Height = 15
+      Hint = 'Indica Campo Obrigat'#243'rio'
       Caption = '*'
-    end
-    object Label9: TLabel
-      Left = 268
-      Top = 52
-      Width = 5
-      Height = 15
-      Caption = '*'
+      ParentShowHint = False
+      ShowHint = True
     end
     object Label10: TLabel
       Left = 38
       Top = 101
       Width = 5
       Height = 15
+      Hint = 'Indica Campo Obrigat'#243'rio'
       Caption = '*'
+      ParentShowHint = False
+      ShowHint = True
     end
     object tCodigoMat: TEdit
       Left = 104
