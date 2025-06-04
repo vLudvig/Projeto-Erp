@@ -12,6 +12,8 @@ type
   TmodelDeposito = class(TDataModule)
     QcadDeposito: TFDQuery;
     QconsultaDeposito: TFDQuery;
+    DS_QcadDeposito: TDataSource;
+    DS_QconsultaDeposito: TDataSource;
   private
     { Private declarations }
   public

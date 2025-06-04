@@ -141,6 +141,7 @@ inherited formCadDeposito: TformCadDeposito
     Top = 408
   end
   object QgridDepos: TFDQuery
+    Active = True
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
       'SELECT * FROM DEPOSITO')

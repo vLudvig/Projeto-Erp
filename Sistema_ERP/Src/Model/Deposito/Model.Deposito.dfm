@@ -15,4 +15,13 @@ object modelDeposito: TmodelDeposito
     Left = 432
     Top = 240
   end
+  object DS_QcadDeposito: TDataSource
+    Left = 128
+    Top = 328
+  end
+  object DS_QconsultaDeposito: TDataSource
+    DataSet = QconsultaDeposito
+    Left = 408
+    Top = 320
+  end
 end

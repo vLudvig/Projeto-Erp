@@ -27,6 +27,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
+    procedure idDep;
   private
     { Private declarations }
   public
@@ -39,6 +40,36 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TformCadDeposito.idDep;
+ var
+    depAtivo: String;
+    depProd_Mat: String;
+    permQtdeNeg: String;
+    permSaidaMn: String;
+    permEntradaMn: String;
+
+begin
+  modelDeposito.QconsultaDeposito.SQL.Text := 'select * from deposito where ID = :id';
+  modelDeposito.QconsultaDeposito.ParamByName('id').AsString := tId.Text;
+  modelDeposito.QconsultaDeposito.Close;
+  modelDeposito.QconsultaDeposito.Open;
+  tCodigo.Text := modelDeposito.QconsultaDeposito.FieldByName('codigo').AsString;
+  tDesc.Text := modelDeposito.QconsultaDeposito.FieldByName('descricao').AsString;
+  depAtivo := modelDeposito.QconsultaDeposito.FieldByName('ATIVO').AsString;
+  depProd_Mat := modelDeposito.QconsultaDeposito.FieldByName('Tipo_P_M').AsString;
+  permQtdeNeg := modelDeposito.QconsultaDeposito.FieldByName('NEGATIVO').AsString;
+  permSaidaMn := modelDeposito.QconsultaDeposito.FieldByName('SAIDA_MN').AsString;
+  permEntradaMn := modelDeposito.QconsultaDeposito.FieldByName('ENTRADA_MN').AsString;
+
+  if depAtivo = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
+
+  //Rever - NAO FUNCIONA
+  if permQtdeNeg = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
+  if permSaidaMn = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
+  if permEntradaMn = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
+end;
+
 
 procedure TformCadDeposito.btnConfirmarClick(Sender: TObject);
   var
@@ -122,11 +153,13 @@ begin
   try
     formConsultaDep := TformConsultaDep.Create(nil);
     try
-
-    except
-      on E: Exception do
-
-
+      if formConsultaDep.ShowModal = mrOk then
+      begin
+        tId.Text := IntToStr(formConsultaDep.registroSelecionado);
+        idDep;
+      end;
+    finally
+      FreeAndNil(formConsultaDep);
     end;
   finally
 
