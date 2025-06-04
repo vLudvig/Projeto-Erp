@@ -5,7 +5,6 @@ inherited formCadDeposito: TformCadDeposito
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    ExplicitTop = -6
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -101,7 +100,10 @@ inherited formCadDeposito: TformCadDeposito
       Top = 52
       Width = 130
       Height = 72
+      Hint = 'Telas de Produto ainda em desenvolvimento!'
       Caption = 'Tipo'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 6
     end
     object rdBtnProd: TRadioButton
@@ -109,10 +111,12 @@ inherited formCadDeposito: TformCadDeposito
       Top = 72
       Width = 113
       Height = 17
+      Hint = 'Telas de Produto ainda em desenvolvimento!'
       Caption = 'Produto'
-      Checked = True
+      Enabled = False
+      ParentShowHint = False
+      ShowHint = False
       TabOrder = 7
-      TabStop = True
     end
     object rdBtnMat: TRadioButton
       Left = 480
@@ -120,11 +124,16 @@ inherited formCadDeposito: TformCadDeposito
       Width = 113
       Height = 17
       Caption = 'Material'
+      Checked = True
       TabOrder = 8
+      TabStop = True
     end
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited btnConsultar: TButton
+      OnClick = btnConsultarClick
+    end
   end
   object DS_QgridDepos: TDataSource
     DataSet = QgridDepos

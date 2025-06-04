@@ -8,7 +8,7 @@ uses
   Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  Vcl.Grids, Vcl.DBGrids, Model.Conexao, Model.Deposito;
+  Vcl.Grids, Vcl.DBGrids, Model.Conexao, Model.Deposito, Consulta.Deposito;
 
 type
   TformCadDeposito = class(TcadastroGeral)
@@ -26,6 +26,7 @@ type
     procedure btnConfirmarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnConsultarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,11 +56,12 @@ begin
   begin
     sqlInsert := 'Insert into deposito(CODIGO, DESCRICAO, ATIVO, TIPO_P_M, NEGATIVO, SAIDA_MN, ENTRADA_MN) ';
     sqlValues := 'Values(:codigo, :descricao, :ativo, :tipoPM, :negativo, :saidaMn, :entradaMn) ';
-    if checkAtivo.Checked then depAtivo := 'S';
-    if checkQtdeNeg.Checked then permQtdeNeg := 'S';
-    if checkSaidaMn.Checked then permSaidaMn := 'S';
-    if checkEntMn.Checked then permEntradaMn := 'S';
+    if checkAtivo.Checked then depAtivo := 'S' else depAtivo := 'N';
+    if checkQtdeNeg.Checked then permQtdeNeg := 'S' else permQtdeNeg := 'N';
+    if checkSaidaMn.Checked then permSaidaMn := 'S' else permSaidaMn := 'N';
+    if checkEntMn.Checked then permEntradaMn := 'S' else permEntradaMn := 'N';
     if rdBtnProd.Checked then depProd_Mat := 'P' else depProd_Mat := 'M';
+
     try
       try
         modelDeposito.QcadDeposito.SQL.Text := sqlInsert + sqlValues;
@@ -72,7 +74,7 @@ begin
         modelDeposito.QcadDeposito.ParamByName('entradaMn').AsString:= permEntradaMn;
         modelDeposito.QcadDeposito.ExecSQL;
         QgridDepos.Close;
-        QgridDepos.open;
+        QgridDepos.Open;
       except
         on E: Exception do
           ShowMessage(E.Message);
@@ -83,10 +85,52 @@ begin
   end
   else if alteracao then //ao apertar em alterar
   begin
+    if checkAtivo.Checked then depAtivo := 'S' else depAtivo := 'N';
+    if checkQtdeNeg.Checked then permQtdeNeg := 'S' else permQtdeNeg := 'N';
+    if checkSaidaMn.Checked then permSaidaMn := 'S' else permSaidaMn := 'N';
+    if checkEntMn.Checked then permEntradaMn := 'S' else permEntradaMn := 'N';
     sqlUpdate := 'Update deposito set DESCRICAO = :descricao , ATIVO = :ativo ' +
       ' NEGATIVO = :negativo , SAIDA_MN = :saidaMn + ENTRADA_MN = :entradaMn where ID = :id';
+
+    try
+      try
+        modelDeposito.QcadDeposito.SQL.Text := sqlUpdate;
+        modelDeposito.QcadDeposito.ParamByName('descricao').AsString := tDesc.Text;
+        modelDeposito.QcadDeposito.ParamByName('ativo').AsString := depAtivo;
+        modelDeposito.QcadDeposito.ParamByName('negativo').AsString := permQtdeNeg;
+        modelDeposito.QcadDeposito.ParamByName('saidaMn').AsString := permSaidaMn;
+        modelDeposito.QcadDeposito.ParamByName('entradaMn').AsString := permEntradaMn;
+        modelDeposito.QcadDeposito.ParamByName('id').AsString := tId.Text;
+        modelDeposito.QcadDeposito.ExecSQL;
+        QgridDepos.Close;
+        QgridDepos.Open;
+      except
+        on E: Exception do
+          ShowMessage(E.Message);
+      end;
+
+    finally
+      modoConsulta;
+    end;
   end;
 
+end;
+
+procedure TformCadDeposito.btnConsultarClick(Sender: TObject);
+begin
+  inherited;
+  try
+    formConsultaDep := TformConsultaDep.Create(nil);
+    try
+
+    except
+      on E: Exception do
+
+
+    end;
+  finally
+
+  end;
 end;
 
 procedure TformCadDeposito.FormCreate(Sender: TObject);
@@ -99,6 +143,7 @@ begin
     QgridDepos.Close;
     QgridDepos.Open;
   end;
+
 end;
 
 procedure TformCadDeposito.FormDestroy(Sender: TObject);
