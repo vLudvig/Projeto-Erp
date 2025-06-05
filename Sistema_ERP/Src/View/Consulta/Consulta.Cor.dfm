@@ -12,7 +12,6 @@ inherited formConsultaCores: TformConsultaCores
     end
     inherited tBusca: TEdit
       StyleElements = [seFont, seClient, seBorder]
-      OnChange = tBuscaChange
     end
     inherited cmbBusca: TComboBox
       StyleElements = [seFont, seClient, seBorder]
@@ -23,6 +22,14 @@ inherited formConsultaCores: TformConsultaCores
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited lblTabela: TLabel
+      Left = 793
+      Width = 17
+      Caption = 'cor'
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 793
+      ExplicitWidth = 17
+    end
   end
   inherited dataSourceGrid: TDataSource
     Left = 648

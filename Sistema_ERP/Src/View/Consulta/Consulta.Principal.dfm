@@ -41,6 +41,7 @@ object formConsultaPrincipal: TformConsultaPrincipal
       Width = 385
       Height = 23
       TabOrder = 0
+      OnChange = tBuscaChange
     end
     object cmbBusca: TComboBox
       Left = 568
@@ -88,6 +89,13 @@ object formConsultaPrincipal: TformConsultaPrincipal
     Height = 54
     Align = alBottom
     TabOrder = 2
+    object lblTabela: TLabel
+      Left = 745
+      Top = 40
+      Width = 79
+      Height = 15
+      Caption = 'tabelaConsulta'
+    end
     object btnSelecReg: TButton
       Left = 16
       Top = 16

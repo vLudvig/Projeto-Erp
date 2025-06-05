@@ -22,6 +22,14 @@ inherited formConsultaCategoriaMat: TformConsultaCategoriaMat
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited lblTabela: TLabel
+      Left = 729
+      Width = 97
+      Caption = 'categoria_material'
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 729
+      ExplicitWidth = 97
+    end
   end
   inherited Qconsulta: TFDQuery
     Connection = modelConexao.FDConnection1

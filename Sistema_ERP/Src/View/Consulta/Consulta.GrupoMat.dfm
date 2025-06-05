@@ -22,6 +22,12 @@ inherited formConsultaGrupoMat: TformConsultaGrupoMat
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited lblTabela: TLabel
+      Width = 80
+      Caption = 'grupo_material'
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 80
+    end
   end
   inherited Qconsulta: TFDQuery
     Connection = modelConexao.FDConnection1

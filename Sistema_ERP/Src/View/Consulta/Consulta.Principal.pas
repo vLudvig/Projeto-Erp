@@ -24,6 +24,7 @@ type
     DBGrid1: TDBGrid;
     dataSourceGrid: TDataSource;
     Qconsulta: TFDQuery;
+    lblTabela: TLabel;
     procedure btnDesistirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -33,6 +34,10 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnSelecRegClick(Sender: TObject);
     procedure SelecionaRegistro();
+    procedure BuscarDados;
+    procedure buscarInfos(condicao: String);
+    procedure tBuscaChange(Sender: TObject);
+
   private
   protected
     procedure ConfiguraConsulta; virtual;
@@ -68,6 +73,12 @@ begin
   registroSelecionado := Qconsulta.FieldByName('ID').AsInteger;
   Qconsulta.Close;
   ModalResult := mrOk;
+end;
+
+procedure TformConsultaPrincipal.tBuscaChange(Sender: TObject);
+begin
+  //inherited;
+  BuscarDados;
 end;
 
 procedure TformConsultaPrincipal.ConfiguraConsulta();
@@ -134,4 +145,27 @@ begin
   end;
 end;
 
+
+
+procedure TformConsultaPrincipal.BuscarDados;
+var Lcondicao: string;
+begin
+  Lcondicao := '';
+  case cmbBusca.ItemIndex of
+   0: Lcondicao := ' where descricao like '+ QuotedStr('%' + tBusca.Text + '%');
+   1: Lcondicao := ' where codigo like '+ QuotedStr('%' + tBusca.Text + '%');
+  end;
+
+  buscarInfos(Lcondicao);
+
+end;
+
+procedure TformConsultaPrincipal.buscarInfos(condicao: string);
+begin
+  Qconsulta.Close;
+  Qconsulta.SQL.Clear;
+  Qconsulta.SQL.Add('Select * from ' + lblTabela.Caption);
+  Qconsulta.SQL.Add(condicao);
+  Qconsulta.Open;
+end;
 end.

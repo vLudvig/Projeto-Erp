@@ -22,6 +22,14 @@ inherited formConsultaDep: TformConsultaDep
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited lblTabela: TLabel
+      Left = 777
+      Width = 46
+      Caption = 'deposito'
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 777
+      ExplicitWidth = 46
+    end
   end
   inherited Qconsulta: TFDQuery
     Active = True

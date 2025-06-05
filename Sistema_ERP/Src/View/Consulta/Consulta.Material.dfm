@@ -24,6 +24,14 @@ inherited formConsultaMaterial: TformConsultaMaterial
   end
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited lblTabela: TLabel
+      Left = 769
+      Width = 43
+      Caption = 'material'
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 769
+      ExplicitWidth = 43
+    end
   end
   inherited dataSourceGrid: TDataSource
     Left = 632

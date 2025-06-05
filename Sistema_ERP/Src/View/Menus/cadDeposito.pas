@@ -63,11 +63,11 @@ begin
   permEntradaMn := modelDeposito.QconsultaDeposito.FieldByName('ENTRADA_MN').AsString;
 
   if depAtivo = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
-
-  //Rever - NAO FUNCIONA
-  if permQtdeNeg = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
-  if permSaidaMn = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
-  if permEntradaMn = 'S' then checkAtivo.Checked := true else checkAtivo.Checked := false;
+  grpDep.Enabled := true;
+  if permQtdeNeg = 'S' then checkQtdeNeg.Checked := true else checkAtivo.Checked := false;
+  if permSaidaMn = 'S' then checkSaidaMn.Checked := true else checkAtivo.Checked := false;
+  if permEntradaMn = 'S' then checkEntMn.Checked := true else checkAtivo.Checked := false;
+  grpDep.Enabled := false;
 end;
 
 
