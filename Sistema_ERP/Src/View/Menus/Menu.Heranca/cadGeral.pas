@@ -35,6 +35,7 @@ type
     procedure btnAlterarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
+    function validaCamposObrigatorios() : boolean;
   private
     { Private declarations }
   public
@@ -71,7 +72,7 @@ begin
   btnConfirmar.Visible := True;
   btnDesistir.Visible := True;
 
-//limpa todos os campos do panel de informações do material
+//limpa todos os campos do panel de informações
   for var i := 0 to pnlCadastro.ControlCount - 1 do
   begin
     if pnlCadastro.Controls[i] is TEdit then
@@ -83,7 +84,7 @@ end;
 procedure TcadastroGeral.modoConsulta();
 begin
   //pnlCadastro.Enabled := false;
-  //desativa todos os campos do panel de informações do material (menos o grid)
+  //desativa todos os campos do panel de informações (menos o grid)
   for var i := 0 to pnlCadastro.ControlCount - 1 do
   begin
     if (pnlCadastro.Controls[i] is TEdit) or
@@ -91,6 +92,7 @@ begin
     (pnlCadastro.Controls[i] is TGroupBox) then
       TEdit(pnlCadastro.Controls[i]).Enabled := false;
   end;
+
   btnConsultar.Visible := true;
   btnIncluir.Visible := true;
   btnAlterar.Visible := true;
@@ -105,6 +107,7 @@ procedure TcadastroGeral.modoAlteracao();
 begin
   inclusao := false;
   alteracao := true;
+  tDesc.Enabled := true;
   pnlCadastro.Enabled := true;
   btnConsultar.Visible := false;
   btnIncluir.Visible := false;
@@ -123,6 +126,7 @@ begin
 end;
 
 procedure TcadastroGeral.btnConfirmarClick(Sender: TObject);
+ 
 begin
   //modoConsulta();
 end;
@@ -148,6 +152,14 @@ end;
 procedure TcadastroGeral.FormCreate(Sender: TObject);
 begin
   modoConsulta();
+end;
+
+function TcadastroGeral.validaCamposObrigatorios : boolean;
+begin
+  if (Trim(tCodigo.Text) <> '') and (Trim(tDesc.Text) <> '') then
+    validaCamposObrigatorios := true
+  else
+    validaCamposObrigatorios := false;
 end;
 
 end.

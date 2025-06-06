@@ -431,6 +431,7 @@ end;
 procedure TcadastroMaterial.btnDesistirClick(Sender: TObject);
 begin
   modoConsulta();
+  idMaterial;
 end;
 
 procedure TcadastroMaterial.btnExcluirClick(Sender: TObject);

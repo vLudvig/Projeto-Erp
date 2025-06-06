@@ -28,6 +28,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure idDep;
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnDesistirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,8 +73,14 @@ begin
 end;
 
 
+procedure TformCadDeposito.btnAlterarClick(Sender: TObject);
+begin
+  inherited;
+  grpDep.Enabled := true;
+end;
+
 procedure TformCadDeposito.btnConfirmarClick(Sender: TObject);
-  var
+    var
     depAtivo: String;
     depProd_Mat: String;
     permQtdeNeg: String;
@@ -81,9 +89,8 @@ procedure TformCadDeposito.btnConfirmarClick(Sender: TObject);
     sqlInsert: String;
     sqlValues: String;
     sqlUpdate: String;
-
 begin
-  if (inclusao) and (Trim(tCodigo.Text) <> '') then
+  if (inclusao) and (validaCamposObrigatorios) then
   begin
     sqlInsert := 'Insert into deposito(CODIGO, DESCRICAO, ATIVO, TIPO_P_M, NEGATIVO, SAIDA_MN, ENTRADA_MN) ';
     sqlValues := 'Values(:codigo, :descricao, :ativo, :tipoPM, :negativo, :saidaMn, :entradaMn) ';
@@ -104,6 +111,8 @@ begin
         modelDeposito.QcadDeposito.ParamByName('saidaMn').AsString:= permSaidaMn;
         modelDeposito.QcadDeposito.ParamByName('entradaMn').AsString:= permEntradaMn;
         modelDeposito.QcadDeposito.ExecSQL;
+
+        //Atualiza o Grid para aparecer o novo cadastro;
         QgridDepos.Close;
         QgridDepos.Open;
       except
@@ -114,17 +123,18 @@ begin
       modoConsulta;
     end;
   end
-  else if alteracao then //ao apertar em alterar
+  else if (alteracao) and (validaCamposObrigatorios) then //ao confirmar apos apertar em alterar
   begin
     if checkAtivo.Checked then depAtivo := 'S' else depAtivo := 'N';
     if checkQtdeNeg.Checked then permQtdeNeg := 'S' else permQtdeNeg := 'N';
     if checkSaidaMn.Checked then permSaidaMn := 'S' else permSaidaMn := 'N';
     if checkEntMn.Checked then permEntradaMn := 'S' else permEntradaMn := 'N';
-    sqlUpdate := 'Update deposito set DESCRICAO = :descricao , ATIVO = :ativo ' +
-      ' NEGATIVO = :negativo , SAIDA_MN = :saidaMn + ENTRADA_MN = :entradaMn where ID = :id';
+    sqlUpdate := 'Update deposito set DESCRICAO = :descricao , ATIVO = :ativo , ' +
+      ' NEGATIVO = :negativo , SAIDA_MN = :saidaMn , ENTRADA_MN = :entradaMn where ID = :id';
 
     try
       try
+        // REVISAR UPDATE - RETORNA ERRO NA EXPRESSÂO
         modelDeposito.QcadDeposito.SQL.Text := sqlUpdate;
         modelDeposito.QcadDeposito.ParamByName('descricao').AsString := tDesc.Text;
         modelDeposito.QcadDeposito.ParamByName('ativo').AsString := depAtivo;
@@ -133,6 +143,8 @@ begin
         modelDeposito.QcadDeposito.ParamByName('entradaMn').AsString := permEntradaMn;
         modelDeposito.QcadDeposito.ParamByName('id').AsString := tId.Text;
         modelDeposito.QcadDeposito.ExecSQL;
+
+        //Atualiza o Grid para aparecer o novo cadastro;
         QgridDepos.Close;
         QgridDepos.Open;
       except
@@ -166,6 +178,12 @@ begin
   end;
 end;
 
+procedure TformCadDeposito.btnDesistirClick(Sender: TObject);
+begin
+  inherited;
+  idDep;
+end;
+
 procedure TformCadDeposito.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -184,5 +202,7 @@ begin
   inherited;
   FreeAndNil(modelDeposito);
 end;
+
+
 
 end.
