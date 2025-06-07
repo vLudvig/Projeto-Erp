@@ -23,6 +23,14 @@ type
     DBGrid1: TDBGrid;
     DS_QgridDepos: TDataSource;
     QgridDepos: TFDQuery;
+    QgridDeposID: TIntegerField;
+    QgridDeposDESCRICAO: TStringField;
+    QgridDeposTIPO_P_M: TStringField;
+    QgridDeposATIVO: TStringField;
+    QgridDeposCODIGO: TStringField;
+    QgridDeposNEGATIVO: TStringField;
+    QgridDeposSAIDA_MN: TStringField;
+    QgridDeposENTRADA_MN: TStringField;
     procedure btnConfirmarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -30,6 +38,7 @@ type
     procedure idDep;
     procedure btnAlterarClick(Sender: TObject);
     procedure btnDesistirClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -181,7 +190,32 @@ end;
 procedure TformCadDeposito.btnDesistirClick(Sender: TObject);
 begin
   inherited;
-  idDep;
+  if tId.Text <> '' then
+      idDep;
+
+end;
+
+procedure TformCadDeposito.btnExcluirClick(Sender: TObject);
+begin
+  if Trim(tId.Text) <> '' then
+  begin
+    try
+      modelDeposito.QcadDeposito.SQL.Text := 'delete from deposito where id = :id';
+      modelDeposito.QcadDeposito.ParamByName('id').AsInteger := StrToInt(tId.Text);
+      modelDeposito.QcadDeposito.ExecSQL;
+      ShowMessage('Deposito excluido com sucesso!');
+      QgridDepos.Close;
+      QgridDepos.Open;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao excluir: ' + E.Message);
+    end;
+  end
+  else
+    ShowMessage('Nenhum Depósito encontrado, impossivel continuar');
+
+
+  inherited;
 end;
 
 procedure TformCadDeposito.FormCreate(Sender: TObject);

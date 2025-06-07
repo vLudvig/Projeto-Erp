@@ -131,6 +131,9 @@ inherited formCadDeposito: TformCadDeposito
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited btnExcluir: TButton
+      OnClick = btnExcluirClick
+    end
     inherited btnConsultar: TButton
       OnClick = btnConsultarClick
     end
@@ -147,5 +150,59 @@ inherited formCadDeposito: TformCadDeposito
       'SELECT * FROM DEPOSITO')
     Left = 497
     Top = 448
+    object QgridDeposID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QgridDeposCODIGO: TStringField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      Size = 10
+    end
+    object QgridDeposDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Size = 40
+    end
+    object QgridDeposATIVO: TStringField
+      DisplayLabel = 'Ativo'
+      FieldName = 'ATIVO'
+      Origin = 'ATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object QgridDeposTIPO_P_M: TStringField
+      DisplayLabel = 'Prod. ou Mat.'
+      FieldName = 'TIPO_P_M'
+      Origin = 'TIPO_P_M'
+      FixedChar = True
+      Size = 1
+    end
+    object QgridDeposNEGATIVO: TStringField
+      DisplayLabel = 'Qtde Negativa'
+      FieldName = 'NEGATIVO'
+      Origin = 'NEGATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object QgridDeposSAIDA_MN: TStringField
+      DisplayLabel = 'Sa'#237'da Manual'
+      FieldName = 'SAIDA_MN'
+      Origin = 'SAIDA_MN'
+      FixedChar = True
+      Size = 1
+    end
+    object QgridDeposENTRADA_MN: TStringField
+      DisplayLabel = 'Entrada Manual'
+      FieldName = 'ENTRADA_MN'
+      Origin = 'ENTRADA_MN'
+      FixedChar = True
+      Size = 1
+    end
   end
 end

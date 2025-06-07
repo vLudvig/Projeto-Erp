@@ -99,7 +99,6 @@ end;
 
 procedure TcadCor.btnExcluirClick(Sender: TObject);
 begin
-  inherited;
   if tId.Text <> '' then
   begin
     modelCor.QcadastroCor.Close;
@@ -116,6 +115,8 @@ begin
   end
   else
     ShowMessage('Nenhuma cor selecionada, impossivel continuar.');
+
+  inherited;//limpa campos da tela
 end;
 
 procedure TcadCor.FormCreate(Sender: TObject);

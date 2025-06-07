@@ -38,9 +38,9 @@ inherited cadCor: TcadCor
     end
     object pnlGrid: TPanel
       Left = 0
-      Top = 344
+      Top = 176
       Width = 1197
-      Height = 310
+      Height = 478
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 4
@@ -48,7 +48,7 @@ inherited cadCor: TcadCor
         Left = 1
         Top = 1
         Width = 1195
-        Height = 308
+        Height = 476
         Align = alClient
         DataSource = DS_GridCores
         TabOrder = 0
@@ -62,9 +62,6 @@ inherited cadCor: TcadCor
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    inherited btnExcluir: TButton
-      OnClick = btnExcluirClick
-    end
     inherited btnConsultar: TButton
       OnClick = btnConsultarClick
     end

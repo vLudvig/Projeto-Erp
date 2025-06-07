@@ -36,6 +36,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     function validaCamposObrigatorios() : boolean;
+    procedure limpaCamposTela;
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -136,6 +138,11 @@ begin
   modoConsulta();
 end;
 
+procedure TcadastroGeral.btnExcluirClick(Sender: TObject);
+begin
+  limpaCamposTela;
+end;
+
 procedure TcadastroGeral.btnFecharClick(Sender: TObject);
 begin
   if btnIncluir.Visible then
@@ -160,6 +167,16 @@ begin
     validaCamposObrigatorios := true
   else
     validaCamposObrigatorios := false;
+end;
+
+procedure TcadastroGeral.limpaCamposTela;
+begin
+  //limpa todos os campos do panel de informações do material
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if pnlCadastro.Controls[i] is TEdit then
+      TEdit(pnlCadastro.Controls[i]).Text := '';
+  end;
 end;
 
 end.

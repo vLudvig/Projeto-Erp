@@ -212,6 +212,10 @@
             <Form>formConsultaDep</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\View\Menus\movEntradaMat.pas">
+            <Form>formMovEntraMat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

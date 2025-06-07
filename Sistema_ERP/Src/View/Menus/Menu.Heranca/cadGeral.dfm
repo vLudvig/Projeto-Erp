@@ -118,6 +118,7 @@ object cadastroGeral: TcadastroGeral
       Height = 33
       Caption = 'Excluir'
       TabOrder = 2
+      OnClick = btnExcluirClick
     end
     object btnConsultar: TButton
       Left = 445

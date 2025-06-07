@@ -20,7 +20,8 @@ uses
   Consulta.CategoriaMat in 'Src\View\Consulta\Consulta.CategoriaMat.pas' {formConsultaCategoriaMat},
   cadDeposito in 'Src\View\Menus\cadDeposito.pas' {formCadDeposito},
   Model.Deposito in 'Src\Model\Deposito\Model.Deposito.pas' {modelDeposito: TDataModule},
-  Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep};
+  Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep},
+  movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat};
 
 {$R *.res}
 
@@ -31,5 +32,6 @@ begin
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
   Application.CreateForm(TformConsultaDep, formConsultaDep);
+  Application.CreateForm(TformMovEntraMat, formMovEntraMat);
   Application.Run;
 end.
