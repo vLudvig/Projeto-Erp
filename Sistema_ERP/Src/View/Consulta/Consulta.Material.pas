@@ -34,6 +34,7 @@ type
     procedure buscarMateriais(condicao: String);
     var
     registroSelecionado: integer;
+    codigoSelecionado: String;
   end;
 
 var
@@ -58,6 +59,8 @@ begin
     raise Exception.Create('Selecione um Registro');
 
   registroSelecionado := Qconsulta.FieldByName('ID').AsInteger;
+  codigoSelecionado := Qconsulta.FieldByName('CODIGO').AsString;
+  descSelec := Qconsulta.FieldByName('DESCRICAO').ASString;
   Qconsulta.Close;
   ModalResult := mrOk;
 end;

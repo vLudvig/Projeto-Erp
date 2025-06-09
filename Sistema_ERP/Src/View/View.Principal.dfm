@@ -22,8 +22,6 @@ object ViewPrincipal: TViewPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = 32
-    ExplicitTop = -32
     DesignSize = (
       1151
       793)
@@ -758,6 +756,7 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Movimenta'#231#245'es'
       object EntradadeMaterial1: TMenuItem
         Caption = 'Entrada de Materiais'
+        OnClick = EntradadeMaterial1Click
       end
       object N6: TMenuItem
         Caption = '-'

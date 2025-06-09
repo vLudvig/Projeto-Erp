@@ -5,8 +5,8 @@ object modelMaterial: TmodelMaterial
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
       'select * from material')
-    Left = 160
-    Top = 120
+    Left = 352
+    Top = 72
     object QcadastroMaterialID: TIntegerField
       FieldName = 'ID'
       Origin = 'ID'
@@ -62,8 +62,8 @@ object modelMaterial: TmodelMaterial
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
       'select * from material')
-    Left = 296
-    Top = 120
+    Left = 352
+    Top = 176
     object QconsultaMaterialCODIGO: TStringField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'CODIGO'
@@ -118,23 +118,23 @@ object modelMaterial: TmodelMaterial
     end
   end
   object DS_QcadastroMaterial: TDataSource
-    Left = 496
-    Top = 352
+    Left = 472
+    Top = 72
   end
   object DS_QconsultaMaterial: TDataSource
     DataSet = QconsultaMaterial
-    Left = 560
-    Top = 248
+    Left = 472
+    Top = 176
   end
   object QcoresMaterial: TFDQuery
-    Left = 120
-    Top = 288
+    Left = 112
+    Top = 272
   end
   object QremoveCorMat: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
       'select * from cor_material')
-    Left = 320
-    Top = 408
+    Left = 112
+    Top = 352
   end
 end

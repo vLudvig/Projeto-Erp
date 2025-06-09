@@ -44,6 +44,8 @@ type
   public
     var
     registroSelecionado: integer;
+    codigoSelecionado: String;
+    descSelec: String;
   end;
 
 var
@@ -71,6 +73,8 @@ begin
     raise Exception.Create('Selecione um Registro');
 
   registroSelecionado := Qconsulta.FieldByName('ID').AsInteger;
+  codigoSelecionado := Qconsulta.FieldByName('CODIGO').AsString;
+  descSelec := Qconsulta.FieldByName('Descricao').AsString;
   Qconsulta.Close;
   ModalResult := mrOk;
 end;

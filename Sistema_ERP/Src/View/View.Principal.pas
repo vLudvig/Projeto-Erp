@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito,
-  ShellAPI, Vcl.Imaging.jpeg;
+  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat;
 
 type
   TViewPrincipal = class(TForm)
@@ -43,6 +43,7 @@ type
     procedure CategoriaMaterial1Click(Sender: TObject);
     procedure CategoriaMaterial2Click(Sender: TObject);
     procedure N5Click(Sender: TObject);
+    procedure EntradadeMaterial1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,6 +77,16 @@ begin
      cadCategoriaMaterial.ShowModal;
   finally
      FreeAndNil(cadCategoriaMaterial);
+  end;
+end;
+
+procedure TViewPrincipal.EntradadeMaterial1Click(Sender: TObject);
+begin
+  formMovEntraMat := TformMovEntraMat.Create(nil);
+  try
+     formMovEntraMat.ShowModal;
+  finally
+     FreeAndNil(formMovEntraMat);
   end;
 end;
 

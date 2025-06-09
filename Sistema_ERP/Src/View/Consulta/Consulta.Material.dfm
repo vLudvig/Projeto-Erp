@@ -12,7 +12,6 @@ inherited formConsultaMaterial: TformConsultaMaterial
     end
     inherited tBusca: TEdit
       StyleElements = [seFont, seClient, seBorder]
-      OnChange = tBuscaChange
       OnKeyDown = tBuscaKeyDown
     end
     inherited cmbBusca: TComboBox
