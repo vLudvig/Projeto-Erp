@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Grids, Vcl.DBGrids, Model.Conexao, Consulta.Material, Consulta.Cor, Consulta.Deposito,
-  model.Material, model.cor, Model.Deposito;
+  model.Material, model.cor, Model.Deposito, Model.EntradaMat;
 
 type
   TformMovEntraMat = class(TForm)
@@ -42,7 +42,9 @@ type
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure btnConsDepClick(Sender: TObject);
-    procedure tCodMatChange(Sender: TObject);
+    procedure tCodMatExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -120,6 +122,38 @@ begin
       ShowMessage(E.Message);
   end;
   Self.Close
+end;
+
+procedure TformMovEntraMat.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(modelEntraMat);
+end;
+
+procedure TformMovEntraMat.FormShow(Sender: TObject);
+begin
+  modelEntraMat:= TmodelEntraMat.Create(nil);
+end;
+
+procedure TformMovEntraMat.tCodMatExit(Sender: TObject);
+begin
+  if Trim(tCodMat.Text) <> '' then
+  begin
+    try
+      modelEntraMat.Qconsulta.Close;
+      modelEntraMat.Qconsulta.SQL.Text := 'select * from material where codigo = ' + tCodMat.Text ;
+      ShowMessage(tCodMat.Text);
+      modelEntraMat.Qconsulta.Open;
+      tDescMat.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      modelEntraMat.Qconsulta.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar material ' + E.Message);
+
+    end;
+
+
+  end;
+
 end;
 
 end.

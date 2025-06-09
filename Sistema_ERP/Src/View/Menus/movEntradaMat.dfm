@@ -11,6 +11,8 @@ object formMovEntraMat: TformMovEntraMat
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object pnlFundo: TPanel
     Left = 0
@@ -94,8 +96,6 @@ object formMovEntraMat: TformMovEntraMat
       Height = 347
       Align = alBottom
       TabOrder = 1
-      ExplicitLeft = 2
-      ExplicitTop = 320
       object DBGrid1: TDBGrid
         Left = 1
         Top = 1
@@ -117,7 +117,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 121
       Height = 23
       TabOrder = 2
-      OnChange = tCodMatChange
+      OnExit = tCodMatExit
     end
     object tCor: TEdit
       Left = 104

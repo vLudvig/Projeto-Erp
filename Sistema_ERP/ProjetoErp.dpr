@@ -21,7 +21,8 @@ uses
   cadDeposito in 'Src\View\Menus\cadDeposito.pas' {formCadDeposito},
   Model.Deposito in 'Src\Model\Deposito\Model.Deposito.pas' {modelDeposito: TDataModule},
   Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep},
-  movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat};
+  movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat},
+  Model.EntradaMat in 'Src\Model\EntradaMat\Model.EntradaMat.pas' {modelEntraMat: TDataModule};
 
 {$R *.res}
 
@@ -31,5 +32,6 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
+  Application.CreateForm(TmodelEntraMat, modelEntraMat);
   Application.Run;
 end.
