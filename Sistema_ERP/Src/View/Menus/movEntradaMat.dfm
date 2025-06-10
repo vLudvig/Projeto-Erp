@@ -125,6 +125,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 121
       Height = 23
       TabOrder = 3
+      OnExit = tCorExit
     end
     object tDescMat: TEdit
       Left = 231
@@ -148,6 +149,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 121
       Height = 23
       TabOrder = 6
+      OnExit = tDepExit
     end
     object tDescDep: TEdit
       Left = 231

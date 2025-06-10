@@ -45,6 +45,8 @@ type
     procedure tCodMatExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure tCorExit(Sender: TObject);
+    procedure tDepExit(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -140,20 +142,53 @@ begin
   begin
     try
       modelEntraMat.Qconsulta.Close;
-      modelEntraMat.Qconsulta.SQL.Text := 'select * from material where codigo = ' + tCodMat.Text ;
-      ShowMessage(tCodMat.Text);
+      modelEntraMat.Qconsulta.SQL.Text := 'select * from material where codigo = :codigo';
+      modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tCodMat.Text;
       modelEntraMat.Qconsulta.Open;
       tDescMat.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      idMat := modelEntraMat.Qconsulta.FieldByName('id').AsInteger;
       modelEntraMat.Qconsulta.Close;
     except
       on E : Exception do
         ShowMessage('Erro ao encontrar material ' + E.Message);
-
     end;
-
-
   end;
+end;
 
+procedure TformMovEntraMat.tCorExit(Sender: TObject);
+begin
+  if Trim(tCor.Text) <> '' then
+  begin
+    try
+      modelEntraMat.Qconsulta.Close;
+      modelEntraMat.Qconsulta.SQL.Text := 'select * from cor where codigo = :codigo';
+      modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tCor.Text;
+      modelEntraMat.Qconsulta.Open;
+      tDescCor.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      modelEntraMat.Qconsulta.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar cor ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TformMovEntraMat.tDepExit(Sender: TObject);
+begin
+  if Trim(tDep.Text) <> '' then
+  begin
+    try
+      modelEntraMat.Qconsulta.Close;
+      modelEntraMat.Qconsulta.SQL.Text := 'select * from deposito where codigo = :codigo';
+      modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tDep.Text;
+      modelEntraMat.Qconsulta.Open;
+      tDescDep.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      modelEntraMat.Qconsulta.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar deposito ' + E.Message);
+    end;
+  end;
 end;
 
 end.
