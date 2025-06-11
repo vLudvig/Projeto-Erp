@@ -152,6 +152,10 @@ begin
       on E : Exception do
         ShowMessage('Erro ao encontrar material ' + E.Message);
     end;
+  end
+  else
+  begin
+    tDescMat.Text := '';
   end;
 end;
 
@@ -161,7 +165,11 @@ begin
   begin
     try
       modelEntraMat.Qconsulta.Close;
-      modelEntraMat.Qconsulta.SQL.Text := 'select * from cor where codigo = :codigo';
+      modelEntraMat.Qconsulta.SQL.Text :=
+        'select c.* from cor c ' +
+        'inner join cor_material cm on c.id = cm.cor_id ' +
+        'where cm.material_id = ' + IntToStr(idMat) + ' and c.codigo = :codigo';
+
       modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tCor.Text;
       modelEntraMat.Qconsulta.Open;
       tDescCor.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
@@ -170,7 +178,15 @@ begin
       on E : Exception do
         ShowMessage('Erro ao encontrar cor ' + E.Message);
     end;
+  end
+  else
+  begin
+    tDescCor.Text := '';
   end;
+
+  if (Trim(tDescCor.Text) = '') and (Trim(tCor.Text) <> '') then
+    ShowMessage('Cor inválida, verifique se essa cor está vinculada ao Material informado!');
+
 end;
 
 procedure TformMovEntraMat.tDepExit(Sender: TObject);
@@ -188,6 +204,10 @@ begin
       on E : Exception do
         ShowMessage('Erro ao encontrar deposito ' + E.Message);
     end;
+  end
+  else
+  begin
+    tDescDep.Text := '';
   end;
 end;
 
