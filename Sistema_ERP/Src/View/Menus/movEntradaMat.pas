@@ -38,6 +38,7 @@ type
     DBGrid1: TDBGrid;
     Qestoque: TFDQuery;
     DS_Qestoque: TDataSource;
+    habGrav: TButton;
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -81,6 +82,7 @@ begin
        idCor := formConsultaCores.registroSelecionado;
      end;
   finally
+     tCor.SetFocus;
      FreeAndNil(formConsultaCores);
   end;
 end;
@@ -111,6 +113,7 @@ begin
        idMat := formConsultaMaterial.registroSelecionado;//Armazena o ID do material para consulta da COR
      end;
   finally
+     tCodMat.SetFocus;
      FreeAndNil(formConsultaMaterial);
   end;
 end;
@@ -173,7 +176,16 @@ begin
       modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tCor.Text;
       modelEntraMat.Qconsulta.Open;
       tDescCor.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      idCor := modelEntraMat.Qconsulta.FieldByName('id').AsInteger;
       modelEntraMat.Qconsulta.Close;
+      try
+        Qestoque.Close;
+        Qestoque.ParamByName('idMat').AsInteger := idMat;
+        Qestoque.ParamByName('idCor').AsInteger := idCor;
+      finally
+        Qestoque.Open;
+      end;
+
     except
       on E : Exception do
         ShowMessage('Erro ao encontrar cor ' + E.Message);

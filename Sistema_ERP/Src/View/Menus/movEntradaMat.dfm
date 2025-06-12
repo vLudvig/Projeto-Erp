@@ -69,6 +69,7 @@ object formMovEntraMat: TformMovEntraMat
         Width = 105
         Height = 33
         Caption = 'Gravar'
+        Enabled = False
         TabOrder = 0
       end
       object btnLimpar: TButton
@@ -201,6 +202,17 @@ object formMovEntraMat: TformMovEntraMat
       TabOrder = 12
       OnClick = btnConsDepClick
     end
+    object habGrav: TButton
+      Left = 104
+      Top = 256
+      Width = 105
+      Height = 33
+      Hint = 'Habilita o bot'#227'o respons'#225'vel por gravar movimento'
+      Caption = 'Habilita Gravar'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 13
+    end
   end
   object Qestoque: TFDQuery
     Connection = modelConexao.FDConnection1
@@ -209,9 +221,8 @@ object formMovEntraMat: TformMovEntraMat
       
         ' mat.codigo as cod_mat, mat.descricao as desc_Mat, cor.codigo as' +
         ' cod_Cor, '
-      
-        ' cor.descricao as desc_Cor, est.quantidade, est.lote, dep.descri' +
-        'cao as desc_lote'
+      ' cor.descricao as desc_Cor, est.quantidade, '
+      ' est.lote, dep.codigo as dep_cod, dep.descricao as desc_dep'
       'from estoque_material est'
       'inner join cor_material corMat '
       
@@ -223,7 +234,7 @@ object formMovEntraMat: TformMovEntraMat
       'on cor.id = corMat.cor_id '
       'inner join deposito dep'
       'on dep.id = est.deposito_id'
-      'where 1=1 or est.material_id = :idMAt')
+      'where est.material_id = :idMAt and est.cor_id = :idCor')
     Left = 553
     Top = 448
     ParamData = <
@@ -232,6 +243,11 @@ object formMovEntraMat: TformMovEntraMat
         DataType = ftInteger
         ParamType = ptInput
         Value = Null
+      end
+      item
+        Name = 'IDCOR'
+        DataType = ftInteger
+        ParamType = ptInput
       end>
   end
   object DS_Qestoque: TDataSource
