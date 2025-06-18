@@ -70,7 +70,8 @@ object formMovEntraMat: TformMovEntraMat
         Height = 33
         Caption = 'Gravar'
         Enabled = False
-        TabOrder = 0
+        TabOrder = 2
+        OnClick = btnGravarClick
       end
       object btnLimpar: TButton
         Left = 175
@@ -78,7 +79,8 @@ object formMovEntraMat: TformMovEntraMat
         Width = 105
         Height = 33
         Caption = 'Limpar'
-        TabOrder = 1
+        TabOrder = 0
+        OnClick = btnLimparClick
       end
       object btnFechar: TButton
         Left = 310
@@ -86,7 +88,7 @@ object formMovEntraMat: TformMovEntraMat
         Width = 105
         Height = 33
         Caption = 'Fechar'
-        TabOrder = 2
+        TabOrder = 1
         OnClick = btnFecharClick
       end
     end
@@ -96,7 +98,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 1195
       Height = 347
       Align = alBottom
-      TabOrder = 1
+      TabOrder = 4
       object DBGrid1: TDBGrid
         Left = 1
         Top = 1
@@ -117,7 +119,7 @@ object formMovEntraMat: TformMovEntraMat
       Top = 55
       Width = 121
       Height = 23
-      TabOrder = 2
+      TabOrder = 5
       OnExit = tCodMatExit
     end
     object tCor: TEdit
@@ -125,7 +127,7 @@ object formMovEntraMat: TformMovEntraMat
       Top = 94
       Width = 121
       Height = 23
-      TabOrder = 3
+      TabOrder = 6
       OnExit = tCorExit
     end
     object tDescMat: TEdit
@@ -134,7 +136,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 242
       Height = 23
       Enabled = False
-      TabOrder = 4
+      TabOrder = 7
     end
     object tDescCor: TEdit
       Left = 231
@@ -142,14 +144,14 @@ object formMovEntraMat: TformMovEntraMat
       Width = 242
       Height = 23
       Enabled = False
-      TabOrder = 5
+      TabOrder = 8
     end
     object tDep: TEdit
       Left = 104
       Top = 133
       Width = 121
       Height = 23
-      TabOrder = 6
+      TabOrder = 9
       OnExit = tDepExit
     end
     object tDescDep: TEdit
@@ -158,22 +160,24 @@ object formMovEntraMat: TformMovEntraMat
       Width = 242
       Height = 23
       Enabled = False
-      TabOrder = 7
+      TabOrder = 10
     end
     object tLote: TEdit
       Left = 104
       Top = 172
       Width = 121
       Height = 23
-      TabOrder = 8
+      TabOrder = 11
       Text = '000000'
+      OnEnter = tLoteEnter
     end
     object tQtde: TEdit
       Left = 104
       Top = 211
       Width = 46
       Height = 23
-      TabOrder = 9
+      TabOrder = 12
+      OnKeyPress = tQtdeKeyPress
     end
     object btnConsMat: TButton
       Left = 479
@@ -181,7 +185,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 75
       Height = 25
       Caption = 'Consultar'
-      TabOrder = 10
+      TabOrder = 1
       OnClick = btnConsMatClick
     end
     object btnConsCor: TButton
@@ -190,7 +194,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 75
       Height = 25
       Caption = 'Consultar'
-      TabOrder = 11
+      TabOrder = 2
       OnClick = btnConsCorClick
     end
     object btnConsDep: TButton
@@ -199,7 +203,7 @@ object formMovEntraMat: TformMovEntraMat
       Width = 75
       Height = 25
       Caption = 'Consultar'
-      TabOrder = 12
+      TabOrder = 3
       OnClick = btnConsDepClick
     end
     object habGrav: TButton
@@ -208,10 +212,11 @@ object formMovEntraMat: TformMovEntraMat
       Width = 105
       Height = 33
       Hint = 'Habilita o bot'#227'o respons'#225'vel por gravar movimento'
-      Caption = 'Habilita Gravar'
+      Caption = 'Habilitar Gravar'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 13
+      OnClick = habGravClick
     end
   end
   object Qestoque: TFDQuery

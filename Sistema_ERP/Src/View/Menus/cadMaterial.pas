@@ -211,6 +211,9 @@ begin
      begin
         alteracao := true;
         modoAlteracao;
+
+        //ajustando index de cbUnidade
+
      end
   else
    ShowMessage('Nenhum material selecionado, impossivel continuar.');

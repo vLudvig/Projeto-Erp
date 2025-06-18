@@ -48,6 +48,13 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure tCorExit(Sender: TObject);
     procedure tDepExit(Sender: TObject);
+    procedure habGravClick(Sender: TObject);
+    function geraRegistroEstoque: boolean;
+    procedure btnGravarClick(Sender: TObject);
+    procedure tQtdeKeyPress(Sender: TObject; var Key: Char);
+    procedure limpaCamposTela();
+    procedure btnLimparClick(Sender: TObject);
+    procedure tLoteEnter(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -77,7 +84,8 @@ begin
 
      if formConsultaCores.ShowModal = mrOk then
      begin
-       tCor.Text := formConsultaCores.codigoSelecionado; //Escreve o CODIGO conforme selecionado na consulta
+        //Escreve as informações da cor conforme selecionado na consulta
+       tCor.Text := formConsultaCores.codigoSelecionado;
        tDescCor.Text := formConsultaCores.descSelec;
        idCor := formConsultaCores.registroSelecionado;
      end;
@@ -93,7 +101,8 @@ begin
   try
      if formConsultaDep.ShowModal = mrOk then
      begin
-       tDep.Text := formConsultaDep.codigoSelecionado;//Escreve o CODIGO conforme selecionado na consulta
+      //Escreve as informações do deposito conforme selecionado na consulta
+       tDep.Text := formConsultaDep.codigoSelecionado;
        tDescDep.Text := formConsultaDep.descSelec;
        idDep := formConsultaDep.registroSelecionado;
      end;
@@ -108,9 +117,10 @@ begin
   try
      if formConsultaMaterial.ShowModal = mrOk then
      begin
-       tCodMat.Text := formConsultaMaterial.codigoSelecionado;//Escreve o CODIGO conforme selecionado na consulta
+       //Escreve as informações do material conforme selecionado na consulta
+       tCodMat.Text := formConsultaMaterial.codigoSelecionado;
        tDescMat.Text := formConsultaMaterial.descSelec;
-       idMat := formConsultaMaterial.registroSelecionado;//Armazena o ID do material para consulta da COR
+       idMat := formConsultaMaterial.registroSelecionado;
      end;
   finally
      tCodMat.SetFocus;
@@ -129,6 +139,59 @@ begin
   Self.Close
 end;
 
+procedure TformMovEntraMat.btnGravarClick(Sender: TObject);
+  var
+    SqlInsert: String;
+    SqlValues:String;
+    SqlUpdate: String;
+begin
+  //Valida se deve gerar um Insert ou Update na Estoque_material
+  if geraRegistroEstoque then
+  begin
+    try
+      SqlInsert := 'Insert into estoque_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE) ';
+      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde) ';
+      modelEntraMat.Qcad.SQL.Text := SqlInsert + SqlValues;
+      modelEntraMat.Qcad.ParamByName('idMat').asInteger := idMat;
+      modelEntraMat.Qcad.ParamByName('idCor').asInteger := idCor;
+      modelEntraMat.Qcad.ParamByName('idDep').asInteger := idDep;
+      modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
+      modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
+      modelEntraMat.Qcad.ExecSQL;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao gerar estoque do material: ' + E.Message);
+
+    end;
+  end
+  else
+  begin
+    try
+      SqlUpdate := 'update estoque_material set QUANTIDADE = QUANTIDADE + :qtde where ' +
+        ' material_id = :idMat and Cor_id = :idCor and deposito_id = :idDep and lote = :lote';
+      modelEntraMat.Qcad.SQL.Text := SqlUpdate;
+      modelEntraMat.Qcad.ParamByName('idMat').asInteger := idMat;
+      modelEntraMat.Qcad.ParamByName('idCor').asInteger := idCor;
+      modelEntraMat.Qcad.ParamByName('idDep').asInteger := idDep;
+      modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
+      modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
+      modelEntraMat.Qcad.ExecSQL;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao alterar estoque do material: ' + E.Message);
+    end;
+  end;
+
+  Qestoque.Close;
+  Qestoque.Open;
+
+end;
+
+procedure TformMovEntraMat.btnLimparClick(Sender: TObject);
+begin
+  limpaCamposTela;
+end;
+
 procedure TformMovEntraMat.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(modelEntraMat);
@@ -137,6 +200,23 @@ end;
 procedure TformMovEntraMat.FormShow(Sender: TObject);
 begin
   modelEntraMat:= TmodelEntraMat.Create(nil);
+end;
+
+procedure TformMovEntraMat.habGravClick(Sender: TObject);
+begin
+  try
+    modelEntraMat.Qconsulta.Close;
+    modelEntraMat.Qconsulta.SQL.Text := 'select * from cor_material where cor_id = :idCor and material_id = :idMat';
+    modelEntraMat.Qconsulta.ParamByName('idCor').AsInteger := idCor;
+    modelEntraMat.Qconsulta.ParamByName('idMat').AsInteger := idMat;
+    modelEntraMat.Qconsulta.Open;
+    if modelEntraMat.Qconsulta.IsEmpty then
+      ShowMessage('Material não possui esta Cor ou Material inválido, impossivel continuar!')
+    else
+      btnGravar.Enabled := true;
+  finally
+
+  end;
 end;
 
 procedure TformMovEntraMat.tCodMatExit(Sender: TObject);
@@ -220,6 +300,64 @@ begin
   else
   begin
     tDescDep.Text := '';
+  end;
+end;
+
+procedure TformMovEntraMat.tLoteEnter(Sender: TObject);
+begin
+  tLote.Text := '000000';//Lote padrão
+end;
+
+procedure TformMovEntraMat.tQtdeKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9', ',', #8]) then
+    Key := #0;
+
+  // Impede digitar mais de uma vírgula
+  if (Key = ',') and (Pos(',', tQtde.Text) > 0) then
+    Key := #0;
+
+  //Tab no campo qtde leva para o habilita gravar -- OBS: Não funciona =(
+  if Key = #9 then
+  begin
+    Key := #0;
+    habGrav.SetFocus;
+  end;
+end;
+
+function TformMovEntraMat.geraRegistroEstoque: Boolean;
+begin
+  try
+    modelEntraMat.Qconsulta.Close;
+    modelEntraMat.Qconsulta.Sql.Text := 'select * from estoque_material where ' +
+      ' material_id = :idMat and cor_id = :idCor and deposito_id = :idDep and lote = :lote';
+    modelEntraMat.Qconsulta.ParamByName('idMat').AsInteger := idMat;
+    modelEntraMat.Qconsulta.ParamByName('idCor').AsInteger := idCor;
+    modelEntraMat.Qconsulta.ParamByName('idDep').AsInteger := idDep;
+    modelEntraMat.Qconsulta.ParamByName('lote').AsString := tLote.Text;
+    modelEntraMat.Qconsulta.Open;
+
+    if modelEntraMat.Qconsulta.IsEmpty then
+      geraRegistroEstoque := true
+    else
+      geraRegistroEstoque := false;
+
+  except
+    on E: Exception do
+     begin
+      ShowMessage(E.Message);
+     end;
+
+  end;
+end;
+
+procedure TformMovEntraMat.limpaCamposTela();
+begin
+  //limpa todos os campos do panel de informações do material
+  for var i := 0 to pnlFundo.ControlCount - 1 do
+  begin
+    if pnlFundo.Controls[i] is TEdit then
+      TEdit(pnlFundo.Controls[i]).Text := '';
   end;
 end;
 

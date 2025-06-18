@@ -7,7 +7,6 @@ object modelConexao: TmodelConexao
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')
-    Connected = True
     Left = 232
     Top = 128
   end

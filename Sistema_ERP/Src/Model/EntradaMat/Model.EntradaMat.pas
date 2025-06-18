@@ -12,6 +12,8 @@ type
   TmodelEntraMat = class(TDataModule)
     Qconsulta: TFDQuery;
     DS_Qconsulta: TDataSource;
+    Qcad: TFDQuery;
+    DS_Qcad: TDataSource;
   private
     { Private declarations }
   public
