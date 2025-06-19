@@ -200,7 +200,7 @@
       Cursor = crHandPoint
       Caption = 'Anexar'
       TabOrder = 8
-      object Image1: TImage
+      object img2: TImage
         Left = 1
         Top = 1
         Width = 223
@@ -393,5 +393,9 @@
       FixedChar = True
       Size = 1
     end
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 1056
+    Top = 72
   end
 end

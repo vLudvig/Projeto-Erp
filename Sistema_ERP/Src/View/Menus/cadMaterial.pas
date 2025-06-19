@@ -8,7 +8,8 @@ uses
   Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Consulta.Material, Model.Conexao,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Consulta.CategoriaMat,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat;
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat,
+  Vcl.ExtDlgs;
 
 type
   TcadastroMaterial = class(TForm)
@@ -54,7 +55,8 @@ type
     btnConsultaGrupo: TButton;
     btnConsultaCategoria: TButton;
     img1: TImage;
-    Image1: TImage;
+    img2: TImage;
+    OpenDialog1: TOpenDialog;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -85,6 +87,8 @@ type
     procedure descCategId();
     procedure tGrupoMatExit(Sender: TObject);
     procedure tCategoriaMatExit(Sender: TObject);
+    procedure carregarImg;
+    procedure Button2Click(Sender: TObject);
   private
     colunaSelecionada: String;
   public
@@ -110,6 +114,21 @@ begin
       //FreeAndNil(modelMaterial);
     end;
 
+end;
+
+
+procedure TcadastroMaterial.carregarImg;
+begin
+  var caminhoImg1 : String;
+  var caminhoImg2 : String;
+  caminhoImg1 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'1.png';
+  caminhoImg2 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'2.png';
+
+  if FileExists(caminhoImg1) then
+    img1.Picture.LoadFromFile(caminhoImg1);
+
+  if FileExists(caminhoImg2) then
+    img2.Picture.LoadFromFile(caminhoImg2);
 end;
 
 procedure TcadastroMaterial.modoInclusao();
@@ -403,7 +422,7 @@ begin
      if formConsultaMaterial.ShowModal = mrOk then
      begin
        tIdMat.Text :=  IntToStr(formConsultaMaterial.registroSelecionado);//Escreve o ID conforme selecionado na consulta
-       idMaterial();//com o ID escrito, pega todos os outros campos;
+       idMaterial();//com o ID escrito, pega e escreve todos os outros campos;
      end;
   finally
      FreeAndNil(formConsultaMaterial);
@@ -428,7 +447,7 @@ begin
   QcorMaterial.SQL.Text := sqlConsultaCores;
   QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
   QcorMaterial.Open();
-  
+
   if not modelMaterial.QconsultaMaterial.IsEmpty then
   begin
     tCodigoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('codigo').AsString;
@@ -443,6 +462,8 @@ begin
 
     if Trim(tGrupoMat.Text) <> '' then descGrupoId();
     if Trim(tCategoriaMat.Text) <> '' then descCategId();
+
+    carregarImg;
   end
   else
     ShowMessage('Material nao encontrado!');
@@ -492,6 +513,11 @@ begin
     ShowMessage('Impossivel remover cores ao incluir material, necessário estar em alteração!')
   else
     removerCor();
+end;
+
+procedure TcadastroMaterial.Button2Click(Sender: TObject);
+begin
+  OpenDialog1.Create(nil);
 end;
 
 procedure TcadastroMaterial.removerCor;
