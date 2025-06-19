@@ -44,6 +44,8 @@ type
     procedure CategoriaMaterial2Click(Sender: TObject);
     procedure N5Click(Sender: TObject);
     procedure EntradadeMaterial1Click(Sender: TObject);
+    procedure CarregarImagem;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -59,6 +61,14 @@ implementation
 
 uses
   cadMaterial, cadCor1, cadGrupoMaterial;
+
+procedure TViewPrincipal.CarregarImagem;
+begin
+  var caminhoImg : String;
+  caminhoImg := 'C:\Projeto-Erp\Sistema_ERP\Img\Empresa\logo.png';
+  if FileExists(caminhoImg) then
+    Image1.Picture.LoadFromFile(caminhoImg);
+end;
 
 procedure TViewPrincipal.CategoriaMaterial1Click(Sender: TObject);
 begin
@@ -88,6 +98,12 @@ begin
   finally
      FreeAndNil(formMovEntraMat);
   end;
+end;
+
+
+procedure TViewPrincipal.FormCreate(Sender: TObject);
+begin
+  CarregarImagem;
 end;
 
 procedure TViewPrincipal.lblMouseClick(Sender: TObject);

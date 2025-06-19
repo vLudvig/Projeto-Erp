@@ -53,6 +53,8 @@ type
     Label10: TLabel;
     btnConsultaGrupo: TButton;
     btnConsultaCategoria: TButton;
+    img1: TImage;
+    Image1: TImage;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -122,6 +124,7 @@ begin
       ShowMessage('Erro: modelMaterial ou QconsultaMaterial não foi instanciado!');
     end;
   inclusao := true;
+  tCodigoMat.Enabled := True;
   checkAtivo.Checked := true;
   pnlCadastro.Enabled := true;
   btnConsultar.Visible := false;
@@ -242,10 +245,17 @@ begin
         modelMaterial.QcadastroMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
         modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text;
         modelMaterial.QcadastroMaterial.ParamByName('quantidade').AsInteger := 0;
-        modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
+        modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Items[cbUnidade.ItemIndex];
         modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
-        modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
-        modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+        if (Trim(tGrupoMat.Text) <> '')  then
+          begin
+            modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
+          end;
+        if (Trim(tCategoriaMat.Text) <> '') then
+          begin
+            modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+          end;
+
         modelMaterial.QcadastroMaterial.ExecSQL;
         modelMaterial.QcadastroMaterial.Close;
 
@@ -277,8 +287,17 @@ begin
       modelMaterial.QcadastroMaterial.ParamByName('descricao').AsString := tDescMat.Text;
       modelMaterial.QcadastroMaterial.ParamByName('unidade').AsString := cbUnidade.Text;
       modelMaterial.QcadastroMaterial.ParamByName('ativo').AsString := materialAtivo;
-      modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
-      modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+
+      if (Trim(tGrupoMat.Text) <> '')  then
+        begin
+          modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
+        end;
+
+      if (Trim(tCategoriaMat.Text) <> '') then
+        begin
+          modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
+        end;
+
       modelMaterial.QcadastroMaterial.ExecSQL;
       modelMaterial.QcadastroMaterial.Close;
     finally
@@ -573,13 +592,13 @@ end;
 
 function TcadastroMaterial.validaCamposConfirmar: boolean;
 begin
-  if (tCodigoMat.Text <> '')
-    and (cbUnidade.ItemIndex.ToString <> '') and (tDescMat.Text <> '')
-    and ((Trim(tGrupoMat.Text) <> '') and (Trim(tDescGrupo.Text) <> ''))
-    and ((Trim(tCategoriaMat.Text) <> '') and (Trim(tDescCategoria.Text) <> '')) then
-    validaCamposConfirmar := true
-  else
-    validaCamposConfirmar := false;
+  if (Trim(tCodigoMat.Text) = '') then validaCamposConfirmar := false;
+  if (cbUnidade.Text = '') then validaCamposConfirmar := false;
+  if (tDescMat.Text = '') then validaCamposConfirmar := false;
+  if ((Trim(tGrupoMat.Text) <> '') and (Trim(tDescGrupo.Text) = '')) then validaCamposConfirmar := false;
+  if ((Trim(tCategoriaMat.Text) <> '') and (Trim(tDescCategoria.Text) = '')) then validaCamposConfirmar := false;
+
+  validaCamposConfirmar := true;
 end;
 
 end.

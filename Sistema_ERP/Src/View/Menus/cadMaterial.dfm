@@ -180,6 +180,17 @@
       Cursor = crHandPoint
       Caption = 'Anexar'
       TabOrder = 7
+      object img1: TImage
+        Left = 1
+        Top = 1
+        Width = 295
+        Height = 287
+        Align = alClient
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 297
+        ExplicitHeight = 289
+      end
     end
     object Panel2: TPanel
       Left = 688
@@ -189,6 +200,17 @@
       Cursor = crHandPoint
       Caption = 'Anexar'
       TabOrder = 8
+      object Image1: TImage
+        Left = 1
+        Top = 1
+        Width = 223
+        Height = 203
+        Align = alClient
+        ExplicitLeft = 8
+        ExplicitTop = 17
+        ExplicitWidth = 225
+        ExplicitHeight = 201
+      end
     end
     object tIdMat: TEdit
       Left = 44
