@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Consulta.CategoriaMat,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat,
-  Vcl.ExtDlgs;
+  Vcl.ExtDlgs, Vcl.Imaging.pngimage, Vcl.Buttons;
 
 type
   TcadastroMaterial = class(TForm)
@@ -17,8 +17,6 @@ type
     pnlBotoes: TPanel;
     btnIncluir: TButton;
     btnAlterar: TButton;
-    btnExcluir: TButton;
-    btnConsultar: TButton;
     Label1: TLabel;
     tCodigoMat: TEdit;
     Descrição: TLabel;
@@ -52,11 +50,17 @@ type
     tDescCategoria: TEdit;
     label8: TLabel;
     Label10: TLabel;
-    btnConsultaGrupo: TButton;
-    btnConsultaCategoria: TButton;
     img1: TImage;
-    img2: TImage;
     OpenDialog1: TOpenDialog;
+    Label9: TLabel;
+    Label11: TLabel;
+    img2: TImage;
+    btnExcImg2: TSpeedButton;
+    btnExcImg1: TSpeedButton;
+    btnExcluir: TBitBtn;
+    btnConsultar: TBitBtn;
+    btnConsultaGrupo: TSpeedButton;
+    SpeedButton1: TSpeedButton;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -80,7 +84,7 @@ type
     procedure tGrupoMatEnter(Sender: TObject);
     procedure tGrupoMatKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure btnConsultaCategoriaClick(Sender: TObject);
+    procedure btnConsultaCategoria2Click(Sender: TObject);
     procedure tCategoriaMatKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure descGrupoId();
@@ -89,6 +93,17 @@ type
     procedure tCategoriaMatExit(Sender: TObject);
     procedure carregarImg;
     procedure Button2Click(Sender: TObject);
+    procedure img1Click(Sender: TObject);
+    procedure img2Click(Sender: TObject);
+    procedure btnDelImg1Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure btnConsultar1Click(Sender: TObject);
+    procedure btnExcImg1Click(Sender: TObject);
+    procedure btnExcImg2Click(Sender: TObject);
+    procedure btnConsultaGrupo1Click(Sender: TObject);
+    procedure btnConsultaCategoria1Click(Sender: TObject);
+    procedure btnConsultaGrupo2Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     colunaSelecionada: String;
   public
@@ -121,14 +136,18 @@ procedure TcadastroMaterial.carregarImg;
 begin
   var caminhoImg1 : String;
   var caminhoImg2 : String;
-  caminhoImg1 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'1.png';
-  caminhoImg2 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'2.png';
+  caminhoImg1 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'.jpeg';
+  caminhoImg2 := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\'+ tCodigoMat.Text +'2.jpeg';
 
   if FileExists(caminhoImg1) then
-    img1.Picture.LoadFromFile(caminhoImg1);
+    img1.Picture.LoadFromFile(caminhoImg1)
+  else
+    img1.Picture.Assign(nil);
 
   if FileExists(caminhoImg2) then
-    img2.Picture.LoadFromFile(caminhoImg2);
+    img2.Picture.LoadFromFile(caminhoImg2)
+  else
+    img2.Picture.Assign(nil);
 end;
 
 procedure TcadastroMaterial.modoInclusao();
@@ -225,6 +244,27 @@ begin
       on E: Exception do
         ShowMessage('Erro ao abrir formConsultaCores: ' + E.Message);
     end;
+end;
+
+procedure TcadastroMaterial.BitBtn1Click(Sender: TObject);
+begin
+  if tIdMat.Text <> '' then
+  begin
+    modelMaterial.QcadastroMaterial.Close;
+    modelMaterial.QcadastroMaterial.SQL.Clear;
+    modelMaterial.QcadastroMaterial.SQL.Text := 'delete from material where id = :id';
+    modelMaterial.QcadastroMaterial.ParamByName('id').AsInteger := StrToInt(tIdMat.Text);
+    try
+      modelMaterial.QcadastroMaterial.ExecSQL;
+      ShowMessage('Material Excluido com sucesso!');
+      limpaCamposTela;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao excluir material: ' + E.Message);
+    end;
+  end
+  else
+    ShowMessage('Nenhum material selecionado, impossivel continuar.');
 end;
 
 procedure TcadastroMaterial.btnAlterarClick(Sender: TObject);
@@ -333,7 +373,29 @@ begin
 end;
 
 //Abre a tela de consulta de categoria de Material
-procedure TcadastroMaterial.btnConsultaCategoriaClick(Sender: TObject);
+procedure TcadastroMaterial.btnConsultaCategoria1Click(Sender: TObject);
+begin
+  formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
+  try
+     if formConsultaCategoriaMat.ShowModal = mrOk then
+     begin
+      try
+        tCategoriaMat.Text :=  IntToStr(formConsultaCategoriaMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
+        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tCategoriaMat.Text);
+        formConsultaCategoriaMat.Qconsulta.Open;
+        tDescCategoria.text := formConsultaCategoriaMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar esta categoria!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaCategoriaMat);
+  end;
+end;
+
+procedure TcadastroMaterial.btnConsultaCategoria2Click(Sender: TObject);
 begin
   formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
   try
@@ -393,6 +455,50 @@ begin
     end;
 end;
 
+procedure TcadastroMaterial.btnConsultaGrupo1Click(Sender: TObject);
+begin
+  formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
+  try
+     if formConsultaGrupoMat.ShowModal = mrOk then
+     begin
+      try
+        tGrupoMat.Text :=  IntToStr(formConsultaGrupoMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+        formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaGrupoMat.Qconsulta.Open;
+        tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar este grupo!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaGrupoMat);
+  end;
+end;
+
+procedure TcadastroMaterial.btnConsultaGrupo2Click(Sender: TObject);
+begin
+  formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
+  try
+     if formConsultaGrupoMat.ShowModal = mrOk then
+     begin
+      try
+        tGrupoMat.Text :=  IntToStr(formConsultaGrupoMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaGrupoMat.Qconsulta.Sql.Text := 'Select * from grupo_material where id = :ID';
+        formConsultaGrupoMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tGrupoMat.Text);
+        formConsultaGrupoMat.Qconsulta.Open;
+        tDescGrupo.text := formConsultaGrupoMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar este grupo!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaGrupoMat);
+  end;
+end;
+
 procedure TcadastroMaterial.btnConsultaGrupoClick(Sender: TObject);
 begin
   formConsultaGrupoMat := TformConsultaGrupoMat.Create(nil);
@@ -415,6 +521,20 @@ begin
   end;
 end;
 
+procedure TcadastroMaterial.btnConsultar1Click(Sender: TObject);
+begin
+  formConsultaMaterial := TformConsultaMaterial.Create(nil);
+  try
+     if formConsultaMaterial.ShowModal = mrOk then
+     begin
+       tIdMat.Text :=  IntToStr(formConsultaMaterial.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+       idMaterial();//com o ID escrito, pega e escreve todos os outros campos;
+     end;
+  finally
+     FreeAndNil(formConsultaMaterial);
+  end;
+end;
+
 procedure TcadastroMaterial.btnConsultarClick(Sender: TObject);
 begin
   formConsultaMaterial := TformConsultaMaterial.Create(nil);
@@ -434,41 +554,101 @@ var
   sqlConsulta: String;
   sqlConsultaCores: String;
 begin
-  sqlConsulta := 'Select * from material where id = :ID';
-  modelMaterial.QconsultaMaterial.SQL.Text := sqlConsulta;
-  modelMaterial.QconsultaMaterial.ParamByName('ID').AsInteger := StrToInt(tIdMat.Text);
-  modelMaterial.QconsultaMaterial.Close();
-  modelMaterial.QconsultaMaterial.Open();
-  sqlConsultaCores := 'select c.codigo, c.descricao, c.ativa from cor c inner join cor_material cm '
-      + ' on c.id = cm.cor_id'
-      + ' inner join material m'
-      + ' on m.id = cm.Material_id'
-      + ' where m.id = :idMat';
-  QcorMaterial.SQL.Text := sqlConsultaCores;
-  QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
-  QcorMaterial.Open();
 
-  if not modelMaterial.QconsultaMaterial.IsEmpty then
+  if Trim(tIdMat.Text) <> '' then
   begin
-    tCodigoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('codigo').AsString;
-    tDescMat.Text := modelMaterial.QconsultaMaterial.FieldByName('descricao').AsString;
-    cbUnidade.Text := modelMaterial.QconsultaMaterial.FieldByName('UNIDADE_ESTOQUE').AsString;
-    tCategoriaMat.Text := modelMaterial.QconsultaMaterial.FieldByName('CATEGORIA_MATERIAL_ID').AsString;
-    tGrupoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('GRUPO_MATERIAL_ID').AsString;
-    if modelMaterial.QconsultaMaterial.FieldByName('ativo').AsString = 'S' then
-      checkAtivo.Checked := true
+    sqlConsulta := 'Select * from material where id = :ID';
+    modelMaterial.QconsultaMaterial.SQL.Text := sqlConsulta;
+    modelMaterial.QconsultaMaterial.ParamByName('ID').AsInteger := StrToInt(tIdMat.Text);
+    modelMaterial.QconsultaMaterial.Close();
+    modelMaterial.QconsultaMaterial.Open();
+    sqlConsultaCores := 'select c.codigo, c.descricao, c.ativa from cor c inner join cor_material cm '
+        + ' on c.id = cm.cor_id'
+        + ' inner join material m'
+        + ' on m.id = cm.Material_id'
+        + ' where m.id = :idMat';
+    QcorMaterial.SQL.Text := sqlConsultaCores;
+    QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
+    QcorMaterial.Open();
+
+    if not modelMaterial.QconsultaMaterial.IsEmpty then
+    begin
+      tCodigoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('codigo').AsString;
+      tDescMat.Text := modelMaterial.QconsultaMaterial.FieldByName('descricao').AsString;
+      cbUnidade.Text := modelMaterial.QconsultaMaterial.FieldByName('UNIDADE_ESTOQUE').AsString;
+      tCategoriaMat.Text := modelMaterial.QconsultaMaterial.FieldByName('CATEGORIA_MATERIAL_ID').AsString;
+      tGrupoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('GRUPO_MATERIAL_ID').AsString;
+      if modelMaterial.QconsultaMaterial.FieldByName('ativo').AsString = 'S' then
+        checkAtivo.Checked := true
+      else
+        checkAtivo.Checked := false;
+
+      if Trim(tGrupoMat.Text) <> '' then descGrupoId();
+      if Trim(tCategoriaMat.Text) <> '' then descCategId();
+
+      carregarImg;
+    end
     else
-      checkAtivo.Checked := false;
-
-    if Trim(tGrupoMat.Text) <> '' then descGrupoId();
-    if Trim(tCategoriaMat.Text) <> '' then descCategId();
-
-    carregarImg;
-  end
-  else
-    ShowMessage('Material nao encontrado!');
-
+      ShowMessage('Material nao encontrado!');
+  end;
   modelMaterial.QconsultaMaterial.Close();
+end;
+
+procedure TcadastroMaterial.btnDelImg1Click(Sender: TObject);
+begin
+  DeleteFile('C:\Projeto-Erp\Sistema_ERP\Img\Material\' + tCodigoMat.Text +'.jpeg');
+end;
+
+procedure TcadastroMaterial.img1Click(Sender: TObject);
+  var
+    origem, destino : String;
+begin
+  OpenDialog1.Filter := 'Arquivos JPEG (*.jpeg;*.jpg)|*.jpeg;*.jpg';
+  OpenDialog1.Title := 'Selecione uma imagem JPEG';
+
+  //Abre a janela de seleção de arquivo
+  if OpenDialog1.Execute then
+  begin
+    origem := OpenDialog1.FileName;//salva o caminho do arquivo!
+    destino := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\' + tCodigoMat.Text +'.jpeg';
+
+    if FileExists(destino) then
+        DeleteFile(destino);
+
+    //Copia o arquivo de sua origem para a pasta do programa!
+    if CopyFile(PChar(Origem), PChar(Destino), False) then
+      ShowMessage('Imagem copiada com sucesso!')
+    else
+      ShowMessage('Erro ao copiar a imagem.');
+  end;
+
+  carregarImg;
+end;
+
+procedure TcadastroMaterial.img2Click(Sender: TObject);
+  var
+    origem, destino : String;
+begin
+  OpenDialog1.Filter := 'Arquivos JPEG (*.jpeg;*.jpg)|*.jpeg;*.jpg';
+  OpenDialog1.Title := 'Selecione uma imagem JPEG';
+
+  //Abre a janela de seleção de arquivo
+  if OpenDialog1.Execute then
+  begin
+    origem := OpenDialog1.FileName;//salva o caminho do arquivo!
+    destino := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\' + tCodigoMat.Text +'2.jpeg';
+
+    if FileExists(destino) then
+        DeleteFile(destino);
+
+    //Copia o arquivo de sua origem para a pasta do programa!
+    if CopyFile(PChar(Origem), PChar(Destino), False) then
+      ShowMessage('Imagem copiada com sucesso!')
+    else
+      ShowMessage('Erro ao copiar a imagem.');
+  end;
+
+  carregarImg;
 end;
 
 procedure TcadastroMaterial.btnDesistirClick(Sender: TObject);
@@ -553,6 +733,77 @@ begin
     ShowMessage('Erro ao excluir cor do material: ' + E.Message);
 
   end;
+end;
+
+procedure TcadastroMaterial.SpeedButton1Click(Sender: TObject);
+begin
+  formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
+  try
+     if formConsultaCategoriaMat.ShowModal = mrOk then
+     begin
+      try
+        tCategoriaMat.Text :=  IntToStr(formConsultaCategoriaMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
+        formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
+        formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tCategoriaMat.Text);
+        formConsultaCategoriaMat.Qconsulta.Open;
+        tDescCategoria.text := formConsultaCategoriaMat.Qconsulta.FieldByName('descricao').AsString;
+      except
+        on E: Exception do
+           ShowMessage('Não foi possivel carregar esta categoria!')
+      end;
+     end;
+  finally
+     FreeAndNil(formConsultaCategoriaMat);
+  end;
+end;
+
+procedure TcadastroMaterial.btnExcImg1Click(Sender: TObject);
+var
+  Resposta: Integer;
+  imagem: String;
+begin
+  imagem := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\' + tCodigoMat.Text +'.jpeg';
+
+  //Verifica se a imagem existe antes de excluir
+  if FileExists(imagem) then
+  begin
+    Resposta := MessageDlg('Deseja realmente excluir a imagem?', mtConfirmation, [mbOK, mbCancel], 0);
+
+    if Resposta = mrOk then
+    begin
+      DeleteFile(imagem);
+      ShowMessage('Imagem Exluida!');
+      carregarImg;
+    end;
+  end
+  else
+    ShowMessage('Imagem não encontrada, impossivel continuar!');
+
+end;
+
+
+procedure TcadastroMaterial.btnExcImg2Click(Sender: TObject);
+var
+  Resposta: Integer;
+  imagem: String;
+begin
+  imagem := 'C:\Projeto-Erp\Sistema_ERP\Img\Material\' + tCodigoMat.Text +'2.jpeg';
+
+  //Verifica se a imagem existe antes de excluir
+  if FileExists(imagem) then
+  begin
+    Resposta := MessageDlg('Deseja realmente excluir a imagem?', mtConfirmation, [mbOK, mbCancel], 0);
+
+    if Resposta = mrOk then
+    begin
+      DeleteFile(imagem);
+      ShowMessage('Imagem Exluida!');
+      carregarImg;
+    end;
+  end
+  else
+    ShowMessage('Imagem não encontrada, impossivel continuar!');
+
 end;
 
 procedure TcadastroMaterial.tCategoriaMatExit(Sender: TObject);

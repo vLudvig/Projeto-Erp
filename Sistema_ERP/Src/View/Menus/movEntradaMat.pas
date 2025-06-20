@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Grids, Vcl.DBGrids, Model.Conexao, Consulta.Material, Consulta.Cor, Consulta.Deposito,
-  model.Material, model.cor, Model.Deposito, Model.EntradaMat;
+  model.Material, model.cor, Model.Deposito, Model.EntradaMat, Vcl.Buttons;
 
 type
   TformMovEntraMat = class(TForm)
@@ -32,13 +32,21 @@ type
     tLote: TEdit;
     Label1: TLabel;
     tQtde: TEdit;
-    btnConsMat: TButton;
-    btnConsCor: TButton;
-    btnConsDep: TButton;
     DBGrid1: TDBGrid;
     Qestoque: TFDQuery;
     DS_Qestoque: TDataSource;
     habGrav: TButton;
+    btnConsMat: TSpeedButton;
+    btnConsCor: TSpeedButton;
+    btnConsDep1: TSpeedButton;
+    QestoqueCOD_MAT: TStringField;
+    QestoqueDESC_MAT: TStringField;
+    QestoqueCOD_COR: TStringField;
+    QestoqueDESC_COR: TStringField;
+    QestoqueQUANTIDADE: TFMTBCDField;
+    QestoqueLOTE: TStringField;
+    QestoqueDEP_COD: TStringField;
+    QestoqueDESC_DEP: TStringField;
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -55,6 +63,9 @@ type
     procedure limpaCamposTela();
     procedure btnLimparClick(Sender: TObject);
     procedure tLoteEnter(Sender: TObject);
+    procedure btnConsMat1Click(Sender: TObject);
+    procedure btnConsCor1Click(Sender: TObject);
+    procedure btnConsDep1Click(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -70,6 +81,30 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TformMovEntraMat.btnConsCor1Click(Sender: TObject);
+begin
+  formConsultaCores := TformConsultaCores.Create(nil);
+  try
+     formConsultaCores.Qconsulta.Close;
+     formConsultaCores.Qconsulta.Sql.Text :=
+        'select c.* from cor c ' +
+        'inner join cor_material cm on c.id = cm.cor_id ' +
+        'where cm.material_id = ' + IntToStr(idMat);
+     formConsultaCores.Qconsulta.Open;
+
+     if formConsultaCores.ShowModal = mrOk then
+     begin
+        //Escreve as informações da cor conforme selecionado na consulta
+       tCor.Text := formConsultaCores.codigoSelecionado;
+       tDescCor.Text := formConsultaCores.descSelec;
+       idCor := formConsultaCores.registroSelecionado;
+     end;
+  finally
+     tCor.SetFocus;
+     FreeAndNil(formConsultaCores);
+  end;
+end;
 
 procedure TformMovEntraMat.btnConsCorClick(Sender: TObject);
 begin
@@ -95,6 +130,22 @@ begin
   end;
 end;
 
+procedure TformMovEntraMat.btnConsDep1Click(Sender: TObject);
+begin
+  formConsultaDep := TformConsultaDep.Create(nil);
+  try
+     if formConsultaDep.ShowModal = mrOk then
+     begin
+      //Escreve as informações do deposito conforme selecionado na consulta
+       tDep.Text := formConsultaDep.codigoSelecionado;
+       tDescDep.Text := formConsultaDep.descSelec;
+       idDep := formConsultaDep.registroSelecionado;
+     end;
+  finally
+     FreeAndNil(formConsultaDep);
+  end;
+end;
+
 procedure TformMovEntraMat.btnConsDepClick(Sender: TObject);
 begin
   formConsultaDep := TformConsultaDep.Create(nil);
@@ -108,6 +159,23 @@ begin
      end;
   finally
      FreeAndNil(formConsultaDep);
+  end;
+end;
+
+procedure TformMovEntraMat.btnConsMat1Click(Sender: TObject);
+begin
+  formConsultaMaterial := TformConsultaMaterial.Create(nil);
+  try
+     if formConsultaMaterial.ShowModal = mrOk then
+     begin
+       //Escreve as informações do material conforme selecionado na consulta
+       tCodMat.Text := formConsultaMaterial.codigoSelecionado;
+       tDescMat.Text := formConsultaMaterial.descSelec;
+       idMat := formConsultaMaterial.registroSelecionado;
+     end;
+  finally
+     tCodMat.SetFocus;
+     FreeAndNil(formConsultaMaterial);
   end;
 end;
 

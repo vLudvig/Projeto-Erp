@@ -32,6 +32,5 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
-  Application.CreateForm(TmodelEntraMat, modelEntraMat);
   Application.Run;
 end.
