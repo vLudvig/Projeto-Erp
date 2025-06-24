@@ -22,7 +22,8 @@ uses
   Model.Deposito in 'Src\Model\Deposito\Model.Deposito.pas' {modelDeposito: TDataModule},
   Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep},
   movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat},
-  Model.EntradaMat in 'Src\Model\EntradaMat\Model.EntradaMat.pas' {modelEntraMat: TDataModule};
+  Model.EntradaMat in 'Src\Model\EntradaMat\Model.EntradaMat.pas' {modelEntraMat: TDataModule},
+  funcGeral in 'Src\Service\funcGeral.pas';
 
 {$R *.res}
 

@@ -292,7 +292,7 @@
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
       OnClick = btnConsultaGrupo2Click
     end
-    object SpeedButton1: TSpeedButton
+    object btnConsultaCateg: TSpeedButton
       Left = 430
       Top = 197
       Width = 23
@@ -349,7 +349,7 @@
         FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFF1F0EEBEB5AD
         95887C705D4A69554289786AABA096E6E3DEFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
-      OnClick = SpeedButton1Click
+      OnClick = btnConsultaCategClick
     end
     object tCodigoMat: TEdit
       Left = 104

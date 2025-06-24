@@ -60,7 +60,7 @@ type
     btnExcluir: TBitBtn;
     btnConsultar: TBitBtn;
     btnConsultaGrupo: TSpeedButton;
-    SpeedButton1: TSpeedButton;
+    btnConsultaCateg: TSpeedButton;
     procedure abrirTelaMaterial(Sender: TObject);
     procedure FecharTelaMaterial(Sender: TObject);
     procedure modoInclusao();
@@ -103,7 +103,7 @@ type
     procedure btnConsultaGrupo1Click(Sender: TObject);
     procedure btnConsultaCategoria1Click(Sender: TObject);
     procedure btnConsultaGrupo2Click(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnConsultaCategClick(Sender: TObject);
   private
     colunaSelecionada: String;
   public
@@ -735,7 +735,7 @@ begin
   end;
 end;
 
-procedure TcadastroMaterial.SpeedButton1Click(Sender: TObject);
+procedure TcadastroMaterial.btnConsultaCategClick(Sender: TObject);
 begin
   formConsultaCategoriaMat := TformConsultaCategoriaMat.Create(nil);
   try
@@ -808,7 +808,7 @@ end;
 
 procedure TcadastroMaterial.tCategoriaMatExit(Sender: TObject);
 begin
-  if Trim(tCategoriaMat.Text) <> '' then descCategId();
+  if Trim(tCategoriaMat.Text) <> '' then descCategId() else tDescCategoria.Text := '';
 
 end;
 
@@ -840,7 +840,7 @@ end;
 
 procedure TcadastroMaterial.tGrupoMatExit(Sender: TObject);
 begin
-  if Trim(tGrupoMat.Text) <> '' then descGrupoId();//Escreve a desc do grupo
+  if Trim(tGrupoMat.Text) <> '' then descGrupoId() else tDescGrupo.Text := '';//Escreve a desc do grupo
 end;
 
 procedure TcadastroMaterial.tGrupoMatKeyDown(Sender: TObject; var Key: Word;
