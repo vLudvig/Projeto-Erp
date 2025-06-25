@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Grids, Vcl.DBGrids, Model.Conexao, Consulta.Material, Consulta.Cor, Consulta.Deposito,
-  model.Material, model.cor, Model.Deposito, Model.EntradaMat, Vcl.Buttons;
+  model.Material, model.cor, Model.Deposito, Model.EntradaMat, Vcl.Buttons, funcGeral, uReferenciaMaterial;
 
 type
   TformMovEntraMat = class(TForm)
@@ -47,6 +47,7 @@ type
     QestoqueLOTE: TStringField;
     QestoqueDEP_COD: TStringField;
     QestoqueDESC_DEP: TStringField;
+    checkExibMsg: TCheckBox;
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -67,6 +68,8 @@ type
     procedure btnConsCor1Click(Sender: TObject);
     procedure btnConsDep1Click(Sender: TObject);
   private
+
+  protected
     var
       idMat: Integer;
       idDep: Integer;
@@ -212,7 +215,16 @@ procedure TformMovEntraMat.btnGravarClick(Sender: TObject);
     SqlInsert: String;
     SqlValues:String;
     SqlUpdate: String;
+
 begin
+  btnGravar.Enabled := false;
+
+  var refMat : TReferenciaMaterial;
+  refMat.IdMat := idMat;
+  refMat.IdCor:= idCor;
+  refMat.IdDep := IdDep;
+  refMat.Lote := tLote.Text;
+
   //Valida se deve gerar um Insert ou Update na Estoque_material
   if geraRegistroEstoque then
   begin
@@ -226,6 +238,11 @@ begin
       modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
       modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
       modelEntraMat.Qcad.ExecSQL;
+
+      funcGeral.geraMovMat(refMat);
+
+      if checkExibMsg.Checked then
+        ShowMessage('Movimentação efetuada com sucesso!')
     except
       on E: Exception do
         ShowMessage('Erro ao gerar estoque do material: ' + E.Message);
@@ -244,6 +261,11 @@ begin
       modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
       modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
       modelEntraMat.Qcad.ExecSQL;
+
+      funcGeral.geraMovMat(refMat);
+
+      if checkExibMsg.Checked then
+        ShowMessage('Movimentação efetuada com sucesso!')
     except
       on E: Exception do
         ShowMessage('Erro ao alterar estoque do material: ' + E.Message);
@@ -252,7 +274,6 @@ begin
 
   Qestoque.Close;
   Qestoque.Open;
-
 end;
 
 procedure TformMovEntraMat.btnLimparClick(Sender: TObject);
@@ -405,6 +426,7 @@ begin
     modelEntraMat.Qconsulta.ParamByName('lote').AsString := tLote.Text;
     modelEntraMat.Qconsulta.Open;
 
+    //Se "IsEmpty" então não existe registro de estoque para a referencia(material, cor, deposito e lote)
     if modelEntraMat.Qconsulta.IsEmpty then
       geraRegistroEstoque := true
     else

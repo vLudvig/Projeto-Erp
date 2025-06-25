@@ -118,8 +118,9 @@ object ViewPrincipal: TViewPrincipal
       object N6: TMenuItem
         Caption = '-'
       end
-      object SadadeMateriais1: TMenuItem
+      object SaidaDeMateriais1: TMenuItem
         Caption = 'Sa'#237'da de Materiais'
+        OnClick = SaidaDeMateriais1Click
       end
       object SadadeProdutos2: TMenuItem
         Caption = '-'

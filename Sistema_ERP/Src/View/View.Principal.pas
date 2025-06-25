@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito,
-  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat;
+  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat;
 
 type
   TViewPrincipal = class(TForm)
@@ -23,7 +23,7 @@ type
     Relatrios1: TMenuItem;
     EntradadeMaterial1: TMenuItem;
     N6: TMenuItem;
-    SadadeMateriais1: TMenuItem;
+    SaidaDeMateriais1: TMenuItem;
     SadadeProdutos2: TMenuItem;
     ransfrenciaDepProd1: TMenuItem;
     MovimentaesMat1: TMenuItem;
@@ -46,6 +46,7 @@ type
     procedure EntradadeMaterial1Click(Sender: TObject);
     procedure CarregarImagem;
     procedure FormCreate(Sender: TObject);
+    procedure SaidaDeMateriais1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -153,6 +154,16 @@ begin
      formCadDeposito.ShowModal;
   finally
      FreeAndNil(formCadDeposito);
+  end;
+end;
+
+procedure TViewPrincipal.SaidaDeMateriais1Click(Sender: TObject);
+begin
+  formMovSaidaMat := TformMovSaidaMat.Create(nil);
+    try
+       formMovSaidaMat.ShowModal;
+    finally
+       FreeAndNil(formMovSaidaMat);
   end;
 end;
 

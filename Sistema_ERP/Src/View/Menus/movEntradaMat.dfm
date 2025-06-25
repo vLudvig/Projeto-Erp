@@ -368,6 +368,17 @@ object formMovEntraMat: TformMovEntraMat
       TabOrder = 10
       OnClick = habGravClick
     end
+    object checkExibMsg: TCheckBox
+      Left = 736
+      Top = 55
+      Width = 121
+      Height = 17
+      Hint = 'Se marcado, sistema mostra mensagem confirmando o movimento.'
+      Caption = 'Exibe Confirma'#231#227'o'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 11
+    end
   end
   object Qestoque: TFDQuery
     Connection = modelConexao.FDConnection1

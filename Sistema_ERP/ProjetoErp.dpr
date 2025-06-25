@@ -23,7 +23,11 @@ uses
   Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep},
   movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat},
   Model.EntradaMat in 'Src\Model\EntradaMat\Model.EntradaMat.pas' {modelEntraMat: TDataModule},
-  funcGeral in 'Src\Service\funcGeral.pas';
+  funcGeral in 'Src\Service\funcGeral.pas',
+  movSaidaMat in 'Src\View\Menus\movSaidaMat.pas' {formMovSaidaMat},
+  Model.SaidaMat in 'Src\Model\SaidaMat\Model.SaidaMat.pas' {modelSaidaMat: TDataModule},
+  uReferenciaMaterial in 'Src\Service\uReferenciaMaterial.pas',
+  Model.FuncGeral in 'Src\Model\FuncGeral\Model.FuncGeral.pas' {modelFuncGeral: TDataModule};
 
 {$R *.res}
 
@@ -33,5 +37,6 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
+  Application.CreateForm(TmodelFuncGeral, modelFuncGeral);
   Application.Run;
 end.

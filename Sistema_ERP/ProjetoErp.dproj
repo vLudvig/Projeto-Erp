@@ -222,6 +222,21 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\Service\funcGeral.pas"/>
+        <DCCReference Include="Src\View\Menus\movSaidaMat.pas">
+            <Form>formMovSaidaMat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\Model\SaidaMat\Model.SaidaMat.pas">
+            <Form>modelSaidaMat</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\Service\uReferenciaMaterial.pas"/>
+        <DCCReference Include="Src\Model\FuncGeral\Model.FuncGeral.pas">
+            <Form>modelFuncGeral</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
