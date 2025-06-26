@@ -1,5 +1,5 @@
 inherited formMovSaidaMat: TformMovSaidaMat
-  Caption = 'formMovSaidaMat'
+  Caption = 'Movimenta'#231#227'o - Sa'#237'da Material'
   StyleElements = [seFont, seClient, seBorder]
   TextHeight = 15
   inherited pnlFundo: TPanel

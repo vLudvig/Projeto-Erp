@@ -23,7 +23,7 @@ uses
   Consulta.Deposito in 'Src\View\Consulta\Consulta.Deposito.pas' {formConsultaDep},
   movEntradaMat in 'Src\View\Menus\movEntradaMat.pas' {formMovEntraMat},
   Model.EntradaMat in 'Src\Model\EntradaMat\Model.EntradaMat.pas' {modelEntraMat: TDataModule},
-  funcGeral in 'Src\Service\funcGeral.pas',
+  funcMovMat in 'Src\Service\funcMovMat.pas',
   movSaidaMat in 'Src\View\Menus\movSaidaMat.pas' {formMovSaidaMat},
   Model.SaidaMat in 'Src\Model\SaidaMat\Model.SaidaMat.pas' {modelSaidaMat: TDataModule},
   uReferenciaMaterial in 'Src\Service\uReferenciaMaterial.pas',

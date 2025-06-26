@@ -8,7 +8,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Model.EntradaMat,
-  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.ExtCtrls, Model.SaidaMat;
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.ExtCtrls, Model.SaidaMat,
+  funcMovMat, uReferenciaMaterial;
 
 type
   TformMovSaidaMat = class(TformMovEntraMat)
@@ -29,35 +30,29 @@ implementation
 {$R *.dfm}
 
 procedure TformMovSaidaMat.btnGravarClick(Sender: TObject);
-var SqlUpdate : String;
+var
+  SqlUpdate : String;
+  refMat : TReferenciaMaterial;
 begin
   btnGravar.Enabled := false;
 
+  refMat.IdMat := idMat;
+  refMat.IdCor := IdCor;
+  refMat.IdDep := idDep;
+  refMat.Lote := tLote.Text;
+
   //Na saida, nunca criamos um registro de estoque,
   //apenas pode dar saida quando ja teve entrada no estoque(registro que já existe)
-  if not geraRegistroEstoque then
-  begin
-    try
-      SqlUpdate := 'update estoque_material set QUANTIDADE = QUANTIDADE - :qtde where ' +
-        ' material_id = :idMat and Cor_id = :idCor and deposito_id = :idDep and lote = :lote';
-      modelSaidaMat.QsaidaMat.SQL.Text := SqlUpdate;
-      modelSaidaMat.QsaidaMat.ParamByName('idMat').asInteger := idMat;
-      modelSaidaMat.QsaidaMat.ParamByName('idCor').asInteger := idCor;
-      modelSaidaMat.QsaidaMat.ParamByName('idDep').asInteger := idDep;
-      modelSaidaMat.QsaidaMat.ParamByName('lote').asString := tLote.Text;
-      modelSaidaMat.QsaidaMat.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
-      modelSaidaMat.QsaidaMat.ExecSQL;
+  try
+     funcMovMat.atualizaEstSaida(refMat, tQtde.Text);
 
-      if checkExibMsg.Checked then
-        ShowMessage('Movimentação efetuada com sucesso!')
+    if checkExibMsg.Checked then
+      ShowMessage('Movimentação efetuada com sucesso!')
 
-    except
-      on E: Exception do
-        ShowMessage('Erro ao alterar estoque do material: ' + E.Message);
-    end;
-  end
-  else
-    ShowMessage('Impossivel fazer saida de um lote ou deposito que ainda não teve entradas!');
+  except
+    on E: Exception do
+      ShowMessage('Erro ao alterar estoque do material: ' + E.Message);
+  end;
 
   Qestoque.Close;
   Qestoque.Open;

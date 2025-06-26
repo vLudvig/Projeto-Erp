@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Grids, Vcl.DBGrids, Model.Conexao, Consulta.Material, Consulta.Cor, Consulta.Deposito,
-  model.Material, model.cor, Model.Deposito, Model.EntradaMat, Vcl.Buttons, funcGeral, uReferenciaMaterial;
+  model.Material, model.cor, Model.Deposito, Model.EntradaMat, Vcl.Buttons, funcMOvMat, uReferenciaMaterial;
 
 type
   TformMovEntraMat = class(TForm)
@@ -212,64 +212,25 @@ end;
 
 procedure TformMovEntraMat.btnGravarClick(Sender: TObject);
   var
-    SqlInsert: String;
-    SqlValues:String;
-    SqlUpdate: String;
+    refMat : TReferenciaMaterial;
 
 begin
   btnGravar.Enabled := false;
 
-  var refMat : TReferenciaMaterial;
   refMat.IdMat := idMat;
   refMat.IdCor:= idCor;
   refMat.IdDep := IdDep;
   refMat.Lote := tLote.Text;
 
-  //Valida se deve gerar um Insert ou Update na Estoque_material
-  if geraRegistroEstoque then
-  begin
-    try
-      SqlInsert := 'Insert into estoque_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE) ';
-      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde) ';
-      modelEntraMat.Qcad.SQL.Text := SqlInsert + SqlValues;
-      modelEntraMat.Qcad.ParamByName('idMat').asInteger := idMat;
-      modelEntraMat.Qcad.ParamByName('idCor').asInteger := idCor;
-      modelEntraMat.Qcad.ParamByName('idDep').asInteger := idDep;
-      modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
-      modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
-      modelEntraMat.Qcad.ExecSQL;
+  try
+    funcMovMat.atualizaEstEntra(refMat, tQtde.Text);
 
-      funcGeral.geraMovMat(refMat);
+    if checkExibMsg.Checked then
+      ShowMessage('Movimentação efetuada com sucesso!')
+  except
+    on E: Exception do
+      ShowMessage('Erro ao movimentar estoque: ' + E.Message);
 
-      if checkExibMsg.Checked then
-        ShowMessage('Movimentação efetuada com sucesso!')
-    except
-      on E: Exception do
-        ShowMessage('Erro ao gerar estoque do material: ' + E.Message);
-
-    end;
-  end
-  else
-  begin
-    try
-      SqlUpdate := 'update estoque_material set QUANTIDADE = QUANTIDADE + :qtde where ' +
-        ' material_id = :idMat and Cor_id = :idCor and deposito_id = :idDep and lote = :lote';
-      modelEntraMat.Qcad.SQL.Text := SqlUpdate;
-      modelEntraMat.Qcad.ParamByName('idMat').asInteger := idMat;
-      modelEntraMat.Qcad.ParamByName('idCor').asInteger := idCor;
-      modelEntraMat.Qcad.ParamByName('idDep').asInteger := idDep;
-      modelEntraMat.Qcad.ParamByName('lote').asString := tLote.Text;
-      modelEntraMat.Qcad.ParamByName('qtde').AsFloat := StrToFloat(tQtde.Text);
-      modelEntraMat.Qcad.ExecSQL;
-
-      funcGeral.geraMovMat(refMat);
-
-      if checkExibMsg.Checked then
-        ShowMessage('Movimentação efetuada com sucesso!')
-    except
-      on E: Exception do
-        ShowMessage('Erro ao alterar estoque do material: ' + E.Message);
-    end;
   end;
 
   Qestoque.Close;
@@ -299,10 +260,21 @@ begin
     modelEntraMat.Qconsulta.ParamByName('idCor').AsInteger := idCor;
     modelEntraMat.Qconsulta.ParamByName('idMat').AsInteger := idMat;
     modelEntraMat.Qconsulta.Open;
+
     if modelEntraMat.Qconsulta.IsEmpty then
       ShowMessage('Material não possui esta Cor ou Material inválido, impossivel continuar!')
     else
-      btnGravar.Enabled := true;
+    begin
+      if Trim(tQtde.Text) <> ''  then
+      begin
+        if StrToFloat(tQtde.Text) <= 0 then
+          ShowMessage('Quantidade de movimento deve ser maior que 0, impossivel continuar!')
+        else
+          btnGravar.Enabled := true;
+      end;
+
+    end;
+
   finally
 
   end;
@@ -406,12 +378,6 @@ begin
   if (Key = ',') and (Pos(',', tQtde.Text) > 0) then
     Key := #0;
 
-  //Tab no campo qtde leva para o habilita gravar -- OBS: Não funciona =(
-  if Key = #9 then
-  begin
-    Key := #0;
-    habGrav.SetFocus;
-  end;
 end;
 
 function TformMovEntraMat.geraRegistroEstoque: Boolean;

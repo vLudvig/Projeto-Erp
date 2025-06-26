@@ -221,7 +221,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Src\Service\funcGeral.pas"/>
+        <DCCReference Include="Src\Service\funcMovMat.pas"/>
         <DCCReference Include="Src\View\Menus\movSaidaMat.pas">
             <Form>formMovSaidaMat</Form>
             <FormType>dfm</FormType>
