@@ -23,8 +23,6 @@ object ViewPrincipal: TViewPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1149
-    ExplicitHeight = 785
     DesignSize = (
       1151
       793)
@@ -45,7 +43,6 @@ object ViewPrincipal: TViewPrincipal
       Anchors = [akLeft, akBottom]
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 504
       object Label1: TLabel
         Left = 24
         Top = 83
@@ -139,6 +136,7 @@ object ViewPrincipal: TViewPrincipal
       end
       object MovimentaesMat2: TMenuItem
         Caption = 'Movimenta'#231#245'es Mat.'
+        OnClick = MovimentaesMat2Click
       end
     end
   end

@@ -1,7 +1,7 @@
-object formMovEntraMat: TformMovEntraMat
+object fmRelMovtoMat: TfmRelMovtoMat
   Left = 0
   Top = 0
-  Caption = 'Movimenta'#231#227'o - Entrada Material'
+  Caption = 'Relat'#243'rio - Movimento Material'
   ClientHeight = 750
   ClientWidth = 1197
   Color = clBtnFace
@@ -10,114 +10,74 @@ object formMovEntraMat: TformMovEntraMat
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poScreenCenter
-  OnDestroy = FormDestroy
-  OnShow = FormShow
   TextHeight = 15
-  object pnlFundo: TPanel
+  object Panel1: TPanel
+    Left = 0
+    Top = 286
+    Width = 1197
+    Height = 464
+    Align = alBottom
+    TabOrder = 0
+    object DBGrid1: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 1195
+      Height = 462
+      Align = alClient
+      DataSource = DS_QconsultaMovto
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+  end
+  object Panel2: TPanel
     Left = 0
     Top = 0
     Width = 1197
-    Height = 750
+    Height = 286
     Align = alClient
-    TabOrder = 0
+    TabOrder = 1
+    object lblDesc: TLabel
+      Left = 38
+      Top = 193
+      Width = 54
+      Height = 15
+      Caption = 'Descri'#231#227'o:'
+    end
     object lblCodigo: TLabel
-      Left = 56
-      Top = 58
+      Left = 50
+      Top = 37
       Width = 42
       Height = 15
       Caption = 'C'#243'digo:'
     end
     object lblCor: TLabel
-      Left = 76
-      Top = 97
+      Left = 70
+      Top = 76
       Width = 22
       Height = 15
       Caption = 'Cor:'
     end
     object lblDep: TLabel
-      Left = 48
-      Top = 136
+      Left = 42
+      Top = 115
       Width = 50
       Height = 15
       Caption = 'Dep'#243'sito:'
     end
     object lblLote: TLabel
-      Left = 72
-      Top = 175
+      Left = 66
+      Top = 154
       Width = 26
       Height = 15
       Caption = 'Lote:'
     end
-    object Label1: TLabel
-      Left = 33
-      Top = 256
-      Width = 65
-      Height = 15
-      Caption = 'Quantidade:'
-    end
-    object btnConsMat: TSpeedButton
-      Left = 479
-      Top = 55
-      Width = 23
-      Height = 23
-      Cursor = crHandPoint
-      Flat = True
-      Glyph.Data = {
-        0E060000424D0E06000000000000360000002800000016000000160000000100
-        180000000000D8050000C40E0000C40E00000000000000000000FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE2EFFF70B0FF4B9DFFC9E2FF0000FFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD2E6FF469AFF2487FF2B8EFF4BB1FE
-        0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFE5FF4E9FFF2788FF2F8CFF3098
-        FF6DBEFD0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCDE4FF54A1FF2688FF2F8CFF30
-        97FF58B9FFDFEEFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFBD5E1EE5BA4FD2487FF308DFF
-        3098FF5EB9FFD0E6FFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F4F3
-        DEDAD5C6BFB8C2BAB2D6D1CBEBE9E7FFFFFFFFFFFFFCFAF8ACADAE4577B43593
-        FF2F99FF60BAFFCEE7FFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFBFAFAB7AE
-        A5887A6B7B6A5A7564527462517766568374659D9084EEEDEAF7F7F69C8C7B71
-        655A487FB462B7FECCE7FFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE8E4E28D
-        7F70705E4B95826FBCAA97CFBFABD2C2AFC4B29EAC9B876E5A487C6C5C9F9488
-        7E6D5E9C8C7BADB0AFD4E2EEFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFF9F8F7
-        7A69587A6754C5B4A1EDDDCAF4E4D0F6E6D2F6E7D2F5E5D1F1E2CEDCCCB9927F
-        6C624F3D9F9387F8F6F6FCF9F8FFFDFBFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF
-        FFA2988A6B5642D3C4B0F6E6D2F4E4D0F2E2CEF2E2CEF2E2CEF2E2CEF3E3CFF6
-        E6D2E9DAC5927F6D7C6C5BEFEDEAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        0000E6E2DE523C27AF9F8EFBEAD5F2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CE
-        F2E2CEF2E2CEF5E5D1DDCDBA6E59489D8F84FFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFF0000ABA095705D4AF9ECD9F8EFE4F1E0CBF1E1CDF2E2CEF2E2CEF2E2
-        CEF2E2CEF2E2CEF2E2CEF3E3CFF2E2CDAC9B87827364ECE8E6FFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFF000088786A8B7966FFFEF3FCFAF8F2E2CDF1E1CDF2E2CEF2
-        E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF5E5D1C3B29E776657D6D1CBFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFF0000695542AD9E8DFFFDF5FBF8F2F0E0CAF2E1CD
-        F2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF6E7D2D3C2AF746251C2BB
-        B2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00006F5D4BA49583FFFCF3FBF7F2F1DF
-        CAF1E1CDF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF6E6D2CFBFAB75
-        6452C7BFB8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000095887B806D5AFFF7E9FD
-        FAF7F3E5D3F1E1CCF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF4E4D0
-        BDAB977B6A5BDEDAD5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000BDB5AC634D38
-        E2D3C2FFFDF7F8F0E6F1DFCAF1E1CDF1E1CDF2E2CEF2E2CEF2E2CEF2E2CEF4E4
-        D0EEDECA94826E88796BF5F4F3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000F1F0
-        EE6B5744998775F6EADCF9EFE1F4E5D4F3E4D2F1E0CBF1E1CCF2E2CEF2E2CEF2
-        E2CEF5E6D1C5B4A1705E4AB8AFA6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        0000FFFFFFC6BFB85F4935B5A592F3E5D3FEF7EEFDFBF9FBF5F0F3E5D4F1E1CD
-        F3E3CFFBECD7D3C3AF7A66558D7F70FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFF0000FFFFFFFDFDFCA59A8F5F4934998876E2D3C3FFF5E8FFFBF2FCEF
-        DDFEEEDAF6E6D2B09F8E6A57427B6957E8E5E2FFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFDFDFCC6BEB86A5644634E38806D5AA4
-        9585AD9D8C8A7866705C49533C27A2988CF9F8F8FFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFF1F0EEBEB5AD
-        95887C705D4A69554289786AABA096E6E3DEFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
-      OnClick = btnConsMat1Click
-    end
     object btnConsCor: TSpeedButton
-      Left = 479
-      Top = 94
+      Left = 473
+      Top = 73
       Width = 23
       Height = 23
       Cursor = crHandPoint
@@ -172,11 +132,11 @@ object formMovEntraMat: TformMovEntraMat
         FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFF1F0EEBEB5AD
         95887C705D4A69554289786AABA096E6E3DEFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
-      OnClick = btnConsCor1Click
+      OnClick = btnConsCorClick
     end
     object btnConsDep1: TSpeedButton
-      Left = 479
-      Top = 133
+      Left = 473
+      Top = 112
       Width = 23
       Height = 23
       Cursor = crHandPoint
@@ -233,272 +193,174 @@ object formMovEntraMat: TformMovEntraMat
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
       OnClick = btnConsDep1Click
     end
+    object btnConsMat: TSpeedButton
+      Left = 473
+      Top = 34
+      Width = 23
+      Height = 23
+      Cursor = crHandPoint
+      Flat = True
+      Glyph.Data = {
+        0E060000424D0E06000000000000360000002800000016000000160000000100
+        180000000000D8050000C40E0000C40E00000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE2EFFF70B0FF4B9DFFC9E2FF0000FFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD2E6FF469AFF2487FF2B8EFF4BB1FE
+        0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFE5FF4E9FFF2788FF2F8CFF3098
+        FF6DBEFD0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCDE4FF54A1FF2688FF2F8CFF30
+        97FF58B9FFDFEEFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFBD5E1EE5BA4FD2487FF308DFF
+        3098FF5EB9FFD0E6FFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F4F3
+        DEDAD5C6BFB8C2BAB2D6D1CBEBE9E7FFFFFFFFFFFFFCFAF8ACADAE4577B43593
+        FF2F99FF60BAFFCEE7FFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFBFAFAB7AE
+        A5887A6B7B6A5A7564527462517766568374659D9084EEEDEAF7F7F69C8C7B71
+        655A487FB462B7FECCE7FFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE8E4E28D
+        7F70705E4B95826FBCAA97CFBFABD2C2AFC4B29EAC9B876E5A487C6C5C9F9488
+        7E6D5E9C8C7BADB0AFD4E2EEFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFF9F8F7
+        7A69587A6754C5B4A1EDDDCAF4E4D0F6E6D2F6E7D2F5E5D1F1E2CEDCCCB9927F
+        6C624F3D9F9387F8F6F6FCF9F8FFFDFBFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF
+        FFA2988A6B5642D3C4B0F6E6D2F4E4D0F2E2CEF2E2CEF2E2CEF2E2CEF3E3CFF6
+        E6D2E9DAC5927F6D7C6C5BEFEDEAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        0000E6E2DE523C27AF9F8EFBEAD5F2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CE
+        F2E2CEF2E2CEF5E5D1DDCDBA6E59489D8F84FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFF0000ABA095705D4AF9ECD9F8EFE4F1E0CBF1E1CDF2E2CEF2E2CEF2E2
+        CEF2E2CEF2E2CEF2E2CEF3E3CFF2E2CDAC9B87827364ECE8E6FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFF000088786A8B7966FFFEF3FCFAF8F2E2CDF1E1CDF2E2CEF2
+        E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF5E5D1C3B29E776657D6D1CBFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFF0000695542AD9E8DFFFDF5FBF8F2F0E0CAF2E1CD
+        F2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF6E7D2D3C2AF746251C2BB
+        B2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00006F5D4BA49583FFFCF3FBF7F2F1DF
+        CAF1E1CDF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF6E6D2CFBFAB75
+        6452C7BFB8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000095887B806D5AFFF7E9FD
+        FAF7F3E5D3F1E1CCF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF2E2CEF4E4D0
+        BDAB977B6A5BDEDAD5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000BDB5AC634D38
+        E2D3C2FFFDF7F8F0E6F1DFCAF1E1CDF1E1CDF2E2CEF2E2CEF2E2CEF2E2CEF4E4
+        D0EEDECA94826E88796BF5F4F3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000F1F0
+        EE6B5744998775F6EADCF9EFE1F4E5D4F3E4D2F1E0CBF1E1CCF2E2CEF2E2CEF2
+        E2CEF5E6D1C5B4A1705E4AB8AFA6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        0000FFFFFFC6BFB85F4935B5A592F3E5D3FEF7EEFDFBF9FBF5F0F3E5D4F1E1CD
+        F3E3CFFBECD7D3C3AF7A66558D7F70FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFF0000FFFFFFFDFDFCA59A8F5F4934998876E2D3C3FFF5E8FFFBF2FCEF
+        DDFEEEDAF6E6D2B09F8E6A57427B6957E8E5E2FFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFDFDFCC6BEB86A5644634E38806D5AA4
+        9585AD9D8C8A7866705C49533C27A2988CF9F8F8FFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFF1F0EEBEB5AD
+        95887C705D4A69554289786AABA096E6E3DEFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
+      OnClick = btnConsMatClick
+    end
     object lblTpMov: TLabel
-      Left = 231
-      Top = 175
+      Left = 225
+      Top = 154
       Width = 107
       Height = 15
       Caption = 'Tipo de Movimento:'
     end
-    object lblDesc: TLabel
-      Left = 44
-      Top = 217
-      Width = 54
-      Height = 15
-      Caption = 'Descri'#231#227'o:'
-    end
-    object Panel1: TPanel
-      Left = 1
-      Top = 659
-      Width = 1195
-      Height = 90
-      Align = alBottom
-      TabOrder = 0
-      object btnGravar: TButton
-        Left = 44
-        Top = 33
-        Width = 105
-        Height = 33
-        Caption = 'Gravar'
-        Enabled = False
-        TabOrder = 2
-        OnClick = btnGravarClick
-      end
-      object btnLimpar: TButton
-        Left = 175
-        Top = 33
-        Width = 105
-        Height = 33
-        Caption = 'Limpar'
-        TabOrder = 0
-        OnClick = btnLimparClick
-      end
-      object btnFechar: TButton
-        Left = 310
-        Top = 33
-        Width = 105
-        Height = 33
-        Caption = 'Fechar'
-        TabOrder = 1
-        OnClick = btnFecharClick
-      end
-    end
-    object Panel2: TPanel
-      Left = 1
-      Top = 312
-      Width = 1195
-      Height = 347
-      Align = alBottom
-      TabOrder = 1
-      object DBGrid1: TDBGrid
-        Left = 1
-        Top = 1
-        Width = 1193
-        Height = 345
-        Align = alClient
-        DataSource = DS_Qestoque
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -12
-        TitleFont.Name = 'Segoe UI'
-        TitleFont.Style = []
-      end
-    end
     object tCodMat: TEdit
-      Left = 104
-      Top = 55
+      Left = 98
+      Top = 34
+      Width = 121
+      Height = 23
+      TabOrder = 0
+    end
+    object tCor: TEdit
+      Left = 98
+      Top = 73
+      Width = 121
+      Height = 23
+      TabOrder = 1
+    end
+    object tDep: TEdit
+      Left = 98
+      Top = 112
       Width = 121
       Height = 23
       TabOrder = 2
-      OnExit = tCodMatExit
     end
-    object tCor: TEdit
-      Left = 104
-      Top = 94
-      Width = 121
+    object tDescCor: TEdit
+      Left = 225
+      Top = 73
+      Width = 242
       Height = 23
+      Enabled = False
       TabOrder = 3
-      OnExit = tCorExit
     end
-    object tDescMat: TEdit
-      Left = 231
-      Top = 55
+    object tDescDep: TEdit
+      Left = 225
+      Top = 112
       Width = 242
       Height = 23
       Enabled = False
       TabOrder = 4
     end
-    object tDescCor: TEdit
-      Left = 231
-      Top = 94
+    object tDescMat: TEdit
+      Left = 225
+      Top = 34
       Width = 242
       Height = 23
       Enabled = False
       TabOrder = 5
     end
-    object tDep: TEdit
-      Left = 104
-      Top = 133
+    object tLote: TEdit
+      Left = 98
+      Top = 151
       Width = 121
       Height = 23
       TabOrder = 6
-      OnExit = tDepExit
-    end
-    object tDescDep: TEdit
-      Left = 231
-      Top = 133
-      Width = 242
-      Height = 23
-      Enabled = False
-      TabOrder = 7
-    end
-    object tLote: TEdit
-      Left = 104
-      Top = 172
-      Width = 121
-      Height = 23
-      TabOrder = 8
-      Text = '000000'
-      OnEnter = tLoteEnter
     end
     object tQtde: TEdit
-      Left = 104
-      Top = 253
-      Width = 65
+      Left = 98
+      Top = 190
+      Width = 369
       Height = 23
-      TabOrder = 9
-      OnKeyPress = tQtdeKeyPress
+      TabOrder = 7
     end
-    object habGrav: TButton
-      Left = 368
-      Top = 248
-      Width = 105
-      Height = 33
-      Hint = 'Habilita o bot'#227'o respons'#225'vel por gravar movimento'
-      Caption = 'Habilitar Gravar'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 10
-      OnClick = habGravClick
-    end
-    object checkExibMsg: TCheckBox
-      Left = 736
-      Top = 55
+    object checkMatAtivo: TCheckBox
+      Left = 586
+      Top = 37
       Width = 121
       Height = 17
       Hint = 'Se marcado, sistema mostra mensagem confirmando o movimento.'
-      Caption = 'Exibe Confirma'#231#227'o'
+      Caption = 'Material Ativo'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 11
+      TabOrder = 8
+    end
+    object BitBtn1: TBitBtn
+      Left = 98
+      Top = 240
+      Width = 105
+      Height = 33
+      Caption = 'Consultar'
+      TabOrder = 9
+    end
+    object BitBtn2: TBitBtn
+      Left = 225
+      Top = 240
+      Width = 105
+      Height = 33
+      Caption = 'Imprimir'
+      TabOrder = 10
     end
     object cbTpMov: TComboBox
-      Left = 344
-      Top = 172
+      Left = 338
+      Top = 151
       Width = 129
       Height = 23
-      TabOrder = 12
-    end
-    object Edit1: TEdit
-      Left = 104
-      Top = 214
-      Width = 369
-      Height = 23
-      TabOrder = 13
+      TabOrder = 11
     end
   end
-  object Qestoque: TFDQuery
+  object QconsultaMovto: TFDQuery
     Connection = modelConexao.FDConnection1
-    SQL.Strings = (
-      'select '
-      
-        ' mat.codigo as cod_mat, mat.descricao as desc_Mat, cor.codigo as' +
-        ' cod_Cor, '
-      ' cor.descricao as desc_Cor, est.quantidade, '
-      ' est.lote, dep.codigo as dep_cod, dep.descricao as desc_dep'
-      'from estoque_material est'
-      'inner join cor_material corMat '
-      
-        'on corMat.cor_Id = est.cor_id and est.material_id = corMat.mater' +
-        'ial_id'
-      'inner join material mat '
-      'on mat.id = corMat.material_id'
-      'inner join cor'
-      'on cor.id = corMat.cor_id '
-      'inner join deposito dep'
-      'on dep.id = est.deposito_id'
-      'where est.material_id = :idMAt and est.cor_id = :idCor')
-    Left = 553
-    Top = 448
-    ParamData = <
-      item
-        Name = 'IDMAT'
-        DataType = ftInteger
-        ParamType = ptInput
-        Value = Null
-      end
-      item
-        Name = 'IDCOR'
-        DataType = ftInteger
-        ParamType = ptInput
-      end>
-    object QestoqueCOD_MAT: TStringField
-      DisplayLabel = 'C'#243'd. Material'
-      FieldName = 'COD_MAT'
-      Origin = 'COD_MAT'
-      Required = True
-      Size = 10
-    end
-    object QestoqueDESC_MAT: TStringField
-      DisplayLabel = 'Desc. Material'
-      FieldName = 'DESC_MAT'
-      Origin = 'DESC_MAT'
-      Required = True
-      Size = 30
-    end
-    object QestoqueCOD_COR: TStringField
-      DisplayLabel = 'C'#243'd. Cor'
-      FieldName = 'COD_COR'
-      Origin = 'COD_COR'
-      Required = True
-      Size = 10
-    end
-    object QestoqueDESC_COR: TStringField
-      DisplayLabel = 'Desc. Cor'
-      FieldName = 'DESC_COR'
-      Origin = 'DESC_COR'
-      Required = True
-    end
-    object QestoqueQUANTIDADE: TFMTBCDField
-      DisplayLabel = 'Quantidade'
-      FieldName = 'QUANTIDADE'
-      Origin = 'QUANTIDADE'
-      Precision = 18
-      Size = 2
-    end
-    object QestoqueLOTE: TStringField
-      DisplayLabel = 'Lote'
-      FieldName = 'LOTE'
-      Origin = 'LOTE'
-      Required = True
-    end
-    object QestoqueDEP_COD: TStringField
-      DisplayLabel = 'C'#243'd. Dep'#243'sito'
-      FieldName = 'DEP_COD'
-      Origin = 'DEP_COD'
-      Size = 10
-    end
-    object QestoqueDESC_DEP: TStringField
-      DisplayLabel = 'Desc. Dep'#243'sito'
-      FieldName = 'DESC_DEP'
-      Origin = 'DESC_DEP'
-      Size = 40
-    end
+    Left = 472
+    Top = 454
   end
-  object DS_Qestoque: TDataSource
-    DataSet = Qestoque
-    Left = 673
-    Top = 456
+  object DS_QconsultaMovto: TDataSource
+    DataSet = QconsultaMovto
+    Left = 624
+    Top = 446
   end
 end

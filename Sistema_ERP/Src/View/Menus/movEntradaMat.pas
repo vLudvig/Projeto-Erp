@@ -48,6 +48,10 @@ type
     QestoqueDEP_COD: TStringField;
     QestoqueDESC_DEP: TStringField;
     checkExibMsg: TCheckBox;
+    lblTpMov: TLabel;
+    cbTpMov: TComboBox;
+    lblDesc: TLabel;
+    Edit1: TEdit;
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
