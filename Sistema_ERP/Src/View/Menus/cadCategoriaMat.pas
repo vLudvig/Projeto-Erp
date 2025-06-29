@@ -46,8 +46,9 @@ var
   grupoInv: String;
   grupoMov: String;
 begin
-  //inherited;
-  if inclusao and (tCodigo.Text <> '') then
+  //com valor booleano de inclusão, verifica se deve rodar um insert ou update
+  //caso não informado o valor no campo codigo, não permite continuar.
+  if inclusao and (Trim(tCodigo.Text) <> '') then
   begin
     sqlInsert := 'Insert into categoria_material(CODIGO, DESCRICAO, ATIVO) ';
     sqlValues := 'values (:codigo, :descricao, :ativo);';
@@ -73,7 +74,7 @@ begin
   end
   else
   begin
-
+    ShowMessage('Informe um código válido para prosseguir!');
   end;
   modoConsulta();
 end;

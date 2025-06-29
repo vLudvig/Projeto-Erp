@@ -22,6 +22,8 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 1195
+    ExplicitHeight = 652
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -371,6 +373,7 @@
       Width = 45
       Height = 23
       TabOrder = 2
+      OnChange = tGrupoMatChange
       OnExit = tGrupoMatExit
       OnKeyDown = tGrupoMatKeyDown
     end
@@ -380,6 +383,7 @@
       Width = 45
       Height = 23
       TabOrder = 3
+      OnChange = tCategoriaMatChange
       OnExit = tCategoriaMatExit
       OnKeyDown = tCategoriaMatKeyDown
     end
@@ -526,6 +530,8 @@
     ParentBackground = False
     ParentCtl3D = False
     TabOrder = 1
+    ExplicitTop = 652
+    ExplicitWidth = 1195
     object btnIncluir: TButton
       Left = 44
       Top = 32

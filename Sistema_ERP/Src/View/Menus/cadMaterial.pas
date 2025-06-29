@@ -104,6 +104,8 @@ type
     procedure btnConsultaCategoria1Click(Sender: TObject);
     procedure btnConsultaGrupo2Click(Sender: TObject);
     procedure btnConsultaCategClick(Sender: TObject);
+    procedure tGrupoMatChange(Sender: TObject);
+    procedure tCategoriaMatChange(Sender: TObject);
   private
     colunaSelecionada: String;
   public
@@ -806,6 +808,11 @@ begin
 
 end;
 
+procedure TcadastroMaterial.tCategoriaMatChange(Sender: TObject);
+begin
+  if Trim(tCategoriaMat.Text) <> '' then descCategId() else tDescCategoria.Text := '';
+end;
+
 procedure TcadastroMaterial.tCategoriaMatExit(Sender: TObject);
 begin
   if Trim(tCategoriaMat.Text) <> '' then descCategId() else tDescCategoria.Text := '';
@@ -819,6 +826,11 @@ begin
   begin
     descCategId(); //Escreve a descricao da categoria com ID informado
   end;
+end;
+
+procedure TcadastroMaterial.tGrupoMatChange(Sender: TObject);
+begin
+  if Trim(tGrupoMat.Text) <> '' then descGrupoId() else tDescGrupo.Text := '';
 end;
 
 procedure TcadastroMaterial.tGrupoMatEnter(Sender: TObject);
