@@ -5,8 +5,8 @@ interface
 uses
   uReferenciaMaterial, System.SysUtils, Vcl.Dialogs, Model.FuncGeral;
 
-  procedure geraMovSaida(const Ref: TreferenciaMaterial; const qtde: String);
-  procedure geraMovEntrada(const Ref: TreferenciaMaterial; const qtde: String);
+  procedure geraMovSaida(const Ref: TreferenciaMaterial; const qtde: String; const tp_mov: String; const desc_mov: String);
+  procedure geraMovEntrada(const Ref: TreferenciaMaterial; const qtde: String; const tp_mov: String; const desc_mov: String);
   procedure atualizaEstEntra(const Ref: TreferenciaMaterial; const qtde: String);
   procedure atualizaEstSaida(const Ref: TreferenciaMaterial; const qtde: String);
   function existeRefEstoque(const Ref: TreferenciaMaterial): Boolean;
@@ -14,15 +14,15 @@ uses
 implementation
 
 //Gera registro de movimentação para tabela mov_material (Em saidas)
-procedure geraMovSaida(const Ref: TreferenciaMaterial; const qtde: String);
+procedure geraMovSaida(const Ref: TreferenciaMaterial; const qtde: String; const tp_mov: String; const desc_mov: String);
 var
   SqlInsert: String;
   SqlValues: String;
 
 begin
   try
-      SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE) ';
-      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde) ';
+      SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV) ';
+      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov) ';
 
       modelFuncGeral.QfuncGeral.SQL.Text := SqlInsert + SqlValues;
       modelFuncGeral.QfuncGeral.ParamByName('idMat').asInteger := Ref.idMat;
@@ -40,7 +40,7 @@ begin
 end;
 
 //Gera registro de movimentação para tabela mov_material (Em entradas)
-procedure geraMovEntrada(const Ref: TreferenciaMaterial; const qtde: String);
+procedure geraMovEntrada(const Ref: TreferenciaMaterial; const qtde: String; const tp_mov: String; const desc_mov: String);
 begin
   ShowMessage('')  ;
 end;

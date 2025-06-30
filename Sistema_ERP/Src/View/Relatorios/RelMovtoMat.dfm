@@ -355,6 +355,8 @@ object fmRelMovtoMat: TfmRelMovtoMat
   end
   object QconsultaMovto: TFDQuery
     Connection = modelConexao.FDConnection1
+    SQL.Strings = (
+      'select * from mov_material')
     Left = 472
     Top = 454
   end
