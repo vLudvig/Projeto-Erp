@@ -236,9 +236,9 @@ object formMovEntraMat: TformMovEntraMat
     object lblTpMov: TLabel
       Left = 231
       Top = 175
-      Width = 107
+      Width = 91
       Height = 15
-      Caption = 'Tipo de Movimento:'
+      Caption = 'Tipo Movimento:'
     end
     object lblDesc: TLabel
       Left = 44
@@ -394,13 +394,22 @@ object formMovEntraMat: TformMovEntraMat
       TabOrder = 11
     end
     object cbTpMov: TComboBox
-      Left = 344
+      Left = 328
       Top = 172
-      Width = 129
+      Width = 145
       Height = 23
+      Style = csDropDownList
+      ItemIndex = 0
       TabOrder = 12
+      Text = 'Acerto Manual (AM)'
+      Items.Strings = (
+        'Acerto Manual (AM)'
+        'Facc'#227'o (FAC)'
+        'Tinturaria (TIN)'
+        'Malharia (MAL)'
+        'Lavanderia (LAV)')
     end
-    object Edit1: TEdit
+    object tDescMov: TEdit
       Left = 104
       Top = 214
       Width = 369

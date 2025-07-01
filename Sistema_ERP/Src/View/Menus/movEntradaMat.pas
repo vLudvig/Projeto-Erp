@@ -51,7 +51,7 @@ type
     lblTpMov: TLabel;
     cbTpMov: TComboBox;
     lblDesc: TLabel;
-    Edit1: TEdit;
+    tDescMov: TEdit;
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -217,16 +217,28 @@ end;
 procedure TformMovEntraMat.btnGravarClick(Sender: TObject);
   var
     refMat : TReferenciaMaterial;
+    tp_mov : String;
 
 begin
-  btnGravar.Enabled := false;
+  btnGravar.Enabled := false; //Faz necessário sempre habilitar o gravar.
 
+  //Define o tipo do movimento para funcao de gerar movimento
+  case cbTpMov.ItemIndex of
+   0: tp_mov := 'AM' ;
+   1: tp_mov := 'FAC' ;
+   2: tp_mov := 'TIN' ;
+   3: tp_mov := 'MAL' ;
+   4: tp_mov := 'LAV' ;
+  end;
+
+  //Atualiza atributos da classe de Referencia de material.
   refMat.IdMat := idMat;
   refMat.IdCor:= idCor;
   refMat.IdDep := IdDep;
   refMat.Lote := tLote.Text;
 
   try
+    funcMovMat.geraMovEntrada(refMat, tQtde.Text, tp_mov, tDescMov.Text);
     funcMovMat.atualizaEstEntra(refMat, tQtde.Text);
 
     if checkExibMsg.Checked then

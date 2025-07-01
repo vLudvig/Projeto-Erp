@@ -21,8 +21,8 @@ var
 
 begin
   try
-      SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV) ';
-      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov) ';
+      SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV, OPERACAO, DT_MOVTO, HORA_MOV) ';
+      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov, :operacao, :dt_movto, :hora_mov) ';
 
       modelFuncGeral.QfuncGeral.SQL.Text := SqlInsert + SqlValues;
       modelFuncGeral.QfuncGeral.ParamByName('idMat').asInteger := Ref.idMat;
@@ -30,10 +30,15 @@ begin
       modelFuncGeral.QfuncGeral.ParamByName('idDep').asInteger := Ref.idDep;
       modelFuncGeral.QfuncGeral.ParamByName('lote').asString := Ref.Lote;
       modelFuncGeral.QfuncGeral.ParamByName('qtde').AsFloat := StrToFloat(qtde);
+      modelFuncGeral.QfuncGeral.ParamByName('tipo_mov').asString := tp_mov;
+      modelFuncGeral.QfuncGeral.ParamByName('desc_mov').asString := desc_mov;
+      modelFuncGeral.QfuncGeral.ParamByName('operacao').asString := 'S';
+      modelFuncGeral.QfuncGeral.ParamByName('dt_movto').asDate := Date;
+      modelFuncGeral.QfuncGeral.ParamByName('hora_mov').asDateTime := Now;
       modelFuncGeral.QfuncGeral.ExecSQL;
     except
       on E: Exception do
-        ShowMessage('Erro ao gerar estoque do material: ' + E.Message);
+        ShowMessage('Erro ao gerar movimento do material(Saida): ' + E.Message);
     end;
 
   ShowMessage('')  ;
@@ -41,8 +46,31 @@ end;
 
 //Gera registro de movimentação para tabela mov_material (Em entradas)
 procedure geraMovEntrada(const Ref: TreferenciaMaterial; const qtde: String; const tp_mov: String; const desc_mov: String);
+var
+  SqlInsert: String;
+  SqlValues: String;
+
 begin
-  ShowMessage('')  ;
+  try
+      SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV, OPERACAO, DT_MOVTO, HORA_MOV) ';
+      SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov, :operacao, :dt_movto, :hora_mov) ';
+
+      modelFuncGeral.QfuncGeral.SQL.Text := SqlInsert + SqlValues;
+      modelFuncGeral.QfuncGeral.ParamByName('idMat').asInteger := Ref.idMat;
+      modelFuncGeral.QfuncGeral.ParamByName('idCor').asInteger := Ref.idCor;
+      modelFuncGeral.QfuncGeral.ParamByName('idDep').asInteger := Ref.idDep;
+      modelFuncGeral.QfuncGeral.ParamByName('lote').asString := Ref.Lote;
+      modelFuncGeral.QfuncGeral.ParamByName('qtde').AsFloat := StrToFloat(qtde);
+      modelFuncGeral.QfuncGeral.ParamByName('tipo_mov').asString := tp_mov;
+      modelFuncGeral.QfuncGeral.ParamByName('desc_mov').asString := desc_mov;
+      modelFuncGeral.QfuncGeral.ParamByName('operacao').asString := 'E';
+      modelFuncGeral.QfuncGeral.ParamByName('dt_movto').asDate := Date;
+      modelFuncGeral.QfuncGeral.ParamByName('hora_mov').asDateTime := Now;
+      modelFuncGeral.QfuncGeral.ExecSQL;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao gerar movimento do material(Entrada): ' + E.Message);
+    end;
 end;
 
 procedure atualizaEstSaida(const Ref: TreferenciaMaterial; const qtde: String);

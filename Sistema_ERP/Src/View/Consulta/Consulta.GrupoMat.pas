@@ -12,6 +12,7 @@ uses
 
 type
   TformConsultaGrupoMat = class(TformConsultaPrincipal)
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,5 +25,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TformConsultaGrupoMat.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(Qconsulta);
+end;
 
 end.

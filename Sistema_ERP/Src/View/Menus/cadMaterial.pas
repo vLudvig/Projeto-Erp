@@ -744,6 +744,7 @@ begin
      if formConsultaCategoriaMat.ShowModal = mrOk then
      begin
       try
+        formConsultaCategoriaMat.Qconsulta.Close;
         tCategoriaMat.Text :=  IntToStr(formConsultaCategoriaMat.registroSelecionado);//Escreve o ID conforme selecionado na consulta
         formConsultaCategoriaMat.Qconsulta.Sql.Text := 'Select * from categoria_material where id = :ID';
         formConsultaCategoriaMat.Qconsulta.ParamByName('ID').AsInteger := StrToInt(tCategoriaMat.Text);
@@ -810,7 +811,7 @@ end;
 
 procedure TcadastroMaterial.tCategoriaMatChange(Sender: TObject);
 begin
-  if Trim(tCategoriaMat.Text) <> '' then descCategId() else tDescCategoria.Text := '';
+  if Trim(tCategoriaMat.Text) = '' then tDescCategoria.Text := '';
 end;
 
 procedure TcadastroMaterial.tCategoriaMatExit(Sender: TObject);
@@ -830,7 +831,7 @@ end;
 
 procedure TcadastroMaterial.tGrupoMatChange(Sender: TObject);
 begin
-  if Trim(tGrupoMat.Text) <> '' then descGrupoId() else tDescGrupo.Text := '';
+  if Trim(tGrupoMat.Text) = '' then tDescGrupo.Text := '';
 end;
 
 procedure TcadastroMaterial.tGrupoMatEnter(Sender: TObject);

@@ -4,7 +4,7 @@ object modelEntraMat: TmodelEntraMat
   object Qconsulta: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from estoque_material')
+      'select * from mov_material')
     Left = 80
     Top = 168
   end

@@ -22,8 +22,6 @@
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1195
-    ExplicitHeight = 652
     object Label1: TLabel
       Left = 56
       Top = 56
@@ -400,7 +398,10 @@
       Top = 53
       Width = 97
       Height = 23
+      Style = csDropDownList
+      ItemIndex = 2
       TabOrder = 5
+      Text = 'UN'
       Items.Strings = (
         'MT'
         'KG'
@@ -530,8 +531,6 @@
     ParentBackground = False
     ParentCtl3D = False
     TabOrder = 1
-    ExplicitTop = 652
-    ExplicitWidth = 1195
     object btnIncluir: TButton
       Left = 44
       Top = 32

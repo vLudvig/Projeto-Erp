@@ -19,6 +19,12 @@ inherited formMovSaidaMat: TformMovSaidaMat
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
+    inherited lblTpMov: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited lblDesc: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
     inherited Panel1: TPanel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -47,6 +53,12 @@ inherited formMovSaidaMat: TformMovSaidaMat
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited tQtde: TEdit
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited cbTpMov: TComboBox
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited tDescMov: TEdit
       StyleElements = [seFont, seClient, seBorder]
     end
   end

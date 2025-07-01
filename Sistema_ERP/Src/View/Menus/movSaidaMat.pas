@@ -33,9 +33,20 @@ procedure TformMovSaidaMat.btnGravarClick(Sender: TObject);
 var
   SqlUpdate : String;
   refMat : TReferenciaMaterial;
+  tp_mov : String;
 begin
   btnGravar.Enabled := false;
 
+  //Define o tipo do movimento para funcao de gerar movimento
+  case cbTpMov.ItemIndex of
+   0: tp_mov := 'AM' ;
+   1: tp_mov := 'FAC' ;
+   2: tp_mov := 'TIN' ;
+   3: tp_mov := 'MAL' ;
+   4: tp_mov := 'LAV' ;
+  end;
+
+  //Altera atributos de refMat (classe referencia Material)
   refMat.IdMat := idMat;
   refMat.IdCor := IdCor;
   refMat.IdDep := idDep;
@@ -44,6 +55,7 @@ begin
   //Na saida, nunca criamos um registro de estoque,
   //apenas pode dar saida quando ja teve entrada no estoque(registro que já existe)
   try
+     funcMovMat.geraMovSaida(refMat, tQtde.Text, tp_mov, tDescMov.Text);
      funcMovMat.atualizaEstSaida(refMat, tQtde.Text);
 
     if checkExibMsg.Checked then

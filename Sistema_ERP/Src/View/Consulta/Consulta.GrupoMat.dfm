@@ -1,6 +1,7 @@
 inherited formConsultaGrupoMat: TformConsultaGrupoMat
   Caption = 'Consulta Grupo Material'
   StyleElements = [seFont, seClient, seBorder]
+  OnDestroy = FormDestroy
   TextHeight = 15
   inherited pnlEdit: TPanel
     StyleElements = [seFont, seClient, seBorder]
