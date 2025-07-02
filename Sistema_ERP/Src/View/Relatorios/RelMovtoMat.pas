@@ -31,7 +31,7 @@ type
     tDep: TEdit;
     tDescDep: TEdit;
     tLote: TEdit;
-    tQtde: TEdit;
+    tDescMovto: TEdit;
     checkMatAtivo: TCheckBox;
     QconsultaMovto: TFDQuery;
     DS_QconsultaMovto: TDataSource;
@@ -42,6 +42,10 @@ type
     procedure btnConsMatClick(Sender: TObject);
     procedure btnConsCorClick(Sender: TObject);
     procedure btnConsDep1Click(Sender: TObject);
+    procedure tCodMatExit(Sender: TObject);
+    procedure tCorExit(Sender: TObject);
+    procedure tDepExit(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -55,6 +59,55 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfmRelMovtoMat.BitBtn1Click(Sender: TObject);
+  var
+    SqlConsulta : String;
+begin
+    SqlConsulta := 'Select m.codigo as cod_material, m.descricao as material,' +
+       ' c.codigo as cod_cor, c.descricao as cor, d.codigo as cod_deposito, d.descricao as deposito, ' +
+       ' mm.quantidade, mm.operacao, mm.tipo_mov, mm.descricao_mov, mm.dt_movto, mm.hora_mov from mov_material mm ' +
+       ' inner join material m on m.id = mm.material_id ' +
+       ' inner join deposito d on d.id = mm.deposito_id ' +
+       ' inner join cor c on c.id = mm.cor_id ' +
+       ' where 1=1 ';
+
+       // Adiciona condições no select com base em dados informados na tela
+    if trim(tCodMat.Text) <> '' then SqlConsulta := SqlConsulta + ' and m.codigo = :codMat ';
+
+    if trim(tCor.Text) <> '' then SqlConsulta := SqlConsulta + ' and c.codigo = :codCor ' ;
+
+    if trim(tDep.Text) <> '' then SqlConsulta := SqlConsulta + ' and d.codigo = :codDep';
+
+    if trim(tLote.Text) <> '' then SqlConsulta := SqlConsulta + ' and mm.lote = :lote ';
+
+    if trim(tDescMovto.Text) <> '' then SqlConsulta := SqlConsulta + ' and mm.descricao_mov like :descMov' ;
+
+    if checkMatAtivo.Checked then SqlConsulta := SqlConsulta + ' and m.ativo = ''S'''
+    else SqlConsulta := SqlConsulta + ' and m.ativo <> ''S''';
+
+
+    try
+      QconsultaMovto.Close;
+      QconsultaMovto.Sql.Text := SqlConsulta;
+
+      if trim(tCodMat.Text) <> '' then QconsultaMovto.ParamByName('codMat').AsString := tCodMat.text;
+
+      if trim(tCor.Text) <> '' then QconsultaMovto.ParamByName('codCor').AsString := tCor.text;
+
+      if trim(tDep.Text) <> '' then QconsultaMovto.ParamByName('codDep').AsString := tDep.text;
+
+      if trim(tLote.Text) <> '' then QconsultaMovto.ParamByName('lote').AsString := tLote.text;
+
+      if trim(tDescMovto.Text) <> '' then QconsultaMovto.ParamByName('descMov').AsString := '%' + Trim(tDescMovto.Text) + '%';
+
+      QconsultaMovto.Open;
+    except on E: Exception do
+      ShowMessage(E.Message);
+
+    end;
+
+end;
 
 procedure TfmRelMovtoMat.btnConsCorClick(Sender: TObject);
 begin
@@ -111,6 +164,21 @@ begin
      tCodMat.SetFocus;
      FreeAndNil(formConsultaMaterial);
   end;
+end;
+
+procedure TfmRelMovtoMat.tCodMatExit(Sender: TObject);
+begin
+  if Trim(tCodMat.Text) = '' then tDescMat.Text := '';
+end;
+
+procedure TfmRelMovtoMat.tCorExit(Sender: TObject);
+begin
+  if Trim(tCor.Text) = '' then tDescCor.Text := '';
+end;
+
+procedure TfmRelMovtoMat.tDepExit(Sender: TObject);
+begin
+  if Trim(tDep.Text) = '' then tDescDep.Text := '';
 end;
 
 end.

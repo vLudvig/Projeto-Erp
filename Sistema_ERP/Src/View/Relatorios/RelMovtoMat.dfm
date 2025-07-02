@@ -10,6 +10,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -265,6 +266,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Width = 121
       Height = 23
       TabOrder = 0
+      OnExit = tCodMatExit
     end
     object tCor: TEdit
       Left = 98
@@ -272,6 +274,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Width = 121
       Height = 23
       TabOrder = 1
+      OnExit = tCorExit
     end
     object tDep: TEdit
       Left = 98
@@ -279,6 +282,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Width = 121
       Height = 23
       TabOrder = 2
+      OnExit = tDepExit
     end
     object tDescCor: TEdit
       Left = 225
@@ -311,7 +315,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Height = 23
       TabOrder = 6
     end
-    object tQtde: TEdit
+    object tDescMovto: TEdit
       Left = 98
       Top = 190
       Width = 369
@@ -336,6 +340,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Height = 33
       Caption = 'Consultar'
       TabOrder = 9
+      OnClick = BitBtn1Click
     end
     object BitBtn2: TBitBtn
       Left = 225
@@ -356,7 +361,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
   object QconsultaMovto: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from mov_material')
+      'select * from mov_material where 1 = 1')
     Left = 472
     Top = 454
   end

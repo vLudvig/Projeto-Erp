@@ -28,7 +28,8 @@ uses
   Model.SaidaMat in 'Src\Model\SaidaMat\Model.SaidaMat.pas' {modelSaidaMat: TDataModule},
   uReferenciaMaterial in 'Src\Service\uReferenciaMaterial.pas',
   Model.FuncGeral in 'Src\Model\FuncGeral\Model.FuncGeral.pas' {modelFuncGeral: TDataModule},
-  RelMovtoMat in 'Src\View\Relatorios\RelMovtoMat.pas' {fmRelMovtoMat};
+  RelMovtoMat in 'Src\View\Relatorios\RelMovtoMat.pas' {fmRelMovtoMat},
+  Model.RelatorioMovtoMat in 'Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas' {modelRelmovtoMat: TDataModule};
 
 {$R *.res}
 
@@ -40,5 +41,6 @@ begin
   Application.CreateForm(TmodelConexao, modelConexao);
   Application.CreateForm(TmodelFuncGeral, modelFuncGeral);
   Application.CreateForm(TfmRelMovtoMat, fmRelMovtoMat);
+  Application.CreateForm(TmodelRelmovtoMat, modelRelmovtoMat);
   Application.Run;
 end.

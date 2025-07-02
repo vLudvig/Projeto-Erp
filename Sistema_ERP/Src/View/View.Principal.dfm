@@ -12,6 +12,7 @@ object ViewPrincipal: TViewPrincipal
   Font.Style = []
   KeyPreview = True
   Menu = MainMenu1
+  Position = poScreenCenter
   WindowState = wsMaximized
   OnCreate = FormCreate
   TextHeight = 15
