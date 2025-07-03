@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito,
-  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat, RelMovtoMat;
+  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat, RelMovtoMat, RelEstoqueMat;
 
 type
   TViewPrincipal = class(TForm)
@@ -48,6 +48,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure SaidaDeMateriais1Click(Sender: TObject);
     procedure MovimentaesMat2Click(Sender: TObject);
+    procedure MovimentaesMat1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -136,6 +137,16 @@ end;
 procedure TViewPrincipal.Material2Click(Sender: TObject);
 begin
   ShowMessage('Tela ainda em Produção, impossivel continuar');
+end;
+
+procedure TViewPrincipal.MovimentaesMat1Click(Sender: TObject);
+begin
+  fmRelEstoqueMat := TfmRelEstoqueMat.Create(nil);
+  try
+     fmRelEstoqueMat.ShowModal;
+  finally
+     FreeAndNil(fmRelEstoqueMat);
+  end;
 end;
 
 procedure TViewPrincipal.MovimentaesMat2Click(Sender: TObject);

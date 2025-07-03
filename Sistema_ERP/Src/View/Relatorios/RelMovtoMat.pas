@@ -35,8 +35,8 @@ type
     checkMatAtivo: TCheckBox;
     QconsultaMovto: TFDQuery;
     DS_QconsultaMovto: TDataSource;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    btnCons: TBitBtn;
+    btnImprimir: TBitBtn;
     lblTpMov: TLabel;
     cbTpMov: TComboBox;
     procedure btnConsMatClick(Sender: TObject);
@@ -45,7 +45,8 @@ type
     procedure tCodMatExit(Sender: TObject);
     procedure tCorExit(Sender: TObject);
     procedure tDepExit(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
+    procedure btnConsClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     var
       idMat: Integer;
@@ -60,9 +61,10 @@ implementation
 
 {$R *.dfm}
 
-procedure TfmRelMovtoMat.BitBtn1Click(Sender: TObject);
+procedure TfmRelMovtoMat.btnConsClick(Sender: TObject);
   var
     SqlConsulta : String;
+    tp_mov : String;
 begin
     SqlConsulta := 'Select m.codigo as cod_material, m.descricao as material,' +
        ' c.codigo as cod_cor, c.descricao as cor, d.codigo as cod_deposito, d.descricao as deposito, ' +
@@ -86,6 +88,16 @@ begin
     if checkMatAtivo.Checked then SqlConsulta := SqlConsulta + ' and m.ativo = ''S'''
     else SqlConsulta := SqlConsulta + ' and m.ativo <> ''S''';
 
+    if cbTpMov.ItemIndex > 0 then SqlConsulta := SqlConsulta + ' and tipo_mov = :tp_mov' ;
+
+
+    case cbTpMov.ItemIndex of
+      1: tp_mov := 'AM' ;
+      2: tp_mov := 'FAC' ;
+      3: tp_mov := 'TIN' ;
+      4: tp_mov := 'MAL' ;
+      5: tp_mov := 'LAV' ;
+    end;
 
     try
       QconsultaMovto.Close;
@@ -100,6 +112,8 @@ begin
       if trim(tLote.Text) <> '' then QconsultaMovto.ParamByName('lote').AsString := tLote.text;
 
       if trim(tDescMovto.Text) <> '' then QconsultaMovto.ParamByName('descMov').AsString := '%' + Trim(tDescMovto.Text) + '%';
+
+      if cbTpMov.ItemIndex > 0 then QconsultaMovto.ParamByName('tp_mov').AsString := tp_mov;
 
       QconsultaMovto.Open;
     except on E: Exception do
@@ -164,6 +178,11 @@ begin
      tCodMat.SetFocus;
      FreeAndNil(formConsultaMaterial);
   end;
+end;
+
+procedure TfmRelMovtoMat.btnImprimirClick(Sender: TObject);
+begin
+  ShowMessage('A impressão só esta disponivel na versão paga do sistema, entre em contato com o administrador!');
 end;
 
 procedure TfmRelMovtoMat.tCodMatExit(Sender: TObject);

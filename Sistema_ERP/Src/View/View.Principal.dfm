@@ -134,6 +134,7 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Relat'#243'rios'
       object MovimentaesMat1: TMenuItem
         Caption = 'Estoque'
+        OnClick = MovimentaesMat1Click
       end
       object MovimentaesMat2: TMenuItem
         Caption = 'Movimenta'#231#245'es Mat.'

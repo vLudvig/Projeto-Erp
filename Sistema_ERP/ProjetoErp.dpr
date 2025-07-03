@@ -29,7 +29,8 @@ uses
   uReferenciaMaterial in 'Src\Service\uReferenciaMaterial.pas',
   Model.FuncGeral in 'Src\Model\FuncGeral\Model.FuncGeral.pas' {modelFuncGeral: TDataModule},
   RelMovtoMat in 'Src\View\Relatorios\RelMovtoMat.pas' {fmRelMovtoMat},
-  Model.RelatorioMovtoMat in 'Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas' {modelRelmovtoMat: TDataModule};
+  Model.RelatorioMovtoMat in 'Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas' {modelRelmovtoMat: TDataModule},
+  RelEstoqueMat in 'Src\View\Relatorios\RelEstoqueMat.pas' {fmRelEstoqueMat};
 
 {$R *.res}
 
@@ -42,5 +43,6 @@ begin
   Application.CreateForm(TmodelFuncGeral, modelFuncGeral);
   Application.CreateForm(TfmRelMovtoMat, fmRelMovtoMat);
   Application.CreateForm(TmodelRelmovtoMat, modelRelmovtoMat);
+  Application.CreateForm(TfmRelEstoqueMat, fmRelEstoqueMat);
   Application.Run;
 end.
