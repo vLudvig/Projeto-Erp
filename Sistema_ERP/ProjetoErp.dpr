@@ -30,7 +30,8 @@ uses
   Model.FuncGeral in 'Src\Model\FuncGeral\Model.FuncGeral.pas' {modelFuncGeral: TDataModule},
   RelMovtoMat in 'Src\View\Relatorios\RelMovtoMat.pas' {fmRelMovtoMat},
   Model.RelatorioMovtoMat in 'Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas' {modelRelmovtoMat: TDataModule},
-  RelEstoqueMat in 'Src\View\Relatorios\RelEstoqueMat.pas' {fmRelEstoqueMat};
+  RelEstoqueMat in 'Src\View\Relatorios\RelEstoqueMat.pas' {fmRelEstoqueMat},
+  funcCadMaterial in 'Src\Service\funcCadMaterial.pas';
 
 {$R *.res}
 

@@ -250,6 +250,7 @@
             <Form>fmRelEstoqueMat</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\Service\funcCadMaterial.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

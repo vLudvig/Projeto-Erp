@@ -237,7 +237,15 @@ begin
           QcorMaterial.ParamByName('idCor').AsInteger := formConsultaCores.registroSelecionado;
           QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
           QcorMaterial.ExecSQL;
-          idMaterial();
+          QcorMaterial.Close;
+          QcorMaterial.SQL.Text := 'select c.codigo, c.descricao, c.ativa from cor c inner join cor_material cm '
+              + ' on c.id = cm.cor_id'
+              + ' inner join material m'
+              + ' on m.id = cm.Material_id'
+              + ' where m.id = :idMat';
+          QcorMaterial.ParamByName('idMat').AsInteger := StrToInt(tIdMat.Text);
+          QcorMaterial.Open();
+          //idMaterial();
         end;
     finally
       FreeAndNil(formConsultaCores);
@@ -333,6 +341,7 @@ begin
     finally
       limpaCamposTela;
       inclusao := false;
+      modoConsulta();
     end;
 
   end
@@ -341,6 +350,8 @@ begin
     sqlUpdate := 'Update material set DESCRICAO = :descricao , UNIDADE_ESTOQUE = :unidade , ' +
         'GRUPO_MATERIAL_ID = :grupo_material_id , CATEGORIA_MATERIAL_ID = :categoria_material_id , ATIVO = :ativo ' +
         'where ID = :id';
+
+    if checkAtivo.Checked then materialAtivo := 'S' else materialAtivo := 'N';
 
     try
       modelMaterial.QcadastroMaterial.SQL.Text := sqlUpdate;
@@ -352,26 +363,25 @@ begin
       if (Trim(tGrupoMat.Text) <> '')  then
         begin
           modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').AsInteger := StrToInt(tGrupoMat.Text);
-        end;
+        end
+        else
+          modelMaterial.QcadastroMaterial.ParamByName('grupo_material_id').Clear;
 
       if (Trim(tCategoriaMat.Text) <> '') then
         begin
           modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').AsInteger := StrToInt(tCategoriaMat.Text);
-        end;
+        end
+        else
+          modelMaterial.QcadastroMaterial.ParamByName('categoria_material_id').Clear;
 
       modelMaterial.QcadastroMaterial.ExecSQL;
       modelMaterial.QcadastroMaterial.Close;
     finally
       alteracao := false;
+      modoConsulta();
     end;
 
   end
-  else
-  begin
-    ShowMessage('Campo obrigatório não informado ou vazio, cadastro não efetuado!')
-  end;
-
-  modoConsulta();
 end;
 
 //Abre a tela de consulta de categoria de Material
@@ -564,6 +574,8 @@ begin
     modelMaterial.QconsultaMaterial.ParamByName('ID').AsInteger := StrToInt(tIdMat.Text);
     modelMaterial.QconsultaMaterial.Close();
     modelMaterial.QconsultaMaterial.Open();
+
+    //Faz a busca das cores vinculadas ao material, e mostra no grid de cores
     sqlConsultaCores := 'select c.codigo, c.descricao, c.ativa from cor c inner join cor_material cm '
         + ' on c.id = cm.cor_id'
         + ' inner join material m'
@@ -707,34 +719,38 @@ var
   codCorRemove: String;
   idCorRemove: integer;
 begin
-  try
-     // Captura o código da cor da linha selecionada no grid
-    codCorRemove := QcorMaterial.FieldByName('codigo').AsString;
+  if Application.MessageBox('Tem certeza que deseja excluir esta cor?', 'Atenção', MB_ICONQUESTION + MB_YESNO) = mrYes then
+    begin
+        try
+           // Captura o código da cor da linha selecionada no grid
+          codCorRemove := QcorMaterial.FieldByName('codigo').AsString;
 
-    // Primeiro busca o ID da cor pelo código
-    //QcorMaterial.Close; testessss
-    modelMaterial.QremoveCorMat.SQL.Text := 'select * from cor where codigo = :codigoCor';
-    modelMaterial.QremoveCorMat.ParamByName('codigoCor').AsString := codCorRemove;
-    modelMaterial.QremoveCorMat.Open;
+          // Primeiro busca o ID da cor pelo código
+          modelMaterial.QremoveCorMat.SQL.Text := 'select * from cor where codigo = :codigoCor';
+          modelMaterial.QremoveCorMat.ParamByName('codigoCor').AsString := codCorRemove;
+          modelMaterial.QremoveCorMat.Open;
 
-    if modelMaterial.QremoveCorMat.IsEmpty then
-      raise Exception.Create('Cor não encontrada!');
+          if modelMaterial.QremoveCorMat.IsEmpty then
+            raise Exception.Create('Cor não encontrada!');
 
-    idCorRemove := modelMaterial.QremoveCorMat.FieldByName('id').AsInteger;
-    modelMaterial.QremoveCorMat.Close;
+          idCorRemove := modelMaterial.QremoveCorMat.FieldByName('id').AsInteger;
+          modelMaterial.QremoveCorMat.Close;
 
-    // Agora realiza o delete no vínculo cor_material
-    modelMaterial.QremoveCorMat.SQL.Text := 'delete from cor_material where material_id = :idMaterial and cor_id = :idCor';
-    modelMaterial.QremoveCorMat.ParamByName('idMaterial').AsInteger := StrToInt(tIdMat.Text); // ou tCodigoMat.Text se for ID
-    modelMaterial.QremoveCorMat.ParamByName('idCor').AsInteger := idCorRemove;
-    modelMaterial.QremoveCorMat.ExecSQL;
-    idMaterial();
+          // Realiza o delete no vínculo cor_material
+          modelMaterial.QremoveCorMat.SQL.Text := 'delete from cor_material where material_id = :idMaterial and cor_id = :idCor';
+          modelMaterial.QremoveCorMat.ParamByName('idMaterial').AsInteger := StrToInt(tIdMat.Text);
+          modelMaterial.QremoveCorMat.ParamByName('idCor').AsInteger := idCorRemove;
+          modelMaterial.QremoveCorMat.ExecSQL;
+          idMaterial();
 
-    ShowMessage('Cor removida com sucesso.');
-  except on E: Exception do
-    ShowMessage('Erro ao excluir cor do material: ' + E.Message);
+          ShowMessage('Cor removida com sucesso.');
+        except on E: Exception do
+          ShowMessage('Erro ao excluir cor do material: ' + E.Message);
 
-  end;
+        end;
+    end
+    else
+      Application.MessageBox('Operação cancelada, cor não excluída!', 'Atenção', MB_ICONEXCLAMATION);
 end;
 
 procedure TcadastroMaterial.btnConsultaCategClick(Sender: TObject);
@@ -881,14 +897,44 @@ begin
 end;
 
 function TcadastroMaterial.validaCamposConfirmar: boolean;
+var
+  controle : Boolean;
 begin
-  if (Trim(tCodigoMat.Text) = '') then validaCamposConfirmar := false;
-  if (cbUnidade.Text = '') then validaCamposConfirmar := false;
-  if (tDescMat.Text = '') then validaCamposConfirmar := false;
-  if ((Trim(tGrupoMat.Text) <> '') and (Trim(tDescGrupo.Text) = '')) then validaCamposConfirmar := false;
-  if ((Trim(tCategoriaMat.Text) <> '') and (Trim(tDescCategoria.Text) = '')) then validaCamposConfirmar := false;
+  controle := true;
 
-  validaCamposConfirmar := true;
+  //Validação de cada campo obrigatório da tela.
+  if (Trim(tCodigoMat.Text) = '') then
+  begin
+    controle := false;
+    Application.MessageBox('Código não informado, impossível efetuar o cadastro!', 'Atenção', MB_ICONEXCLAMATION)
+  end;
+
+  if (Trim(cbUnidade.Text) = '') and (controle) then //Se controle ja for falso entao nao mostrará a msg
+  begin
+    controle := false;
+    Application.MessageBox('Unidade não informada, impossível efetuar o cadastro!', 'Atenção', MB_ICONEXCLAMATION)
+  end;
+
+  if ((tDescMat.Text) = '') and (controle) then
+  begin
+    controle := false;
+    Application.MessageBox('Descrição não informada, impossível efetuar o cadastro!', 'Atenção', MB_ICONEXCLAMATION)
+  end;
+
+  if ((Trim(tGrupoMat.Text) <> '') and (Trim(tDescGrupo.Text) = '')) and (controle) then
+  begin
+    controle := false;
+    Application.MessageBox('Grupo informado é inválido, impossível efetuar o cadastro!', 'Atenção', MB_ICONEXCLAMATION)
+  end;
+
+  if ((Trim(tCategoriaMat.Text) <> '') and (Trim(tDescCategoria.Text) = '')) and (controle) then
+  begin
+    controle := false;
+    Application.MessageBox('Categoria informada é inválida, impossível efetuar o cadastro!', 'Atenção', MB_ICONEXCLAMATION)
+  end;
+
+  //Ao final da validação faz com que a função retorne o valor de controle
+  if controle then validaCamposConfirmar := true else validaCamposConfirmar := false;
 end;
 
 end.

@@ -399,9 +399,7 @@
       Width = 97
       Height = 23
       Style = csDropDownList
-      ItemIndex = 2
       TabOrder = 5
-      Text = 'UN'
       Items.Strings = (
         'MT'
         'KG'
@@ -413,7 +411,7 @@
     object gridCores: TDBGrid
       Left = 56
       Top = 328
-      Width = 297
+      Width = 281
       Height = 297
       DataSource = DS_Cor_Mat
       TabOrder = 6
@@ -721,8 +719,8 @@
       'inner join material m'
       'on m.id = cm.Material_id'
       'where m.id = :idMat')
-    Left = 256
-    Top = 520
+    Left = 272
+    Top = 496
     ParamData = <
       item
         Name = 'IDMAT'
