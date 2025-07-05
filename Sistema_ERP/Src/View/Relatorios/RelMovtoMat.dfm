@@ -329,8 +329,10 @@ object fmRelMovtoMat: TfmRelMovtoMat
       Height = 17
       Hint = 'Se marcado, sistema mostra mensagem confirmando o movimento.'
       Caption = 'Material Ativo'
+      Checked = True
       ParentShowHint = False
       ShowHint = True
+      State = cbChecked
       TabOrder = 8
     end
     object btnCons: TBitBtn

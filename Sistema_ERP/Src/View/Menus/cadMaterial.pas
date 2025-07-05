@@ -565,10 +565,13 @@ procedure TcadastroMaterial.idMaterial();
 var
   sqlConsulta: String;
   sqlConsultaCores: String;
+  unidadeMat : String;
+  indexCbUnidade : Integer;
 begin
 
   if Trim(tIdMat.Text) <> '' then
   begin
+    //Com o ID do material escrito, faz a consulta para carregar as outras informações.
     sqlConsulta := 'Select * from material where id = :ID';
     modelMaterial.QconsultaMaterial.SQL.Text := sqlConsulta;
     modelMaterial.QconsultaMaterial.ParamByName('ID').AsInteger := StrToInt(tIdMat.Text);
@@ -589,17 +592,30 @@ begin
     begin
       tCodigoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('codigo').AsString;
       tDescMat.Text := modelMaterial.QconsultaMaterial.FieldByName('descricao').AsString;
-      cbUnidade.Text := modelMaterial.QconsultaMaterial.FieldByName('UNIDADE_ESTOQUE').AsString;
+      //cbUnidade.Text := modelMaterial.QconsultaMaterial.FieldByName('UNIDADE_ESTOQUE').AsString; NÃO FUNCIONA
       tCategoriaMat.Text := modelMaterial.QconsultaMaterial.FieldByName('CATEGORIA_MATERIAL_ID').AsString;
       tGrupoMat.Text := modelMaterial.QconsultaMaterial.FieldByName('GRUPO_MATERIAL_ID').AsString;
+
+      //marca e desmarca CheckAtivo
       if modelMaterial.QconsultaMaterial.FieldByName('ativo').AsString = 'S' then
         checkAtivo.Checked := true
       else
         checkAtivo.Checked := false;
 
+      //Escreve a descrição de grupo e categoria
       if Trim(tGrupoMat.Text) <> '' then descGrupoId();
       if Trim(tCategoriaMat.Text) <> '' then descCategId();
 
+      //Controla o combo box de Unidade do Material
+      unidadeMat := modelMaterial.QconsultaMaterial.FieldByName('UNIDADE_ESTOQUE').AsString;
+      indexCbUnidade := cbUnidade.Items.IndexOf(unidadeMat);
+
+      if indexCbUnidade >= 0 then
+        cbUnidade.ItemIndex := indexCbUnidade
+      else
+        cbUnidade.ItemIndex := -1; //Trata vazio.
+
+      //Carrega Imagens do material
       carregarImg;
     end
     else

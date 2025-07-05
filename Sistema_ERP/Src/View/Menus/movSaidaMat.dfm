@@ -56,8 +56,6 @@ inherited formMovSaidaMat: TformMovSaidaMat
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited cbTpMov: TComboBox
-      ItemIndex = -1
-      Text = ''
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited tDescMov: TEdit

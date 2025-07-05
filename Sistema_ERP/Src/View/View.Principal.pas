@@ -24,8 +24,6 @@ type
     EntradadeMaterial1: TMenuItem;
     N6: TMenuItem;
     SaidaDeMateriais1: TMenuItem;
-    SadadeProdutos2: TMenuItem;
-    ransfrenciaDepProd1: TMenuItem;
     MovimentaesMat1: TMenuItem;
     MovimentaesMat2: TMenuItem;
     Panel1: TPanel;

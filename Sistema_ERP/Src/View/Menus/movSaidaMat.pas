@@ -56,10 +56,14 @@ begin
   //apenas pode dar saida quando ja teve entrada no estoque(registro que já existe)
   try
      funcMovMat.geraMovSaida(refMat, tQtde.Text, tp_mov, tDescMov.Text);
-     funcMovMat.atualizaEstSaida(refMat, tQtde.Text);
 
-    if checkExibMsg.Checked then
-      ShowMessage('Movimentação efetuada com sucesso!')
+     if funcMovMat.gerou_mov then
+     begin
+      funcMovMat.atualizaEstSaida(refMat, tQtde.Text);
+
+      if checkExibMsg.Checked then
+        ShowMessage('Movimentação efetuada com sucesso!')
+     end;
 
   except
     on E: Exception do

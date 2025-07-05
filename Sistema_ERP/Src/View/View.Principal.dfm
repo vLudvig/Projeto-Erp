@@ -123,12 +123,6 @@ object ViewPrincipal: TViewPrincipal
         Caption = 'Sa'#237'da de Materiais'
         OnClick = SaidaDeMateriais1Click
       end
-      object SadadeProdutos2: TMenuItem
-        Caption = '-'
-      end
-      object ransfrenciaDepProd1: TMenuItem
-        Caption = 'Transf'#234'rencia Dep. Mat.'
-      end
     end
     object Relatrios1: TMenuItem
       Caption = 'Relat'#243'rios'

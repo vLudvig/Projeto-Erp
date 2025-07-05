@@ -237,12 +237,18 @@ begin
   refMat.IdDep := IdDep;
   refMat.Lote := tLote.Text;
 
+  //Chama funções de MOVIMENTO e ESTOQUE
   try
     funcMovMat.geraMovEntrada(refMat, tQtde.Text, tp_mov, tDescMov.Text);
-    funcMovMat.atualizaEstEntra(refMat, tQtde.Text);
 
-    if checkExibMsg.Checked then
-      ShowMessage('Movimentação efetuada com sucesso!')
+    if funcMovMat.gerou_mov then
+    begin
+      funcMovMat.atualizaEstEntra(refMat, tQtde.Text);
+
+      if checkExibMsg.Checked then
+        ShowMessage('Movimentação efetuada com sucesso!')
+    end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao movimentar estoque: ' + E.Message);
@@ -368,6 +374,7 @@ begin
       modelEntraMat.Qconsulta.ParamByName('codigo').AsString := tDep.Text;
       modelEntraMat.Qconsulta.Open;
       tDescDep.Text := modelEntraMat.Qconsulta.FieldByName('Descricao').AsString;
+      idDep := modelEntraMat.Qconsulta.FieldByName('id').AsInteger;
       modelEntraMat.Qconsulta.Close;
     except
       on E : Exception do
