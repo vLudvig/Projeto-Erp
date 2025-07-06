@@ -13,11 +13,47 @@ uses
   function grupoMovimentaEst(const Ref: TreferenciaMaterial): Boolean;
   function depositoPermEntraMn(const idDep: Integer): Boolean;
   function depositoPermSaidaMn(const idDep: Integer): Boolean;
+  function depQtdeNeg(const idDep: Integer): Boolean;
+  function qtdeEstRef(const Ref: TreferenciaMaterial): Double;
 
   var
     gerou_mov : boolean;
 
 implementation
+
+//Devolve a quantidade em estoque da referencia.
+function qtdeEstRef(const Ref: TreferenciaMaterial): Double;
+begin
+  modelFuncGeral.QfuncGeral.Close;
+  modelFuncGeral.QfuncGeral.SQL.Text := 'select * from estoque_material where material_id = :idMat ' +
+    ' and deposito_id = :idDep and lote = :lote and cor_id = :idCor';
+  modelFuncGeral.QfuncGeral.ParamByName('idMat').AsInteger := Ref.IdMat;
+  modelFuncGeral.QfuncGeral.ParamByName('idDep').AsInteger := Ref.IdDep;
+  modelFuncGeral.QfuncGeral.ParamByName('lote').AsString := Ref.Lote;
+  modelFuncGeral.QfuncGeral.ParamByName('idCor').AsInteger := Ref.IdCor;
+  modelFuncGeral.QfuncGeral.Open;
+
+  qtdeEstRef := modelFuncGeral.QfuncGeral.FieldByName('quantidade').AsFloat;
+end;
+
+//Valida a configuração do depoisto para ver se permite qtde Negativa
+function depQtdeNeg(const idDep: Integer): Boolean;
+var
+  permite: String;
+begin
+  modelFuncGeral.QfuncGeral.Close;
+  modelFuncGeral.QfuncGeral.SQL.Text := 'select * from deposito where id = :idDep';
+  modelFuncGeral.QfuncGeral.ParamByName('idDep').AsInteger := idDep;
+  modelFuncGeral.QfuncGeral.Open;
+
+  permite := modelFuncGeral.QfuncGeral.FieldByName('negativo').AsString;
+  modelFuncGeral.QfuncGeral.Close;
+
+  if permite = 'S' then
+    depQtdeNeg := true
+  else
+    depQtdeNeg := false;
+end;
 
 function depositoPermEntraMn(const idDep: Integer): Boolean;
 var
@@ -92,33 +128,42 @@ var
 begin
   gerou_mov := false;
 
+  //Valida de o Grupo do material permite movimentar estoque
   if grupoMovimentaEst(Ref) then
   begin
+    //Valida se o deposito permite  saida manual (AM)
     if ((tp_mov = 'AM') and (depositoPermSaidaMn(Ref.IdDep))) or (tp_mov <> 'AM')   then
     begin
-      try
-        SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV, OPERACAO, DT_MOVTO, HORA_MOV) ';
-        SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov, :operacao, :dt_movto, :hora_mov) ';
+      //Valida se a quantidade de saida é maior que a quantia de estoque e se permite ficar negativo
+      if (not depQtdeNeg(Ref.IdDep)) and (StrToFloat(qtde) <= qtdeEstRef(Ref)) or depQtdeNeg(Ref.IdDep) then
+      begin
+        try
+          SqlInsert := 'Insert into mov_material(MATERIAL_ID, COR_ID, DEPOSITO_ID, LOTE, QUANTIDADE, TIPO_MOV, DESCRICAO_MOV, OPERACAO, DT_MOVTO, HORA_MOV) ';
+          SqlValues := 'Values(:idMat, :idCor, :idDep, :lote, :qtde, :tipo_mov, :desc_mov, :operacao, :dt_movto, :hora_mov) ';
 
-        modelFuncGeral.QfuncGeral.SQL.Text := SqlInsert + SqlValues;
-        modelFuncGeral.QfuncGeral.ParamByName('idMat').asInteger := Ref.idMat;
-        modelFuncGeral.QfuncGeral.ParamByName('idCor').asInteger := Ref.idCor;
-        modelFuncGeral.QfuncGeral.ParamByName('idDep').asInteger := Ref.idDep;
-        modelFuncGeral.QfuncGeral.ParamByName('lote').asString := Ref.Lote;
-        modelFuncGeral.QfuncGeral.ParamByName('qtde').AsFloat := StrToFloat(qtde);
-        modelFuncGeral.QfuncGeral.ParamByName('tipo_mov').asString := tp_mov;
-        modelFuncGeral.QfuncGeral.ParamByName('desc_mov').asString := desc_mov;
-        modelFuncGeral.QfuncGeral.ParamByName('operacao').asString := 'S';
-        modelFuncGeral.QfuncGeral.ParamByName('dt_movto').asDate := Date;
-        modelFuncGeral.QfuncGeral.ParamByName('hora_mov').asDateTime := Now;
-        modelFuncGeral.QfuncGeral.ExecSQL;
+          modelFuncGeral.QfuncGeral.SQL.Text := SqlInsert + SqlValues;
+          modelFuncGeral.QfuncGeral.ParamByName('idMat').asInteger := Ref.idMat;
+          modelFuncGeral.QfuncGeral.ParamByName('idCor').asInteger := Ref.idCor;
+          modelFuncGeral.QfuncGeral.ParamByName('idDep').asInteger := Ref.idDep;
+          modelFuncGeral.QfuncGeral.ParamByName('lote').asString := Ref.Lote;
+          modelFuncGeral.QfuncGeral.ParamByName('qtde').AsFloat := StrToFloat(qtde);
+          modelFuncGeral.QfuncGeral.ParamByName('tipo_mov').asString := tp_mov;
+          modelFuncGeral.QfuncGeral.ParamByName('desc_mov').asString := desc_mov;
+          modelFuncGeral.QfuncGeral.ParamByName('operacao').asString := 'S';
+          modelFuncGeral.QfuncGeral.ParamByName('dt_movto').asDate := Date;
+          modelFuncGeral.QfuncGeral.ParamByName('hora_mov').asDateTime := Now;
+          modelFuncGeral.QfuncGeral.ExecSQL;
 
-        //Serve para informar que pode atualizar ESTOQUE
-        gerou_mov := true;
-      except
-        on E: Exception do
-          ShowMessage('Erro ao gerar movimento do material(Saida): ' + E.Message);
-      end;
+          //Serve para informar que pode atualizar ESTOQUE
+          gerou_mov := true;
+        except
+          on E: Exception do
+            ShowMessage('Erro ao gerar movimento do material(Saida): ' + E.Message);
+        end;
+      end
+      else
+        ShowMessage('Depósito não permite quantidade negativa!');
+
     end
     else
       ShowMessage('Depósito não permite saída do Tipo Acerto Manual!');

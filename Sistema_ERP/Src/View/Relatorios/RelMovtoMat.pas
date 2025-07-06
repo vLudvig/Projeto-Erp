@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Model.Conexao, Consulta.Material, Consulta.Cor,
-  Consulta.Deposito;
+  Consulta.Deposito, Model.FuncGeral;
 
 type
   TfmRelMovtoMat = class(TForm)
@@ -127,19 +127,18 @@ procedure TfmRelMovtoMat.btnConsCorClick(Sender: TObject);
 begin
   formConsultaCores := TformConsultaCores.Create(nil);
   try
-     formConsultaCores.Qconsulta.Close;
-     formConsultaCores.Qconsulta.Sql.Text :=
-        'select c.* from cor c ' +
-        'inner join cor_material cm on c.id = cm.cor_id ' +
-        'where cm.material_id = ' + IntToStr(idMat);
-     formConsultaCores.Qconsulta.Open;
+     //formConsultaCores.Qconsulta.Close;
+     //formConsultaCores.Qconsulta.Sql.Text :=
+     //   'select c.* from cor c ' +
+     //   'inner join cor_material cm on c.id = cm.cor_id ' +
+     //   'where cm.material_id = ' + IntToStr(idMat);
+     //formConsultaCores.Qconsulta.Open;
 
      if formConsultaCores.ShowModal = mrOk then
      begin
         //Escreve as informações da cor conforme selecionado na consulta
        tCor.Text := formConsultaCores.codigoSelecionado;
        tDescCor.Text := formConsultaCores.descSelec;
-       //idCor := formConsultaCores.registroSelecionado;
      end;
   finally
      tCor.SetFocus;
@@ -187,17 +186,72 @@ end;
 
 procedure TfmRelMovtoMat.tCodMatExit(Sender: TObject);
 begin
-  if Trim(tCodMat.Text) = '' then tDescMat.Text := '';
+  if Trim(tCodMat.Text) <> '' then
+  begin
+    try
+      modelFuncGeral.QfuncGeral.Close;
+      modelFuncGeral.QfuncGeral.SQL.Text := 'select * from material where codigo = :codigo';
+      modelFuncGeral.QfuncGeral.ParamByName('codigo').AsString := tCodMat.Text;
+      modelFuncGeral.QfuncGeral.Open;
+      tDescMat.Text := modelFuncGeral.QfuncGeral.FieldByName('Descricao').AsString;
+      idMat := modelFuncGeral.QfuncGeral.FieldByName('id').AsInteger;
+      modelFuncGeral.QfuncGeral.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar material ' + E.Message);
+    end;
+  end
+  else
+  begin
+    tDescMat.Text := '';
+  end;
 end;
 
 procedure TfmRelMovtoMat.tCorExit(Sender: TObject);
 begin
-  if Trim(tCor.Text) = '' then tDescCor.Text := '';
+  if Trim(tCor.Text) <> '' then
+  begin
+    try
+      modelFuncGeral.QfuncGeral.Close;
+      modelFuncGeral.QfuncGeral.SQL.Text :=
+        'select * from cor ' +
+        'where codigo = :codigo';
+
+      modelFuncGeral.QfuncGeral.ParamByName('codigo').AsString := tCor.Text;
+      modelFuncGeral.QfuncGeral.Open;
+      tDescCor.Text := modelFuncGeral.QfuncGeral.FieldByName('Descricao').AsString;
+      modelFuncGeral.QfuncGeral.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar cor ' + E.Message);
+    end;
+  end
+  else
+  begin
+    tDescCor.Text := '';
+  end;
 end;
 
 procedure TfmRelMovtoMat.tDepExit(Sender: TObject);
 begin
-  if Trim(tDep.Text) = '' then tDescDep.Text := '';
+  if Trim(tDep.Text) <> '' then
+  begin
+    try
+      modelFuncGeral.QfuncGeral.Close;
+      modelFuncGeral.QfuncGeral.SQL.Text := 'select * from deposito where codigo = :codigo';
+      modelFuncGeral.QfuncGeral.ParamByName('codigo').AsString := tDep.Text;
+      modelFuncGeral.QfuncGeral.Open;
+      tDescDep.Text := modelFuncGeral.QfuncGeral.FieldByName('Descricao').AsString;
+      modelFuncGeral.QfuncGeral.Close;
+    except
+      on E : Exception do
+        ShowMessage('Erro ao encontrar deposito ' + E.Message);
+    end;
+  end
+  else
+  begin
+    tDescDep.Text := '';
+  end;
 end;
 
 end.
