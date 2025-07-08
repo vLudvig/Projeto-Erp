@@ -12,8 +12,10 @@ Antes de executar o sistema, certifique-se de que o computador possui os seguint
 
 - Windows 7 ou superior (32 ou 64 bits)
 - Firebird **3.0.x** instalado e em execução
-- **fbclient.dll** disponível na pasta do executável
+- Pasta raíz `Projeto-Erp\Sistema_ERP` deve estar localizado no disco (C:)
+- **fbclient.dll** disponível na pasta raíz (dentro de `Sistema_ERP`)
 - Permissão de leitura/gravação na pasta onde o banco `.fdb` está localizado
+- Configuração para conexão do banco de dados no arquivo `projetoIni.ini`, localizado na pasta raíz
 
 🛠️ Tecnologias Usadas
 
