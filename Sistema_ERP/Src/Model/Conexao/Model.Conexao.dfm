@@ -1,4 +1,5 @@
 object modelConexao: TmodelConexao
+  OnCreate = DataModuleCreate
   Height = 485
   Width = 693
   object FDConnection1: TFDConnection
@@ -16,6 +17,7 @@ object modelConexao: TmodelConexao
     Top = 224
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
+    OnDriverCreated = FDPhysFBDriverLink1DriverCreated
     Left = 312
     Top = 288
   end
