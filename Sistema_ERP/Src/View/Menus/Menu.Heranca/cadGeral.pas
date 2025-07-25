@@ -107,6 +107,16 @@ end;
 
 procedure TcadastroGeral.modoAlteracao();
 begin
+
+  //Ativa todos os componentes.
+  for var i := 0 to pnlCadastro.ControlCount - 1 do
+  begin
+    if (pnlCadastro.Controls[i] is TEdit) or
+    (pnlCadastro.Controls[i] is TCheckBox) or
+    (pnlCadastro.Controls[i] is TGroupBox) then
+      TEdit(pnlCadastro.Controls[i]).Enabled := true;
+  end;
+
   inclusao := false;
   alteracao := true;
   tDesc.Enabled := true;
