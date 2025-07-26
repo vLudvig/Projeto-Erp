@@ -132,125 +132,108 @@
         </DelphiCompile>
         <DCCReference Include="Src\View\View.Principal.pas">
             <Form>ViewPrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\Conexao\Model.Conexao.pas">
             <Form>modelConexao</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\Model\Material\model.Material.pas">
             <Form>modelMaterial</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\cadMaterial.pas">
             <Form>cadastroMaterial</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.Principal.pas">
             <Form>formConsultaPrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.Material.pas">
             <Form>formConsultaMaterial</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\Menu.Heranca\cadGeral.pas">
             <Form>cadastroGeral</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\cadCor1.pas">
             <Form>cadCor</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\Cor\model.cor.pas">
             <Form>modelCor</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.Cor.pas">
             <Form>formConsultaCores</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\GrupoMaterial\Model.GrupoMaterial.pas">
             <Form>modelGrupoMaterial</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\cadGrupoMaterial.pas">
             <Form>formCadGrupoMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.GrupoMat.pas">
             <Form>formConsultaGrupoMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\cadCategoriaMat.pas">
             <Form>cadCategoriaMaterial</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\CategoriaMaterial\Model.CategoriaMat.pas">
             <Form>modelCategoriaMat</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.CategoriaMat.pas">
             <Form>formConsultaCategoriaMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\cadDeposito.pas">
             <Form>formCadDeposito</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\Deposito\Model.Deposito.pas">
             <Form>modelDeposito</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Consulta\Consulta.Deposito.pas">
             <Form>formConsultaDep</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\View\Menus\movEntradaMat.pas">
             <Form>formMovEntraMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\EntradaMat\Model.EntradaMat.pas">
             <Form>modelEntraMat</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\Service\funcMovMat.pas"/>
         <DCCReference Include="Src\View\Menus\movSaidaMat.pas">
             <Form>formMovSaidaMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\SaidaMat\Model.SaidaMat.pas">
             <Form>modelSaidaMat</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\Service\uReferenciaMaterial.pas"/>
         <DCCReference Include="Src\Model\FuncGeral\Model.FuncGeral.pas">
             <Form>modelFuncGeral</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Relatorios\RelMovtoMat.pas">
             <Form>fmRelMovtoMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas">
             <Form>modelRelmovtoMat</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Src\View\Relatorios\RelEstoqueMat.pas">
             <Form>fmRelEstoqueMat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Src\Service\funcCadMaterial.pas"/>
+        <DCCReference Include="Src\View\fmLogin.pas">
+            <Form>vwLogin</Form>
+        </DCCReference>
+        <DCCReference Include="Src\Service\funcGeral.pas"/>
+        <DCCReference Include="Src\Model\Usuario\Model.cadUsuario.pas">
+            <Form>modelUsuario</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\View\Menus\fmCadUsuario.pas">
+            <Form>vwCadUsuario</Form>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

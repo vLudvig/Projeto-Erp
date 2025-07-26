@@ -2,6 +2,7 @@ program ProjetoErp;
 
 uses
   Vcl.Forms,
+  Vcl.Controls,
   View.Principal in 'Src\View\View.Principal.pas' {ViewPrincipal},
   Model.Conexao in 'Src\Model\Conexao\Model.Conexao.pas' {modelConexao: TDataModule},
   model.Material in 'Src\Model\Material\model.Material.pas' {modelMaterial: TDataModule},
@@ -31,7 +32,10 @@ uses
   RelMovtoMat in 'Src\View\Relatorios\RelMovtoMat.pas' {fmRelMovtoMat},
   Model.RelatorioMovtoMat in 'Src\Model\RelatorioMovtoMat\Model.RelatorioMovtoMat.pas' {modelRelmovtoMat: TDataModule},
   RelEstoqueMat in 'Src\View\Relatorios\RelEstoqueMat.pas' {fmRelEstoqueMat},
-  funcCadMaterial in 'Src\Service\funcCadMaterial.pas';
+  fmLogin in 'Src\View\fmLogin.pas' {vwLogin},
+  funcGeral in 'Src\Service\funcGeral.pas',
+  Model.cadUsuario in 'Src\Model\Usuario\Model.cadUsuario.pas' {modelUsuario: TDataModule},
+  fmCadUsuario in 'Src\View\Menus\fmCadUsuario.pas' {vwCadUsuario};
 
 {$R *.res}
 
@@ -41,6 +45,13 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
-  Application.CreateForm(TmodelFuncGeral, modelFuncGeral);
-  Application.Run;
+  Application.CreateForm(TvwLogin, vwLogin);
+
+  if vwLogin.ShowModal = mrOk then
+  begin
+    Application.Run;
+  end
+  else
+    Application.Terminate;
+
 end.
