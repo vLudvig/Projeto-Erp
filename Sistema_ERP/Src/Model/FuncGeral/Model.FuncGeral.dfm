@@ -4,7 +4,7 @@ object modelFuncGeral: TmodelFuncGeral
   object QfuncGeral: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from estoque_material')
+      'select * from log')
     Left = 136
     Top = 152
   end

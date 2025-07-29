@@ -80,7 +80,7 @@ object vwLogin: TvwLogin
       OnKeyPress = tUsuarioKeyPress
     end
     object btnCadastrar: TBitBtn
-      Left = 169
+      Left = 258
       Top = 304
       Width = 107
       Height = 41
@@ -136,6 +136,7 @@ object vwLogin: TvwLogin
         F9FDFBBFE7D070C8964ABB792CB0632CB0654ABA7A71C997C0E7D0FBFDFCFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
       TabOrder = 3
+      Visible = False
       OnClick = btnCadastrarClick
     end
     object BitBtn1: TBitBtn
@@ -204,7 +205,7 @@ object vwLogin: TvwLogin
       OnClick = BitBtn1Click
     end
     object btnConfirmar: TBitBtn
-      Left = 56
+      Left = 123
       Top = 304
       Width = 107
       Height = 41

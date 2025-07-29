@@ -35,20 +35,25 @@ uses
   fmLogin in 'Src\View\fmLogin.pas' {vwLogin},
   funcGeral in 'Src\Service\funcGeral.pas',
   Model.cadUsuario in 'Src\Model\Usuario\Model.cadUsuario.pas' {modelUsuario: TDataModule},
-  fmCadUsuario in 'Src\View\Menus\fmCadUsuario.pas' {vwCadUsuario};
+  fmCadUsuario in 'Src\View\Menus\fmCadUsuario.pas' {vwCadUsuario},
+  fmAlteraSenha in 'Src\View\Menus\fmAlteraSenha.pas' {vmAlteraSenha};
 
+var
+    usuario_log: string;
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Aplicação ERP - vLudvig';
-  Application.CreateForm(TViewPrincipal, ViewPrincipal);
   Application.CreateForm(TmodelConexao, modelConexao);
-  Application.CreateForm(TvwLogin, vwLogin);
+  Application.CreateForm(TmodelUsuario, modelUsuario);
+
+  vwLogin  := TvwLogin.Create(nil);
 
   if vwLogin.ShowModal = mrOk then
   begin
+    Application.CreateForm(TViewPrincipal, ViewPrincipal);
     Application.Run;
   end
   else

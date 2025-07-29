@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, fmCadUsuario, fmAlteraSenha,
+  Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito, Model.cadUsuario,
   ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat, RelMovtoMat, RelEstoqueMat;
 
 type
@@ -32,6 +32,12 @@ type
     Label1: TLabel;
     Label2: TLabel;
     lblGit: TLabel;
+    lblBemVindo: TLabel;
+    Usurio1: TMenuItem;
+    CadastrodeUsurio1: TMenuItem;
+    CadastrodeUsurio2: TMenuItem;
+    Sistema1: TMenuItem;
+    Logs1: TMenuItem;
     procedure lblMouseClick(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -47,10 +53,13 @@ type
     procedure SaidaDeMateriais1Click(Sender: TObject);
     procedure MovimentaesMat2Click(Sender: TObject);
     procedure MovimentaesMat1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure CadastrodeUsurio1Click(Sender: TObject);
+    procedure CadastrodeUsurio2Click(Sender: TObject);
   private
     { Private declarations }
   public
-    { Public declarations }
+    usuario_logado : string;
   end;
 
 var
@@ -62,6 +71,27 @@ implementation
 
 uses
   cadMaterial, cadCor1, cadGrupoMaterial;
+
+procedure TViewPrincipal.CadastrodeUsurio1Click(Sender: TObject);
+begin
+  vwCadUsuario := TvwCadUsuario.Create(nil);
+  try
+    vwCadUsuario.ShowModal;
+  finally
+    FreeAndNil(vwCadUsuario);
+  end;
+end;
+
+procedure TViewPrincipal.CadastrodeUsurio2Click(Sender: TObject);
+begin
+  try
+    vmAlteraSenha := TvmAlteraSenha.Create(nil);
+    vmAlteraSenha.usuario := usuario_logado;
+    vmAlteraSenha.ShowModal;
+  finally
+    FreeAndNil(vmAlteraSenha);
+  end;
+end;
 
 procedure TViewPrincipal.CarregarImagem;
 begin
@@ -105,6 +135,12 @@ end;
 procedure TViewPrincipal.FormCreate(Sender: TObject);
 begin
   CarregarImagem;
+end;
+
+procedure TViewPrincipal.FormShow(Sender: TObject);
+begin
+  usuario_logado := modelUsuario.usuario_log;
+  lblBemVindo.Caption := 'Bem Vindo, ' + usuario_logado + '!';
 end;
 
 procedure TViewPrincipal.lblMouseClick(Sender: TObject);

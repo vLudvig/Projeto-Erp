@@ -28,11 +28,12 @@ type
   private
     { Private declarations }
   public
-    { Public declarations }
+    usuario: string;
   end;
 
 var
   vwLogin: TvwLogin;
+
 
 implementation
   uses
@@ -67,21 +68,23 @@ end;
 procedure TvwLogin.btnConfirmarClick(Sender: TObject);
 var
   sqlConsulta : string;
+  msgLog : string;
 begin
   sqlConsulta:= 'select * from usuarios where chave_ac = :senha and usuario = :usuario';
 
   try
-    modelUsuario := TmodelUsuario.Create(nil);
     modelUsuario.Qusuarios.Close();
     modelUsuario.Qusuarios.sql.Text := sqlConsulta;
-    modelUsuario.Qusuarios.ParamByName('senha').AsString := funcGeral.geraCriptografia(tSenha.Text);
-    modelUsuario.Qusuarios.ParamByName('usuario').AsString := tUsuario.text;
+    modelUsuario.Qusuarios.ParamByName('senha').AsString := funcGeral.geraCriptografia(Trim(tSenha.Text));
+    modelUsuario.Qusuarios.ParamByName('usuario').AsString := Trim(tUsuario.text);
 
     modelUsuario.Qusuarios.Open();
-
+    msgLog := 'Usuario conectou no sistema!';
     if modelUsuario.Qusuarios.Fields[0].AsInteger > 0 then
     begin
-      //Application.MessageBox('Usuário válido!', 'Sucesso');
+      usuario := Trim(tUsuario.Text);
+      modelUsuario.usuario_log := usuario;
+      funcGeral.gravaLog('fmLogin', usuario, msgLog, 'Login');
       ModalResult := mrOk;
     end
     else
@@ -106,7 +109,7 @@ end;
 
 procedure TvwLogin.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(modelUsuario);
+  //FreeAndNil(modelUsuario);
 end;
 
 procedure TvwLogin.tUsuarioKeyPress(Sender: TObject; var Key: Char);

@@ -75,7 +75,7 @@ begin
       sqlInsert := 'Insert into usuarios (usuario, chave_ac, ativo) values (:usuario, :senha, :ativo)';
 
       //Utiliza função da service funcGeraSenha para gravar no banco a string cirptografada
-      hashSenha := funcGeral.geraCriptografia(tSenha.Text);
+      hashSenha := funcGeral.geraCriptografia(Trim(tSenha.Text));
 
       modelUsuario.Qusuarios.SQL.Text := sqlInsert;
       modelUsuario.Qusuarios.ParamByName('usuario').AsString := tUsuario.Text;

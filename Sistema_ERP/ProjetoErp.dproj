@@ -234,6 +234,10 @@
         <DCCReference Include="Src\View\Menus\fmCadUsuario.pas">
             <Form>vwCadUsuario</Form>
         </DCCReference>
+        <DCCReference Include="Src\View\Menus\fmAlteraSenha.pas">
+            <Form>vmAlteraSenha</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

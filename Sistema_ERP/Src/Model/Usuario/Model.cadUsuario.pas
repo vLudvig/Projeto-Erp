@@ -14,7 +14,7 @@ type
   private
     { Private declarations }
   public
-    { Public declarations }
+    usuario_log: string;
   end;
 
 var
