@@ -36,7 +36,7 @@ inherited vmAlteraSenha: TvmAlteraSenha
     object lblUsuarioLog: TLabel [4]
       Left = 98
       Top = 94
-      Width = 127
+      Width = 56
       Height = 15
       Caption = 'Usu'#225'rio:'
       Font.Charset = DEFAULT_CHARSET
@@ -47,10 +47,13 @@ inherited vmAlteraSenha: TvmAlteraSenha
       ParentFont = False
     end
     inherited tUsuario: TEdit
+      PasswordChar = '*'
       StyleElements = [seFont, seClient, seBorder]
     end
     inherited tSenha: TEdit
+      Top = 204
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitTop = 204
     end
     inherited tConfirmaSenha: TEdit
       StyleElements = [seFont, seClient, seBorder]
