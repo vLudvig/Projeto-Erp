@@ -36,7 +36,8 @@ uses
   funcGeral in 'Src\Service\funcGeral.pas',
   Model.cadUsuario in 'Src\Model\Usuario\Model.cadUsuario.pas' {modelUsuario: TDataModule},
   fmCadUsuario in 'Src\View\Menus\fmCadUsuario.pas' {vwCadUsuario},
-  fmAlteraSenha in 'Src\View\Menus\fmAlteraSenha.pas' {vmAlteraSenha};
+  fmAlteraSenha in 'Src\View\Menus\fmAlteraSenha.pas' {vmAlteraSenha},
+  RelLogSistema in 'Src\View\Relatorios\RelLogSistema.pas' {fmLogSistema};
 
 var
     usuario_log: string;
@@ -48,7 +49,7 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TmodelConexao, modelConexao);
   Application.CreateForm(TmodelUsuario, modelUsuario);
-
+  Application.CreateForm(TfmLogSistema, fmLogSistema);
   vwLogin  := TvwLogin.Create(nil);
 
   if vwLogin.ShowModal = mrOk then

@@ -60,6 +60,7 @@ begin
         modelCategoriaMat.QcadastroCategoria.ParamByName('descricao').AsString := tDesc.Text;
         modelCategoriaMat.QcadastroCategoria.ParamByName('ativo').AsString := categoriaAtiva;
         modelCategoriaMat.QcadastroCategoria.ExecSQL;
+        inherited; //grava_log
 
         //Recarrega o Grid principal da tela, atualizando com este novo cadastro
         QcategoriaMat.Close;

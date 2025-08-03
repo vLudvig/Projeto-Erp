@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Consulta.CategoriaMat,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Consulta.Cor, Consulta.GrupoMat,
-  Vcl.ExtDlgs, Vcl.Imaging.pngimage, Vcl.Buttons;
+  Vcl.ExtDlgs, Vcl.Imaging.pngimage, Vcl.Buttons, funcGeral, View.Principal;
 
 type
   TcadastroMaterial = class(TForm)
@@ -108,6 +108,9 @@ type
     procedure tCategoriaMatChange(Sender: TObject);
   private
     colunaSelecionada: String;
+    mensagem_log : string;
+    usuario: string;
+    tela: string;
   public
     { Public declarations }
   end;
@@ -127,12 +130,13 @@ begin
     modoConsulta();
     try
       modelMaterial := TmodelMaterial.Create(nil);
+      tela := 'cadMaterial';
+      usuario := ViewPrincipal.usuario_logado;
     finally
       //FreeAndNil(modelMaterial);
     end;
 
 end;
-
 
 procedure TcadastroMaterial.carregarImg;
 begin
@@ -266,6 +270,11 @@ begin
     modelMaterial.QcadastroMaterial.ParamByName('id').AsInteger := StrToInt(tIdMat.Text);
     try
       modelMaterial.QcadastroMaterial.ExecSQL;
+
+      //grava Log
+      mensagem_log := 'Exclusão de registro (Código: '+ tCodigoMat.Text + ')';
+      funcGeral.gravaLog(tela, usuario, mensagem_log, 'Delete');
+
       ShowMessage('Material Excluido com sucesso!');
       limpaCamposTela;
     except
@@ -326,8 +335,15 @@ begin
           end;
 
         modelMaterial.QcadastroMaterial.ExecSQL;
+
+        //grava Log
+        mensagem_log := 'Cadastro de material (Código: '+ tCodigoMat.Text + ')';
+        funcGeral.gravaLog(tela, usuario, mensagem_log, 'Inclusão');
+
         modelMaterial.QcadastroMaterial.Close;
 
+        //Apos incluir, pega o ID do registro incluido e escreve no campo tIdMat,
+        //para assim poder usar livremente a funcao idMat()
         modelMaterial.QconsultaMaterial.Close;
         modelMaterial.QconsultaMaterial.SQL.Text := 'select * from material where codigo = :codigo';
         modelMaterial.QconsultaMaterial.ParamByName('codigo').AsString := tCodigoMat.Text;
@@ -376,6 +392,11 @@ begin
 
       modelMaterial.QcadastroMaterial.ExecSQL;
       modelMaterial.QcadastroMaterial.Close;
+
+      //grava Log
+      mensagem_log := 'Alteração de registro (Código: '+ tCodigoMat.Text + ')';
+      funcGeral.gravaLog(tela, usuario, mensagem_log, 'Alteração');
+
     finally
       alteracao := false;
       modoConsulta();

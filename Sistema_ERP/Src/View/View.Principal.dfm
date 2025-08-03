@@ -40,10 +40,10 @@ object ViewPrincipal: TViewPrincipal
     object lblBemVindo: TLabel
       Left = 64
       Top = 67
-      Width = 289
+      Width = 593
       Height = 40
       AutoSize = False
-      Caption = 'Bem Vindo, '
+      Caption = 'Bem Vindo, User !'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = 30

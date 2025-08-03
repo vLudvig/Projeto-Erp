@@ -4,8 +4,6 @@ inherited cadCategoriaMaterial: TcadCategoriaMaterial
   TextHeight = 15
   inherited pnlCadastro: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    ExplicitWidth = 1195
-    ExplicitHeight = 652
     inherited Label1: TLabel
       StyleElements = [seFont, seClient, seBorder]
     end
@@ -37,8 +35,6 @@ inherited cadCategoriaMaterial: TcadCategoriaMaterial
       Height = 443
       Align = alBottom
       TabOrder = 4
-      ExplicitTop = 208
-      ExplicitWidth = 1193
       object DBGrid1: TDBGrid
         Left = 1
         Top = 1
@@ -57,8 +53,6 @@ inherited cadCategoriaMaterial: TcadCategoriaMaterial
   end
   inherited pnlBotoes: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    ExplicitTop = 652
-    ExplicitWidth = 1195
     inherited btnConsultar: TButton
       OnClick = btnConsultarClick
     end

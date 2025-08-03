@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, funcGeral;
 
 type
   TcadastroGeral = class(TForm)
@@ -41,7 +41,10 @@ type
   private
     { Private declarations }
   public
-    { Public declarations }
+    tela : string;
+    mensagem_log: string;
+    tipo_log: string;
+    usuario: string;
   end;
 
 var
@@ -138,9 +141,8 @@ begin
 end;
 
 procedure TcadastroGeral.btnConfirmarClick(Sender: TObject);
- 
 begin
-  //modoConsulta();
+  //funcGeral.gravaLog(tela, usuario, mensagem_log, tipo_log);
 end;
 
 procedure TcadastroGeral.btnDesistirClick(Sender: TObject);

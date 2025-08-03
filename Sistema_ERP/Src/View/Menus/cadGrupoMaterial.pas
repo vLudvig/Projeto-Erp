@@ -84,7 +84,7 @@ begin
   end
   else
   begin
-
+   // alteracao ou codigo invalido
   end;
   modoConsulta();
 end;

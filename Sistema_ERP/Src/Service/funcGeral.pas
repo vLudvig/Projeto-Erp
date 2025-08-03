@@ -28,12 +28,12 @@ begin
     sqlInsert := 'Insert into log (TELA, MENSAGEM, USUARIO, HORA, TIPO_LOG) values (:TELA, :MENSAGEM, :USUARIO, :HORA, :TIPO_LOG)';
     modelFuncGeral.QfuncGeral.Sql.Text := sqlInsert ;
 
-    dtHora := Now;
+    dtHora := Now; //Pega o horario atual do windows
     modelFuncGeral.QfuncGeral.ParamByName('TELA').AsString := tela;
     modelFuncGeral.QfuncGeral.ParamByName('MENSAGEM').AsString := mensagem;
     modelFuncGeral.QfuncGeral.ParamByName('USUARIO').AsString := usuario;
     modelFuncGeral.QfuncGeral.ParamByName('HORA').AsDateTime := dtHora;
-    modelFuncGeral.QfuncGeral.ParamByName('TIPO_LOG').AsString := tipoLog;
+    modelFuncGeral.QfuncGeral.ParamByName('TIPO_LOG').AsString := tipoLog; // AlTERAÇÂO, INCLUSÃO, DELETE, LOGIN
 
     modelFuncGeral.QfuncGeral.ExecSQL;
   Finally
