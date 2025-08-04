@@ -33,7 +33,7 @@ begin
     modelFuncGeral.QfuncGeral.ParamByName('MENSAGEM').AsString := mensagem;
     modelFuncGeral.QfuncGeral.ParamByName('USUARIO').AsString := usuario;
     modelFuncGeral.QfuncGeral.ParamByName('HORA').AsDateTime := dtHora;
-    modelFuncGeral.QfuncGeral.ParamByName('TIPO_LOG').AsString := tipoLog; // AlTERAÇÂO, INCLUSÃO, DELETE, LOGIN
+    modelFuncGeral.QfuncGeral.ParamByName('TIPO_LOG').AsString := tipoLog; // AlTERAÇÂO, INCLUSÃO, DELETE, LOGIN, CONSULTA
 
     modelFuncGeral.QfuncGeral.ExecSQL;
   Finally

@@ -11,6 +11,7 @@ object fmRelMovtoMat: TfmRelMovtoMat
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnCreate = FormCreate
   TextHeight = 15
   object Panel1: TPanel
     Left = 0

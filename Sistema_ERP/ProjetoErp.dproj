@@ -130,9 +130,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Src\View\View.Principal.pas">
-            <Form>ViewPrincipal</Form>
-        </DCCReference>
         <DCCReference Include="Src\Model\Conexao\Model.Conexao.pas">
             <Form>modelConexao</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -240,6 +237,10 @@
         </DCCReference>
         <DCCReference Include="Src\View\Relatorios\RelLogSistema.pas">
             <Form>fmLogSistema</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\View\View.Principal.pas">
+            <Form>ViewPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

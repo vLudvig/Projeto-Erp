@@ -18,8 +18,8 @@ object fmLogSistema: TfmLogSistema
     Height = 750
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1213
-    ExplicitHeight = 740
+    ExplicitWidth = 1185
+    ExplicitHeight = 742
     object lblTela: TLabel
       Left = 56
       Top = 56
@@ -62,8 +62,8 @@ object fmLogSistema: TfmLogSistema
       Height = 533
       Align = alBottom
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 217
+      ExplicitTop = 208
+      ExplicitWidth = 1183
       object gridLog: TDBGrid
         Left = 1
         Top = 1
@@ -98,7 +98,6 @@ object fmLogSistema: TfmLogSistema
       Top = 101
       Width = 145
       Height = 23
-      ItemIndex = 0
       TabOrder = 3
       Text = 'Sem Filtro'
       Items.Strings = (
@@ -106,7 +105,8 @@ object fmLogSistema: TfmLogSistema
         'Altera'#231#227'o'
         'Inclus'#227'o'
         'Delete'
-        'Login')
+        'Login'
+        'Consulta')
     end
     object Edit1: TEdit
       Left = 85

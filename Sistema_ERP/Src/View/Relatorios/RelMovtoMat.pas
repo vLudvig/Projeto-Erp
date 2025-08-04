@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Model.Conexao, Consulta.Material, Consulta.Cor,
-  Consulta.Deposito, Model.FuncGeral;
+  Consulta.Deposito, Model.FuncGeral, funcGeral;
 
 type
   TfmRelMovtoMat = class(TForm)
@@ -47,11 +47,14 @@ type
     procedure tDepExit(Sender: TObject);
     procedure btnConsClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     var
       idMat: Integer;
   public
-    { Public declarations }
+    tela : string;
+    mensagem_log : string;
+    usuario: string;
   end;
 
 var
@@ -60,6 +63,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses View.Principal;
 
 procedure TfmRelMovtoMat.btnConsClick(Sender: TObject);
   var
@@ -116,6 +121,11 @@ begin
       if cbTpMov.ItemIndex > 0 then QconsultaMovto.ParamByName('tp_mov').AsString := tp_mov;
 
       QconsultaMovto.Open;
+
+      //grava log
+      mensagem_log := 'Consulta de movimentações de material realizada';
+      funcgeral.gravaLog(tela, usuario, mensagem_log, 'Consulta');
+
     except on E: Exception do
       ShowMessage(E.Message);
 
@@ -182,6 +192,17 @@ end;
 procedure TfmRelMovtoMat.btnImprimirClick(Sender: TObject);
 begin
   ShowMessage('A impressão só esta disponivel na versão paga do sistema, entre em contato com o administrador!');
+end;
+
+procedure TfmRelMovtoMat.FormCreate(Sender: TObject);
+begin
+  try
+    modelFuncGeral := TmodelFuncGeral.Create(nil);
+    tela := 'RelMovtoMat';
+    usuario := ViewPrincipal.usuario_logado;
+  finally
+
+  end;
 end;
 
 procedure TfmRelMovtoMat.tCodMatExit(Sender: TObject);

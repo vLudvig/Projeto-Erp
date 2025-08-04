@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, fmCadUsuario, fmAlteraSenha,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, cadCategoriaMat, cadDeposito, Model.cadUsuario,
-  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat, RelMovtoMat, RelEstoqueMat;
+  ShellAPI, Vcl.Imaging.jpeg, movEntradaMat, movSaidaMat, RelMovtoMat, RelEstoqueMat, RelLogSistema;
 
 type
   TViewPrincipal = class(TForm)
@@ -56,6 +56,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure CadastrodeUsurio1Click(Sender: TObject);
     procedure CadastrodeUsurio2Click(Sender: TObject);
+    procedure Logs1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -156,6 +157,16 @@ end;
 procedure TViewPrincipal.lblMouseLeave(Sender: TObject);
 begin
   Tlabel(Sender).font.Color := clWindowText;
+end;
+
+procedure TViewPrincipal.Logs1Click(Sender: TObject);
+begin
+  try
+    fmLogSistema := TfmLogSistema.Create(nil);
+    fmLogSistema.ShowModal;
+  finally
+    FreeAndNil(fmLogSistema);
+  end;
 end;
 
 procedure TViewPrincipal.Material1Click(Sender: TObject);

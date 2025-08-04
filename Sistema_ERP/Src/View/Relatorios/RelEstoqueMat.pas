@@ -8,11 +8,12 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, funcGeral;
 
 type
   TfmRelEstoqueMat = class(TfmRelMovtoMat)
     procedure btnConsClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,11 +64,21 @@ begin
       if trim(tLote.Text) <> '' then QconsultaMovto.ParamByName('lote').AsString := tLote.text;
 
       QconsultaMovto.Open;
+
+      //grava log
+      mensagem_log := 'Consulta de estoque de material realizada';
+      funcGeral.gravaLog(tela, usuario, mensagem_log, 'Consulta');
     except on E: Exception do
       ShowMessage(E.Message);
 
     end;
 
+end;
+
+procedure TfmRelEstoqueMat.FormCreate(Sender: TObject);
+begin
+  inherited;
+  tela:= 'RelEstoqueMat';
 end;
 
 end.

@@ -3,7 +3,6 @@ program ProjetoErp;
 uses
   Vcl.Forms,
   Vcl.Controls,
-  View.Principal in 'Src\View\View.Principal.pas' {ViewPrincipal},
   Model.Conexao in 'Src\Model\Conexao\Model.Conexao.pas' {modelConexao: TDataModule},
   model.Material in 'Src\Model\Material\model.Material.pas' {modelMaterial: TDataModule},
   cadMaterial in 'Src\View\Menus\cadMaterial.pas' {cadastroMaterial},
@@ -37,7 +36,8 @@ uses
   Model.cadUsuario in 'Src\Model\Usuario\Model.cadUsuario.pas' {modelUsuario: TDataModule},
   fmCadUsuario in 'Src\View\Menus\fmCadUsuario.pas' {vwCadUsuario},
   fmAlteraSenha in 'Src\View\Menus\fmAlteraSenha.pas' {vmAlteraSenha},
-  RelLogSistema in 'Src\View\Relatorios\RelLogSistema.pas' {fmLogSistema};
+  RelLogSistema in 'Src\View\Relatorios\RelLogSistema.pas' {fmLogSistema},
+  View.Principal in 'Src\View\View.Principal.pas' {ViewPrincipal};
 
 var
     usuario_log: string;
@@ -49,7 +49,8 @@ begin
   Application.Title := 'Aplicação ERP - vLudvig';
   Application.CreateForm(TmodelConexao, modelConexao);
   Application.CreateForm(TmodelUsuario, modelUsuario);
-  Application.CreateForm(TfmLogSistema, fmLogSistema);
+  Application.CreateForm(TViewPrincipal, ViewPrincipal);
+  Application.CreateForm(TViewPrincipal, ViewPrincipal);
   vwLogin  := TvwLogin.Create(nil);
 
   if vwLogin.ShowModal = mrOk then

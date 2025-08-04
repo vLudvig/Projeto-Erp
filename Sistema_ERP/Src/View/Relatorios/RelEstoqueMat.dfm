@@ -4,9 +4,13 @@ inherited fmRelEstoqueMat: TfmRelEstoqueMat
   TextHeight = 15
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 278
+    ExplicitWidth = 1195
   end
   inherited Panel2: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 1195
+    ExplicitHeight = 278
     inherited lblDesc: TLabel
       Visible = False
       StyleElements = [seFont, seClient, seBorder]

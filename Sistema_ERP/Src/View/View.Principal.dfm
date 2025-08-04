@@ -25,6 +25,8 @@ object ViewPrincipal: TViewPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 1149
+    ExplicitHeight = 785
     DesignSize = (
       1151
       793)
@@ -59,6 +61,7 @@ object ViewPrincipal: TViewPrincipal
       Anchors = [akLeft, akBottom]
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitTop = 504
       object Label1: TLabel
         Left = 24
         Top = 83
@@ -165,6 +168,7 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Sistema'
       object Logs1: TMenuItem
         Caption = 'Logs'
+        OnClick = Logs1Click
       end
     end
   end
