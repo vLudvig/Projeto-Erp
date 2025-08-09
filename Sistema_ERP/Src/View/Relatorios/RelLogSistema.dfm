@@ -10,6 +10,7 @@ object fmLogSistema: TfmLogSistema
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -18,8 +19,8 @@ object fmLogSistema: TfmLogSistema
     Height = 750
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1185
-    ExplicitHeight = 742
+    ExplicitLeft = 8
+    ExplicitTop = 48
     object lblTela: TLabel
       Left = 56
       Top = 56
@@ -49,11 +50,18 @@ object fmLogSistema: TfmLogSistema
       Caption = 'Descri'#231#227'o:'
     end
     object Label4: TLabel
-      Left = 258
+      Left = 236
       Top = 56
-      Width = 27
+      Width = 43
       Height = 15
-      Caption = 'Data:'
+      Caption = 'Data de:'
+    end
+    object lblDate: TLabel
+      Left = 375
+      Top = 56
+      Width = 21
+      Height = 15
+      Caption = 'At'#233':'
     end
     object pnlDados: TPanel
       Left = 1
@@ -71,6 +79,7 @@ object fmLogSistema: TfmLogSistema
         Height = 531
         Align = alClient
         DataSource = DS_QconsultLog
+        ReadOnly = True
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -108,19 +117,12 @@ object fmLogSistema: TfmLogSistema
         'Login'
         'Consulta')
     end
-    object Edit1: TEdit
+    object tDescricao: TEdit
       Left = 85
       Top = 149
       Width = 351
       Height = 23
       TabOrder = 4
-    end
-    object tData: TEdit
-      Left = 291
-      Top = 53
-      Width = 145
-      Height = 23
-      TabOrder = 5
     end
     object btnCons: TBitBtn
       Left = 482
@@ -180,7 +182,8 @@ object fmLogSistema: TfmLogSistema
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
       Margin = 5
       Spacing = 10
-      TabOrder = 6
+      TabOrder = 5
+      OnClick = btnConsClick
     end
     object btnImprimir: TBitBtn
       Left = 482
@@ -240,13 +243,32 @@ object fmLogSistema: TfmLogSistema
         4A504F4C252522A2A2A2FFFFFFFFFFFF0000}
       Margin = 5
       Spacing = 10
+      TabOrder = 6
+      OnClick = btnImprimirClick
+    end
+    object tDataDe: TDateTimePicker
+      Left = 285
+      Top = 53
+      Width = 84
+      Height = 23
+      Date = 36526.000000000000000000
+      Time = 36526.000000000000000000
       TabOrder = 7
+    end
+    object tDataAte: TDateTimePicker
+      Left = 402
+      Top = 53
+      Width = 84
+      Height = 23
+      Date = 109575.000000000000000000
+      Time = 109575.000000000000000000
+      TabOrder = 8
     end
   end
   object QconsultLog: TFDQuery
     Connection = modelConexao.FDConnection1
     SQL.Strings = (
-      'select * from log')
+      'select * from log ')
     Left = 761
     Top = 432
   end
