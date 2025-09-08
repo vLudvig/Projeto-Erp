@@ -29,6 +29,6 @@ Componentes: FireDAC
 ⚠️ **Observação:** O sistema possui um usuário padrão para login, usuário: "TESTE", senha: "123456"!
 
 Autor
-Nome: Vitor Luiz Moui Ludvig
-Email: Ludvig.vitor@gmail.com
+Nome: Vitor Luiz Moui Ludvig <br>
+Email: Ludvig.vitor@gmail.com <br>
 GitHub: https://github.com/vLudvig
