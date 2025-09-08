@@ -25,6 +25,9 @@ Firebird 3.0.10
 
 Componentes: FireDAC 
 
+⚠️ **Observação:** Este projeto ainda está em desenvolvimento!
+⚠️ **Observação:** O sistema possui um usuário padrão para login, usuário: "TESTE", senha: "123456"
+
 Autor
 Nome: Vitor Luiz Moui Ludvig
 Email: Ludvig.vitor@gmail.com
